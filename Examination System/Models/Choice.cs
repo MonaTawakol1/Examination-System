@@ -10,6 +10,8 @@ namespace Examination_System.Models
         [Required]
         public string ChoiceBody { get; set; }
 
+        public Boolean IsAnswer {  get; set; }
+
 
         //[ForeignKey("Question")]
         public int QuestionId { get; set; }

@@ -20,9 +20,9 @@ namespace Examination_System.Models
         public QuestionType QuestionType { get; set; }
 
        // [ForeignKey("ModelAnswer")]
-        public int ModelAnswerId { get; set; }
+        //public int ModelAnswerId { get; set; }
 
-        public Choice ModelAnswer { get; set; }
+       // public string ModelAnswer { get; set; }
 
         public List<Choice> ChoicesList { get; set; }  
 

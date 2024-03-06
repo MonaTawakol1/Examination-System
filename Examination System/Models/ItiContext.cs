@@ -17,7 +17,15 @@ namespace Examination_System.Models
         public DbSet<Question> Questions { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Topic> Topics { get; set; }
- 
+
+        public ItiContext()
+        {
+
+        }
+        public ItiContext(DbContextOptions options) : base()
+        {
+
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=ExaminationSystem;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
@@ -45,17 +53,17 @@ namespace Examination_System.Models
 
 
 
-            modelBuilder.Entity<Choice>()
-                .HasOne(b => b.Question)
-                .WithOne(i => i.ModelAnswer)
-                .HasForeignKey<Question>(d => d.ModelAnswerId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+            //modelBuilder.Entity<Choice>()
+            //    .HasOne(b => b.Question)
+            //    .WithOne(i => i.ModelAnswer)
+            //    .HasForeignKey<Question>(d => d.ModelAnswerId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull);
 
 
             //ques choices
-            modelBuilder.Entity<Question>()
-                .HasMany(b => b.ChoicesList)
-                .WithOne().OnDelete(DeleteBehavior.ClientSetNull);
+            //modelBuilder.Entity<Question>()
+            //    .HasMany(b => b.ChoicesList)
+            //    .WithOne().OnDelete(DeleteBehavior.ClientSetNull);
 
 
             ////exam ques

@@ -5,7 +5,7 @@
 namespace Examination_System.Migrations
 {
     /// <inheritdoc />
-    public partial class m1 : Migration
+    public partial class tables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -214,6 +214,7 @@ namespace Examination_System.Migrations
                     ChoiceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ChoiceBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsAnswer = table.Column<bool>(type: "bit", nullable: false),
                     QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -278,7 +279,6 @@ namespace Examination_System.Migrations
                     QuestionBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuestionMark = table.Column<int>(type: "int", nullable: false),
                     QuestionType = table.Column<int>(type: "int", nullable: false),
-                    ModelAnswerId = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     ExamQuestionsExamId = table.Column<int>(type: "int", nullable: true),
                     ExamQuestionsQuestionId = table.Column<int>(type: "int", nullable: true)
@@ -286,11 +286,6 @@ namespace Examination_System.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.QuestionId);
-                    table.ForeignKey(
-                        name: "FK_Questions_Choices_ModelAnswerId",
-                        column: x => x.ModelAnswerId,
-                        principalTable: "Choices",
-                        principalColumn: "ChoiceId");
                     table.ForeignKey(
                         name: "FK_Questions_Courses_CourseId",
                         column: x => x.CourseId,
@@ -366,12 +361,6 @@ namespace Examination_System.Migrations
                 columns: new[] { "ExamQuestionsExamId", "ExamQuestionsQuestionId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questions_ModelAnswerId",
-                table: "Questions",
-                column: "ModelAnswerId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Students_DepartmentId",
                 table: "Students",
                 column: "DepartmentId");
@@ -386,7 +375,8 @@ namespace Examination_System.Migrations
                 table: "Choices",
                 column: "QuestionId",
                 principalTable: "Questions",
-                principalColumn: "QuestionId");
+                principalColumn: "QuestionId",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ExamQuestions_Exams_ExamId",
@@ -411,10 +401,6 @@ namespace Examination_System.Migrations
                 table: "Students");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Choices_Questions_QuestionId",
-                table: "Choices");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_ExamQuestions_Questions_QuestionId",
                 table: "ExamQuestions");
 
@@ -432,6 +418,9 @@ namespace Examination_System.Migrations
 
             migrationBuilder.DropTable(
                 name: "BranchDepartment");
+
+            migrationBuilder.DropTable(
+                name: "Choices");
 
             migrationBuilder.DropTable(
                 name: "CourseInstructor");
@@ -456,9 +445,6 @@ namespace Examination_System.Migrations
 
             migrationBuilder.DropTable(
                 name: "Questions");
-
-            migrationBuilder.DropTable(
-                name: "Choices");
 
             migrationBuilder.DropTable(
                 name: "Courses");
