@@ -12,8 +12,7 @@ namespace Examination_System.Models
         
         public string StudentPassword { get; set;}
 
-        [NotMapped]
-        public string ConfirmPassword { get; set; }
+  
 
         public List<Exam> Exams { get; set; }   
         [ForeignKey("Department")]
