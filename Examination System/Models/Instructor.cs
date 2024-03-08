@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Principal;
 
 namespace Examination_System.Models
 {
@@ -22,7 +23,9 @@ namespace Examination_System.Models
 
         public List<Course> Courses { get; set; }
 
-        
+        public Branch branch { get; set; }
+
+
 
 
     }
