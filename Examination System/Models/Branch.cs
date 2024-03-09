@@ -13,6 +13,7 @@ namespace Examination_System.Models
         [ForeignKey("branchmanger")]
         public int BranchManagerId { get; set; }
         public List<Department> DepartmentList { get; set; }
+        public List<Student> StudentList { get; set; }
 
         public Instructor branchmanger { get; set; }
     }

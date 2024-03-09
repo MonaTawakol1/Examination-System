@@ -22,5 +22,9 @@ namespace Examination_System.Models
 
         public List<Course> Courses { get; set; }
 
+        [ForeignKey("Branch")]
+        public int branchId { get; set; }
+        public Branch Branch { get; set; }
+
     }
 }

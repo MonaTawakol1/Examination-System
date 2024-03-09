@@ -1,4 +1,5 @@
 using Examination_System.Models;
+using Examination_System.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Examination_System
@@ -16,6 +17,8 @@ namespace Examination_System
             {
                 a.UseSqlServer(builder.Configuration.GetConnectionString("con"));
             });
+
+            builder.Services.AddTransient<IstudentRepo, StudentRepo>();
 
             var app = builder.Build();
 
