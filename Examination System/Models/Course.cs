@@ -18,5 +18,6 @@ namespace Examination_System.Models
         public List<Student> Students { get; set; }
 
         public List<Instructor> Instructors { get; set; }
+        public List<Department> Departments { get; set; }
     }
 }
