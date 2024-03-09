@@ -1,0 +1,92 @@
+﻿@model Question
+
+@{
+    ViewData["Title"] = "AddNewQuestion";
+    List<string> Types = new List<string> { "trueOrfalse", "mcq" };
+    SelectList QuestionType = new SelectList(Types);
+}
+
+<h1>AddNewQuestion</h1>
+
+<h4>Question</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddNewQuestion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="QuestionBody" class="control-label"></label>
+                <input asp-for="QuestionBody" class="form-control" />
+                <span asp-validation-for="QuestionBody" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuestionMark" class="control-label"></label>
+                <input asp-for="QuestionMark" class="form-control" />
+       
+            </div>
+            <div class="form-group">
+                <label asp-for="QuestionType" class="control-label"></label>
+                <select asp-for="QuestionType" class="form-control" asp-items="QuestionType" id="questionType"></select>
+              
+            </div>
+
+            <div class="form-group" id="trueOrFalseInputs" style="display: none;">
+                <label>Input Box 1</label>
+                <input type="text" class="form-control" />
+                <label>Input Box 2</label>
+                <input type="text" class="form-control" />
+            </div>
+            <div class="form-group" id="mcqInputs" style="display: none;">
+                <label>Input Box 1</label>
+                <input type="text" class="form-control" />
+                <label>Input Box 2</label>
+                <input type="text" class="form-control" />
+                <label>Input Box 3</label>
+                <input type="text" class="form-control" />
+                <label>Input Box 4</label>
+                <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+
+                <input type="text"  name="id" value="@ViewBag.id" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@* @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+ *@
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#questionType').change(function () {
+                var selectedType = $(this).val();
+                if (selectedType === 'trueOrfalse') {
+                    $('#trueOrFalseInputs').show();
+                    $('#mcqInputs').hide();
+                } else if (selectedType === 'mcq') {
+                    $('#trueOrFalseInputs').hide();
+                    $('#mcqInputs').show();
+                } else {
+                    $('#trueOrFalseInputs').hide();
+                    $('#mcqInputs').hide();
+                }
+            });
+        });
+    </script>
+}
