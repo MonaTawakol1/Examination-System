@@ -16,6 +16,8 @@ namespace Examination_System.Models
 
        public  List<Student> students { get; set; }
 
+        public List<Course> courses { get; set; }   
+
       // [ForeignKey("Manager")]
         public int ManagerId { get; set; }
         public Instructor Manager { get; set; }
