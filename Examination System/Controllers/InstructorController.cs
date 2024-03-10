@@ -9,10 +9,12 @@ namespace Examination_System.Controllers
     {
 
         IInstructorRepo instructorRepo;
+        IQuestionRepo questionRepo;
 
-        public InstructorController(IInstructorRepo _instructorRepo)
+        public InstructorController(IInstructorRepo _instructorRepo , IQuestionRepo _questionRepo)
         {
             instructorRepo = _instructorRepo;
+            questionRepo = _questionRepo;
         }
         public IActionResult Index(int id) { 
       
@@ -31,8 +33,25 @@ namespace Examination_System.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddNewQuestion(Question question, List<String> choicesBody)
+        public IActionResult AddNewQuestion(Question question, List<String> choicesBody, string choiceAnswer ,int id)
         {
+            question.CourseId = id;
+            questionRepo.AddQuestion(question);
+            int idd = question.QuestionId;
+            foreach (var choice in choicesBody)
+            {
+
+                if (choice != null)
+                {
+                    Choice ch1 = new Choice() { QuestionId = idd, ChoiceBody = choice, IsAnswer = false };
+                    questionRepo.AddChoices(ch1);
+                }
+                
+            }
+
+            Choice ch = new Choice() { QuestionId = idd, ChoiceBody = choiceAnswer, IsAnswer = true };
+            questionRepo.AddChoices(ch);
+
 
             return View();
         }

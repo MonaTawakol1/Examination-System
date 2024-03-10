@@ -28,13 +28,13 @@ namespace Examination_System.Models
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=ExaminationSystem;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=ExaminationSystem1;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
             base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ExamQuestions>().HasKey(c => new { c.ExamId, c.QuestionId });
+           // modelBuilder.Entity<ExamQuestions>().HasKey(c => new { c.ExamId, c.QuestionId });
 
 
             //ins dept
@@ -67,19 +67,42 @@ namespace Examination_System.Models
 
 
             ////exam ques
+            ///
+
 
             modelBuilder.Entity<ExamQuestions>()
-                .HasKey(eq => new { eq.ExamId, eq.QuestionId });
+               .HasKey(eq => new { eq.ExamId, eq.QuestionId });
 
-            modelBuilder.Entity<ExamQuestions>()
-                .HasOne(eq => eq.Exam)
-                .WithMany(e => e.ExamQuestions)
-                .HasForeignKey(eq => eq.ExamId).OnDelete(DeleteBehavior.ClientSetNull); 
+            //modelBuilder.Entity<ExamQuestions>()
+            //    .HasOne(eq => eq.Exam)
+            //    .WithMany(e => e.ExamQuestions)
+            //    .HasForeignKey(eq => eq.ExamId).OnDelete(DeleteBehavior.ClientSetNull); 
 
-            modelBuilder.Entity<ExamQuestions>()
-                .HasOne(eq => eq.Question)
-                .WithMany(q => q.ExamQuestions)
-                .HasForeignKey(eq => eq.QuestionId).OnDelete(DeleteBehavior.ClientSetNull);
+            //modelBuilder.Entity<ExamQuestions>()
+            //    .HasOne(eq => eq.Question)
+            //    .WithMany(q => q.ExamQuestions)
+            //    .HasForeignKey(eq => eq.QuestionId).OnDelete(DeleteBehavior.ClientSetNull);
+
+
+
+            //modelBuilder.Entity<Exam>()
+            //    .HasMany(p => p.)
+            //    .WithMany(t => t.Exams)
+            //    .UsingEntity<ExamQuestions>(
+            //    j => j
+            //        .HasOne(pt => pt.Question)
+            //        .WithMany(t => t.ExamQuestions)
+            //        .HasForeignKey(pt => pt.QuestionId).OnDelete(DeleteBehavior.ClientSetNull),
+            //    j => j
+            //        .HasOne(pt => pt.Exam)
+            //        .WithMany(p => p.ExamQuestions)
+            //        .HasForeignKey(pt => pt.ExamId).OnDelete(DeleteBehavior.ClientSetNull)
+            //        ,
+            //    j =>
+            //    {
+            //        j.HasKey(t => new { t.QuestionId, t.ExamId });
+            //    }
+            //    );
 
             base.OnModelCreating(modelBuilder);
 

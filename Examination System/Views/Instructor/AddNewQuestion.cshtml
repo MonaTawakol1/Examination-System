@@ -12,14 +12,14 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddNewQuestion">
+        <form  method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="QuestionBody" class="control-label"></label>
                 <input asp-for="QuestionBody" class="form-control" />
                 <span asp-validation-for="QuestionBody" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group">        
                 <label asp-for="QuestionMark" class="control-label"></label>
                 <input asp-for="QuestionMark" class="form-control" />
        
@@ -30,21 +30,22 @@
               
             </div>
 
+            <label>Answer</label>
+            <input name="choiceAnswer" type="text" class="form-control" />
+
             <div class="form-group" id="trueOrFalseInputs" style="display: none;">
-                <label>Input Box 1</label>
-                <input type="text" class="form-control" />
-                <label>Input Box 2</label>
-                <input type="text" class="form-control" />
+                <label>Choice</label>
+                <input type="text" class="form-control" name="choicesBody[0]" />
+               
             </div>
             <div class="form-group" id="mcqInputs" style="display: none;">
-                <label>Input Box 1</label>
-                <input type="text" class="form-control" />
-                <label>Input Box 2</label>
-                <input type="text" class="form-control" />
-                <label>Input Box 3</label>
-                <input type="text" class="form-control" />
-                <label>Input Box 4</label>
-                <input type="text" class="form-control" />
+                <label>Choice</label>
+                <input type="text" class="form-control" name="choicesBody[1]" />
+                <label>Choice</label>
+                <input type="text" class="form-control" name="choicesBody[2]" />
+                <label>Choice</label>
+                <input type="text" class="form-control" name="choicesBody[3]" />
+              
             </div>
             <div class="form-group">
 
