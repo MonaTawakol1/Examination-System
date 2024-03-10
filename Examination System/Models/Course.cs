@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Examination_System.Models
 {
@@ -19,5 +20,9 @@ namespace Examination_System.Models
 
         public List<Instructor> Instructors { get; set; }
         public List<Department> Departments { get; set; }
+
+        [AllowNull]
+        public DateTime ExamStartDateTime { get; set; }
+
     }
 }

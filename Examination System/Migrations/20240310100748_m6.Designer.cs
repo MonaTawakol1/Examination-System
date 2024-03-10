@@ -4,6 +4,7 @@ using Examination_System.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Examination_System.Migrations
 {
     [DbContext(typeof(ItiContext))]
-    partial class ItiContextModelSnapshot : ModelSnapshot
+    [Migration("20240310100748_m6")]
+    partial class m6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,9 +160,6 @@ namespace Examination_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ExamStartDateTime")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("CourseId");
 
                     b.ToTable("Courses");
@@ -199,6 +199,12 @@ namespace Examination_System.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ExamQuestionsExamId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ExamQuestionsQuestionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudentGrade")
                         .HasColumnType("int");
 
@@ -211,15 +217,17 @@ namespace Examination_System.Migrations
 
                     b.HasIndex("StudentId");
 
+                    b.HasIndex("ExamQuestionsQuestionId", "ExamQuestionsExamId");
+
                     b.ToTable("Exams");
                 });
 
             modelBuilder.Entity("Examination_System.Models.ExamQuestions", b =>
                 {
-                    b.Property<int>("ExamId")
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuestionId")
+                    b.Property<int>("ExamId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ExamAnswers")
@@ -228,9 +236,9 @@ namespace Examination_System.Migrations
                     b.Property<bool?>("IsCorrect")
                         .HasColumnType("bit");
 
-                    b.HasKey("ExamId", "QuestionId");
+                    b.HasKey("QuestionId", "ExamId");
 
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("ExamId");
 
                     b.ToTable("ExamQuestions");
                 });
@@ -267,6 +275,12 @@ namespace Examination_System.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ExamQuestionsExamId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ExamQuestionsQuestionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("QuestionBody")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -280,6 +294,8 @@ namespace Examination_System.Migrations
                     b.HasKey("QuestionId");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("ExamQuestionsQuestionId", "ExamQuestionsExamId");
 
                     b.ToTable("Questions");
                 });
@@ -458,6 +474,10 @@ namespace Examination_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Examination_System.Models.ExamQuestions", null)
+                        .WithMany("Exams")
+                        .HasForeignKey("ExamQuestionsQuestionId", "ExamQuestionsExamId");
+
                     b.Navigation("Course");
 
                     b.Navigation("Student");
@@ -489,6 +509,10 @@ namespace Examination_System.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Examination_System.Models.ExamQuestions", null)
+                        .WithMany("Questions")
+                        .HasForeignKey("ExamQuestionsQuestionId", "ExamQuestionsExamId");
 
                     b.Navigation("Course");
                 });
@@ -543,6 +567,13 @@ namespace Examination_System.Migrations
             modelBuilder.Entity("Examination_System.Models.Exam", b =>
                 {
                     b.Navigation("ExamQuestions");
+                });
+
+            modelBuilder.Entity("Examination_System.Models.ExamQuestions", b =>
+                {
+                    b.Navigation("Exams");
+
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("Examination_System.Models.Instructor", b =>
