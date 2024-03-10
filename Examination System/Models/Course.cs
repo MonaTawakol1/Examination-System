@@ -24,5 +24,7 @@ namespace Examination_System.Models
         [AllowNull]
         public DateTime ExamStartDateTime { get; set; }
 
+        public DateTime ExamEndDateTime { get; set;}
+
     }
 }
