@@ -17,7 +17,7 @@ namespace Examination_System.Models
 
         public Course Course { get; set; }
 
-        public int StudentGrade { get; set; }
+        public int? StudentGrade { get; set; }
 
         public List<ExamQuestions> ExamQuestions { get; set; } = new List<ExamQuestions>();
 

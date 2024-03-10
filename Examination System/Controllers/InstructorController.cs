@@ -40,19 +40,14 @@ namespace Examination_System.Controllers
             int idd = question.QuestionId;
             foreach (var choice in choicesBody)
             {
-
                 if (choice != null)
                 {
                     Choice ch1 = new Choice() { QuestionId = idd, ChoiceBody = choice, IsAnswer = false };
                     questionRepo.AddChoices(ch1);
                 }
-                
             }
-
             Choice ch = new Choice() { QuestionId = idd, ChoiceBody = choiceAnswer, IsAnswer = true };
             questionRepo.AddChoices(ch);
-
-
             return View();
         }
     }

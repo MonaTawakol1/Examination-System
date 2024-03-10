@@ -21,10 +21,12 @@ namespace Examination_System.Models
         public List<Instructor> Instructors { get; set; }
         public List<Department> Departments { get; set; }
 
-        [AllowNull]
-        public DateTime ExamStartDateTime { get; set; }
+    
+        public DateTime? ExamStartDateTime { get; set; }
 
-        public DateTime ExamEndDateTime { get; set;}
+       
+
+        public DateTime? ExamEndDateTime { get; set;}
 
     }
 }

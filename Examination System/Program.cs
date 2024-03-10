@@ -21,6 +21,8 @@ namespace Examination_System
             builder.Services.AddTransient<IstudentRepo, StudentRepo>();
             builder.Services.AddTransient<IInstructorRepo, InstructorRepo>();
             builder.Services.AddTransient<IQuestionRepo, QuestionRepo>();
+            builder.Services.AddTransient<IExamRepo, ExamRepo>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

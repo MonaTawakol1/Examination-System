@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ExamQuestions>
+@{
+    ViewData["Title"] = "StartExam";
+}
+
+<h1>StartExam</h1>
+@foreach(var item in @Model)
+{
+    <h3>@item.Question.QuestionBody</h3>
+
+    @foreach (var choice in @item.Question.ChoicesList)
+    {
+        <p>@choice.ChoiceBody</p>
+    }
+}
+
+

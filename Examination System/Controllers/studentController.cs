@@ -6,10 +6,12 @@ namespace Examination_System.Controllers
     public class studentController : Controller
     {
         IstudentRepo studentRepo;
+        IExamRepo ExamRepo;
 
-        public studentController(IstudentRepo _studentRepo)
+        public studentController(IstudentRepo _studentRepo, IExamRepo examRepo)
         {
             studentRepo = _studentRepo;
+            ExamRepo = examRepo;
         }
         public IActionResult Index(int id)
         {
@@ -29,5 +31,19 @@ namespace Examination_System.Controllers
             var topics = cr.Topics.ToList();    
             return View(topics);
         }
+
+        public IActionResult StartExam(int id, int Studentid)
+        {
+            Exam exam=new Exam() { CourseId=id,StudentId=Studentid};
+            ExamRepo.AddExam(exam);
+            int ExamId=exam.ExamId;
+            ExamRepo.AddExamQuestions(ExamId, id);
+            List<ExamQuestions> examQuestion= ExamRepo.ShowRandomQuestions(ExamId);
+            return View(examQuestion);
+        }
+
+        
+       
+
     }
 }

@@ -20,5 +20,7 @@ namespace Examination_System.Models
         [ForeignKey("Question")]
         public int QuestionId { get; set; }
         public Question Question { get; set; }
+
+        public DateTime InsertedAt { get; set; }
     }
 }
