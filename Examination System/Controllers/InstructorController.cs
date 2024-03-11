@@ -2,6 +2,7 @@
 using Examination_System.Models;
 using Examination_System.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Examination_System.ViewModels;
 
 namespace Examination_System.Controllers
 {
@@ -61,6 +62,34 @@ namespace Examination_System.Controllers
             int courseId = instructorRepo.GetCourseIdByQuestionId(id);
             instructorRepo.DeleteQuestion(id);
             return RedirectToAction("ShowQuestions", new { id = courseId });
+        }
+
+
+        public IActionResult EditQuestion(int id)
+        {
+            Question question = questionRepo.GetQuestion(id);
+            Choice Answer = questionRepo.getQuestionAnswer(question);
+            List<Choice> choices = questionRepo.GetQuestionChoices(question);
+            int courseId= questionRepo.getQuestionCourse(question).CourseId;
+            EditQuestionViewModel editQuestionViewModel = new EditQuestionViewModel()
+            {
+                question = questionRepo.GetQuestion(id),
+                Answer= Answer,
+                Choices= choices,
+                CourseId= courseId  
+            };
+
+            
+          return View(editQuestionViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult EditQuestion(EditQuestionViewModel equestion, List<String> choicesBody,int id)
+        {
+
+            
+
+            return View();
         }
     }
 }

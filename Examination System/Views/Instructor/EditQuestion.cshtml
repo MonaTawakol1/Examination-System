@@ -1,0 +1,75 @@
+﻿@model EditQuestionViewModel
+
+@{
+    ViewData["Title"] = "EditQuestion";
+    // List<string> Types = new List<string> { "trueOrfalse", "mcq" };
+    // SelectList QuestionType = new SelectList(Types);
+
+
+}
+
+
+
+
+
+
+
+<h1>EditQuestion</h1>
+
+<h4>Question</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="question.QuestionId"/>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="question.QuestionBody" class="control-label"></label>
+                <input asp-for="question.QuestionBody" class="form-control" />
+                <span asp-validation-for="question.QuestionBody" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="question.QuestionMark" class="control-label"></label>
+                <input asp-for="question.QuestionMark" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="question.QuestionType" class="control-label"></label>
+                <input asp-for="question.QuestionType" class="form-control" />
+            </div>
+
+            <label>Answer</label>
+            <input name="choicesBody[0]" type="text" class="form-control" asp-for="Answer.ChoiceBody" />
+
+            @{
+                int i=1;  int j = 0;
+            }
+            @foreach (var item in Model.Choices)
+            {
+
+                <div class="form-group">
+                    <label>Choice</label>
+                    <input type="text" asp-for="Choices[j].ChoiceBody" class="form-control" name="choicesBody[@i]" value="@Model.Choices[0].ChoiceBody" />
+                </div>
+                
+                    i++; j++;
+                
+            }
+
+            <div class="form-group">
+                <input type="text" name="id" value="@Model.CourseId" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
