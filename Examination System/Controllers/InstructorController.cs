@@ -64,31 +64,31 @@ namespace Examination_System.Controllers
         }
 
 
-        //public IActionResult EditQuestion(int id)
-        //{
-        //    Question question = questionRepo.GetQuestion(id);
-        //    Choice Answer = questionRepo.getQuestionAnswer(question);
-        //    List<Choice> choices = questionRepo.GetQuestionChoices(question);
-        //    int courseId= questionRepo.getQuestionCourse(question).CourseId;
-        //    EditQuestionViewModel editQuestionViewModel = new EditQuestionViewModel()
-        //    {
-        //        question = questionRepo.GetQuestion(id),
-        //        Answer= Answer,
-        //        Choices= choices,
-        //        CourseId= courseId  
-        //    };
+        public IActionResult EditQuestion(int id)
+        {
+            Question question = questionRepo.GetQuestion(id);
+            //Choice Answer = questionRepo.getQuestionAnswer(question);
+            //List<Choice> choices = questionRepo.GetQuestionChoices(question);
+            //int courseId = questionRepo.getQuestionCourse(question).CourseId;
+            //EditQuestionViewModel editQuestionViewModel = new EditQuestionViewModel()
+            //{
+            //    question = questionRepo.GetQuestion(id),
+            //    Answer = Answer,
+            //    Choices = choices,
+            //    CourseId = courseId
+            //};
 
-            
-        //  return View(editQuestionViewModel);
-        //}
 
-        //[HttpPost]
-        //public IActionResult EditQuestion(EditQuestionViewModel equestion, List<String> choicesBody,int id)
-        //{
+            return View(question);
+        }
 
-            
+        [HttpPost]
+        public IActionResult EditQuestion(Question q)
+        {
 
-        //    return View();
-        //}
+
+            questionRepo.updateQuestion(q);
+            return RedirectToAction("ShowQuestions");
+        }
     }
 }

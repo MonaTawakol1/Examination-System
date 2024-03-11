@@ -1,4 +1,5 @@
 ﻿using Examination_System.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Examination_System.Repository
 {
@@ -10,6 +11,9 @@ namespace Examination_System.Repository
         public List<Choice> GetQuestionChoices(Question q);
         public Choice getQuestionAnswer(Question q);
         public Course getQuestionCourse(Question q);
+        public void updateQuestion(Question q);
+        public Question GetQuestion(int id);
+
 
 
     }
@@ -66,6 +70,18 @@ namespace Examination_System.Repository
             return course;
         }
 
+
+        public void updateQuestion(Question q)
+        {
+            db.Questions.Update(q);
+            db.SaveChanges();
+        }
+
+        public Question GetQuestion(int id)
+        {
+            Question q = db.Questions.Include(a => a.ChoicesList).SingleOrDefault(a => a.QuestionId == id);
+            return q;
+        }
 
 
     }
