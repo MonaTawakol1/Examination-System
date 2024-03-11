@@ -50,9 +50,11 @@ namespace Examination_System.Controllers
             foreach (var questionId in ChoiceIds.Keys)
             {
                 var choiceId = ChoiceIds[questionId];
-                ExamRepo.AddExamAnswer(questionId, new List<int> { choiceId }, ExamId); // Pass choiceId as a list
+                ExamRepo.AddExamAnswer(questionId, new List<int> { choiceId }, ExamId); 
             }
 
+            ExamRepo.CorrectExam(ExamId);
+            ExamRepo.AddExamGrade(ExamId);
             return RedirectToAction("ExamResult");
         }
 
