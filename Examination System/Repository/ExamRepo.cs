@@ -69,7 +69,7 @@ namespace Examination_System.Repository
 
         public List<ExamQuestions> ShowRandomQuestions(int Examid)
         {
-            var questionsInOrder = db.ExamQuestions.Where(a => a.ExamId == Examid).Include(a=>a.Question).ThenInclude(b=>b.ChoicesList).OrderBy(e => e.InsertedAt).ToList();
+            var questionsInOrder = db.ExamQuestions.Where(a => a.ExamId == Examid).Include(a=>a.Exam).Include(a=>a.Question).ThenInclude(b=>b.ChoicesList).OrderBy(e => e.InsertedAt).ToList();
             return questionsInOrder;
         }
 
@@ -118,5 +118,7 @@ namespace Examination_System.Repository
             db.Exams.Update(exam);
             db.SaveChanges();
         }
+
+      
     }
 }

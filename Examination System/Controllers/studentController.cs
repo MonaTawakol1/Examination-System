@@ -44,6 +44,18 @@ namespace Examination_System.Controllers
             return View(examQuestion);
         }
 
+        public IActionResult CorrectExam(int examId)
+        {
+            List<ExamQuestions> examQuestion = ExamRepo.ShowRandomQuestions(examId); 
+            foreach(ExamQuestions questions in examQuestion)
+            {
+                int grade = questions.Exam.StudentGrade.Value;
+                ViewBag.grade = grade;
+            }
+            return View(examQuestion);
+        }
+
+
         [HttpPost]
         public IActionResult StartExam(int ExamId, Dictionary<int, int> ChoiceIds)
         {
@@ -55,7 +67,7 @@ namespace Examination_System.Controllers
 
             ExamRepo.CorrectExam(ExamId);
             ExamRepo.AddExamGrade(ExamId);
-            return RedirectToAction("ExamResult");
+            return RedirectToAction("CorrectExam" , new { examId = ExamId });
         }
 
 
