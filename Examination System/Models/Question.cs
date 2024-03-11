@@ -33,7 +33,7 @@ namespace Examination_System.Models
 
             public List<ExamQuestions> ExamQuestions { get; set; }=new List<ExamQuestions>();
 
-        //public ICollection<Exam> Exams { get; set; }
+        public bool isDeleted { get; set; } = false;
 
 
     }

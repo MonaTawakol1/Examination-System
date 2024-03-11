@@ -6,8 +6,6 @@ namespace Examination_System.Repository
 
     public interface IExamRepo
     {
-
-
         public void AddExam(Exam exam);
         public void AddExamQuestions(int Examid,int CrsId);
         public List<ExamQuestions> ShowRandomQuestions(int Examid);
@@ -29,14 +27,13 @@ namespace Examination_System.Repository
             
         }
 
-      
 
         public void AddExamQuestions(int Examid, int CrsId)
         {
             var random = new Random();
-            //return all questions in course
+            
             List<int> ids = new List<int>();
-            var questionsBank = db.Questions.Where(x => x.CourseId == CrsId).ToList();
+            var questionsBank = db.Questions.Where(x => x.CourseId == CrsId).Where(a=>a.isDeleted==false).ToList();
             questionsBank.ForEach
                 (x =>
                 {
@@ -54,15 +51,13 @@ namespace Examination_System.Repository
                 ids[k] = ids[n];
                 ids[n] = value;
             }
-            //for loop l7d 3add el as2la w b3den random.next(0,10)
-            // examquestions.add(list(random no.)
-
+        
             foreach (var item in ids)
             {
                 ExamQuestions e = new ExamQuestions() { ExamId = Examid, QuestionId = item, InsertedAt = DateTime.Now };
                 db.ExamQuestions.Add(e);
             
-                //Console.WriteLine(row);
+              
             }
             db.SaveChanges();
 

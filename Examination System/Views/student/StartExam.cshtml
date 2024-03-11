@@ -4,14 +4,19 @@
 }
 
 <h1>StartExam</h1>
+<form method="post">
 @foreach(var item in @Model)
 {
     <h3>@item.Question.QuestionBody</h3>
 
     @foreach (var choice in @item.Question.ChoicesList)
     {
-        <p>@choice.ChoiceBody</p>
+        <input type="radio" value="@choice.ChoiceId" name="@item.QuestionId"/>    
+        <label>@choice.ChoiceBody</label>
+        <br />    
     }
 }
+<input class="btn btn-success" type="submit" value="Submit"/>
+</form>
 
 

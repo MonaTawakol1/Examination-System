@@ -30,7 +30,9 @@
                 <tr>
                     <td scope="row">@item.CourseName</td>
 
-                    <td><a class="btn btn-info" asp-controller="Instructor" asp-action="AddNewQuestion" asp-route-id="@item.CourseId">Show Courses</a> </td>
+                    <td><a class="btn btn-info" asp-controller="Instructor" asp-action="AddNewQuestion" asp-route-id="@item.CourseId">Add Questions</a> 
+                    <a class="btn btn-success" asp-controller="Instructor" asp-action="ShowQuestions" asp-route-id="@item.CourseId">Show Questions</a> </td>
+
                 </tr>
             }
 

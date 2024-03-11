@@ -50,5 +50,17 @@ namespace Examination_System.Controllers
             questionRepo.AddChoices(ch);
             return View();
         }
+
+        public IActionResult ShowQuestions(int id)
+        {
+            List<Question> question = instructorRepo.ShowQuestions(id);
+            return View(question);
+        }
+        public IActionResult DeleteQuestion(int id)
+        {
+            int courseId = instructorRepo.GetCourseIdByQuestionId(id);
+            instructorRepo.DeleteQuestion(id);
+            return RedirectToAction("ShowQuestions", new { id = courseId });
+        }
     }
 }
