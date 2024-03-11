@@ -6,7 +6,12 @@ namespace Examination_System.Repository
     {
         public void AddQuestion(Question question);
         public void AddChoices(Choice choice);
-        
+        public Question GetQuestion(int id);
+        public List<Choice> GetQuestionChoices(Question q);
+        public Choice getQuestionAnswer(Question q);
+        public Course getQuestionCourse(Question q);
+
+
     }
     public class QuestionRepo : IQuestionRepo
     {
@@ -28,6 +33,39 @@ namespace Examination_System.Repository
             db.Choices.Add(choice);
             db.SaveChanges();   
         }
+
+        public List<Choice> GetQuestionChoices(Question q)
+        {
+            List<Choice> QuestionchoicesList = new List<Choice>();
+
+
+                var choice = db.Choices.Where(a => a.QuestionId == q.QuestionId).ToList();
+                foreach(var item in choice)
+                {
+                    if (item.IsAnswer == false)
+                    {
+                        QuestionchoicesList.Add(item);
+
+                    }
+                }
+               
+               return QuestionchoicesList;
+        }
+
+        public Choice getQuestionAnswer(Question q)
+        {
+            var answer = db.Choices.FirstOrDefault(a => a.QuestionId == q.QuestionId && a.IsAnswer);
+            return answer;
+
+        }
+
+        public Course getQuestionCourse(Question q)
+        {
+            var course=db.Courses.FirstOrDefault(a=>a.CourseId == q.CourseId);
+
+            return course;
+        }
+
 
 
     }

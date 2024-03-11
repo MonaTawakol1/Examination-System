@@ -22,6 +22,7 @@ namespace Examination_System
             builder.Services.AddTransient<IInstructorRepo, InstructorRepo>();
             builder.Services.AddTransient<IQuestionRepo, QuestionRepo>();
             builder.Services.AddTransient<IExamRepo, ExamRepo>();
+            builder.Services.AddTransient<IChoiceRepo, ChoiceRepo>();
 
             var app = builder.Build();
 

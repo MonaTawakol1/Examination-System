@@ -24,7 +24,15 @@
                     <ul class="list-unstyled">
                         @foreach (var choice in item.ChoicesList)
                         {
-                            <li>@choice.ChoiceBody</li>
+                            
+                            @if (choice.IsAnswer == true)
+                            {
+                                <li class="text-success">@choice.ChoiceBody</li>
+                            }
+                            else
+                            {
+                                <li>@choice.ChoiceBody</li>
+                            }
                         }
                     </ul>
                 </div>

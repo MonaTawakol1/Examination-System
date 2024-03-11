@@ -9,6 +9,7 @@ namespace Examination_System.Repository
         public void AddExam(Exam exam);
         public void AddExamQuestions(int Examid,int CrsId);
         public List<ExamQuestions> ShowRandomQuestions(int Examid);
+        public void AddExamAnswer(int questionId, List<int> choiceIds, int examId);
     }
     public class ExamRepo:IExamRepo
     {
@@ -68,6 +69,16 @@ namespace Examination_System.Repository
         {
             var questionsInOrder = db.ExamQuestions.Where(a => a.ExamId == Examid).Include(a=>a.Question).ThenInclude(b=>b.ChoicesList).OrderBy(e => e.InsertedAt).ToList();
             return questionsInOrder;
+        }
+
+        public void AddExamAnswer(int questionId, List<int> choiceIds, int examId)
+        {
+            var examQuestion = db.ExamQuestions.FirstOrDefault(a => a.ExamId == examId && a.QuestionId == questionId);
+            if (examQuestion != null)
+            {
+                examQuestion.ExamAnswers = choiceIds.First(); // Assuming only one choice is selected
+                db.SaveChanges();
+            }
         }
     }
 }

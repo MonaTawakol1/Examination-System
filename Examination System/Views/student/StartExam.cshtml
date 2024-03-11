@@ -5,18 +5,22 @@
 
 <h1>StartExam</h1>
 <form method="post">
-@foreach(var item in @Model)
-{
-    <h3>@item.Question.QuestionBody</h3>
 
-    @foreach (var choice in @item.Question.ChoicesList)
+    @foreach (var item in @Model)
     {
-        <input type="radio" value="@choice.ChoiceId" name="@item.QuestionId"/>    
-        <label>@choice.ChoiceBody</label>
-        <br />    
+        <h3>@item.Question.QuestionBody</h3>
+        <input type="hidden" name="ExamId" value="@item.ExamId" asp-for="@item.ExamId" />
+        @for (var i = 0; i < item.Question.ChoicesList.Count; i++)
+        {
+            <input type="radio" value="@item.Question.ChoicesList[i].ChoiceId" name="ChoiceIds[@item.QuestionId]" />
+
+            <label>@item.Question.ChoicesList[i].ChoiceBody</label>
+
+            <input type="hidden" name="QuestionId" value="@item.Question.QuestionId" asp-for="@item.QuestionId" />
+
+            <br />
+        }
+
     }
-}
-<input class="btn btn-success" type="submit" value="Submit"/>
+    <input class="btn btn-success" type="submit" value="Submit" />
 </form>
-
-

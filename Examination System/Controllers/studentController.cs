@@ -7,11 +7,13 @@ namespace Examination_System.Controllers
     {
         IstudentRepo studentRepo;
         IExamRepo ExamRepo;
+        IChoiceRepo choiceRepo;
 
-        public studentController(IstudentRepo _studentRepo, IExamRepo examRepo)
+        public studentController(IstudentRepo _studentRepo, IExamRepo examRepo, IChoiceRepo choiceRepo)
         {
             studentRepo = _studentRepo;
             ExamRepo = examRepo;
+            this.choiceRepo = choiceRepo;
         }
         public IActionResult Index(int id)
         {
@@ -42,8 +44,18 @@ namespace Examination_System.Controllers
             return View(examQuestion);
         }
 
-        
-       
+        [HttpPost]
+        public IActionResult StartExam(int ExamId, Dictionary<int, int> ChoiceIds)
+        {
+            foreach (var questionId in ChoiceIds.Keys)
+            {
+                var choiceId = ChoiceIds[questionId];
+                ExamRepo.AddExamAnswer(questionId, new List<int> { choiceId }, ExamId); // Pass choiceId as a list
+            }
+
+            return RedirectToAction("ExamResult");
+        }
+
 
     }
 }
