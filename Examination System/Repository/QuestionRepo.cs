@@ -11,6 +11,7 @@ namespace Examination_System.Repository
         public List<Choice> GetQuestionChoices(Question q);
         public Choice getQuestionAnswer(Question q);
         public Course getQuestionCourse(Question q);
+        public void updateQuestion(Question q);
 
 
     }
@@ -72,6 +73,13 @@ namespace Examination_System.Repository
 
             return course;
         }
+
+        public void updateQuestion(Question q)
+        {
+            db.Questions.Update(q);
+            db.SaveChanges();
+        }
+
 
 
 
