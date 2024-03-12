@@ -9,33 +9,16 @@ namespace Examination_System.Controllers
         IstudentRepo studentRepo;
         IExamRepo ExamRepo;
         IChoiceRepo choiceRepo;
+       
 
         public studentController(IstudentRepo _studentRepo, IExamRepo examRepo, IChoiceRepo choiceRepo)
         {
             studentRepo = _studentRepo;
             ExamRepo = examRepo;
             this.choiceRepo = choiceRepo;
+        
         }
-        //public IActionResult Index()
-        //{
-        //    var principal = HttpContext.User;
-        //    int id;
-
-        //    // Retrieve the Sid claim
-        //    var sidClaim = principal.FindFirst(ClaimTypes.Sid);
-
-
-
-        //         var sidValue = sidClaim.Value;
-        //         id = int.Parse(sidValue);
-        //         var student = studentRepo.GetStudentByUserId(id);
-
-
-
-
-
-        //    return View(student);
-        //}
+      
 
         public async Task<IActionResult> Index()
         {
@@ -63,9 +46,10 @@ namespace Examination_System.Controllers
         }
         public IActionResult ShowCourses(int id)
         {
+
             ViewBag.stdid = id;
             var std = studentRepo.ShowCourses(id);
-           var courses = std.Courses.ToList();
+            var courses = std.Courses.ToList();
             return View(courses);
         }
         public IActionResult showTopics(int id) 
@@ -118,6 +102,8 @@ namespace Examination_System.Controllers
             return RedirectToAction("CorrectExam" , new { examId = ExamId });
         }
 
+
+     
 
     }
 }

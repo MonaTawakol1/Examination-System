@@ -20,43 +20,41 @@
             </tr>
         </thead>
 
-
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
                     <td scope="row">@item.CourseName</td>
                     <td>
-                     
-                    </td>
-                    <td>
-                        <a asp-action="showTopics" asp-controller="student" asp-route-id="@item.CourseId" class="btn btn-info">show Topics</a>
+                        <a asp-action="showTopics" asp-controller="student" asp-route-id="@item.CourseId" class="btn btn-info">Show Topics</a>
                         Exam Start Date : @item.ExamStartDateTime
                         Exam End Date :  @item.ExamEndDateTime
-                        @{
-
-                            while(true){
-                            if (DateTime.Now < @item.ExamStartDateTime || DateTime.Now > @item.ExamEndDateTime)
-                            {
-                                <button class="btn btn-info" disabled>Start Exam</button>
-                            }
-
-                           else{
-                        <a asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info">Start Exam</a>
-                            
-                           }
-                            }
-
-                          }
-                      
-                      
+                        <button id="startExamButton-@item.CourseId" class="btn btn-info" disabled>Start Exam</button>
                     </td>
-                  
                 </tr>
+                <script>
+                    // JavaScript code for enabling/disabling Start Exam button
+                    var startExamButtonId = "startExamButton-@item.CourseId";
+                    var startTime = new Date("@item.ExamStartDateTime").getTime();
+                    var endTime = new Date("@item.ExamEndDateTime").getTime();
+
+                    function checkExamTime() {
+                        var currentTime = new Date().getTime();
+                        if (currentTime >= startTime && currentTime <= endTime) {
+                            document.getElementById(startExamButtonId).disabled = false;
+                        } else {
+                            document.getElementById(startExamButtonId).disabled = true;
+                        }
+                    }
+
+                    // Initial check when the page loads
+                    checkExamTime();
+
+                    // Periodically check every second (you can adjust the interval as needed)
+                    setInterval(checkExamTime, 1000);
+                </script>
             }
         </tbody>
     </table>
-
-
 </body>
 </html>
