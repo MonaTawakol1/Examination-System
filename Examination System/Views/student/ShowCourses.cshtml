@@ -27,26 +27,31 @@
                 <tr>
                     <td scope="row">@item.CourseName</td>
                     <td>
+                     
+                    </td>
+                    <td>
+                        <a asp-action="showTopics" asp-controller="student" asp-route-id="@item.CourseId" class="btn btn-info">show Topics</a>
                         Exam Start Date : @item.ExamStartDateTime
                         Exam End Date :  @item.ExamEndDateTime
-                        
-
                         @{
-                            DateTime now = DateTime.Now;
-                            bool isExamTime = now >= item.ExamStartDateTime && now <= item.ExamEndDateTime;
-                        }
 
-                        @if (isExamTime)
-                        {
-                            <a asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info">Start Exam</a>
-                        }
-                        else
-                        {
-                            <button class="btn btn-info" disabled>Start Exam</button>
-                        }
+                            while(true){
+                            if (DateTime.Now < @item.ExamStartDateTime || DateTime.Now > @item.ExamEndDateTime)
+                            {
+                                <button class="btn btn-info" disabled>Start Exam</button>
+                            }
 
+                           else{
+                        <a asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info">Start Exam</a>
+                            
+                           }
+                            }
+
+                          }
+                      
                       
                     </td>
+                  
                 </tr>
             }
         </tbody>
