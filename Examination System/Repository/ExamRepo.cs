@@ -12,6 +12,7 @@ namespace Examination_System.Repository
         public void AddExamAnswer(int questionId, List<int> choiceIds, int examId);
         public void CorrectExam(int examId);
         public void AddExamGrade(int examId);
+        public Course getCourseById(int id);
     }
     public class ExamRepo:IExamRepo
     {
@@ -118,7 +119,10 @@ namespace Examination_System.Repository
             db.Exams.Update(exam);
             db.SaveChanges();
         }
-
+        public Course getCourseById(int id)
+        {
+            return db.Courses.FirstOrDefault(a => a.CourseId == id);
+        }
       
     }
 }

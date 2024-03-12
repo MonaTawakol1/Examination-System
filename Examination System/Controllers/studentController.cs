@@ -78,6 +78,12 @@ namespace Examination_System.Controllers
 
         public IActionResult StartExam(int id, int Studentid)
         {
+            Course course = ExamRepo.getCourseById(id);
+            var startDate = course.ExamStartDateTime;
+            var endDate = course.ExamEndDateTime;
+            ViewBag.startDate = startDate;
+            ViewBag.endDate = endDate;
+
             Exam exam=new Exam() { CourseId=id,StudentId=Studentid};
             ExamRepo.AddExam(exam);
             int ExamId=exam.ExamId;
