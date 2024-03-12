@@ -26,9 +26,11 @@ namespace Examination_System.Controllers
                 return View(model);
             }
 
+            string userid=res.Id.ToString();
             //add claims
             Claim c1 = new Claim(ClaimTypes.Name, res.Name);
             Claim c2 = new Claim(ClaimTypes.Email, res.Email);
+            Claim c3 = new Claim(ClaimTypes.Sid, userid);
             List<Claim> Roleclaims = new List<Claim>();
             foreach (var item in res.Roles)
             {
@@ -40,6 +42,7 @@ namespace Examination_System.Controllers
             ClaimsIdentity ci = new ClaimsIdentity("Cookies");
             ci.AddClaim(c1);
             ci.AddClaim(c2);
+            ci.AddClaim(c3);
             foreach (var item in Roleclaims)
             {
                 ci.AddClaim(item);

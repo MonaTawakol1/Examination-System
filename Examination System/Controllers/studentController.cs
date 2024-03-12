@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Examination_System.Models;
 using Examination_System.Repository;
+using System.Security.Claims;
 namespace Examination_System.Controllers
 {
     public class studentController : Controller
@@ -15,13 +16,54 @@ namespace Examination_System.Controllers
             ExamRepo = examRepo;
             this.choiceRepo = choiceRepo;
         }
-        public IActionResult Index(int id)
+        //public IActionResult Index()
+        //{
+        //    var principal = HttpContext.User;
+        //    int id;
+
+        //    // Retrieve the Sid claim
+        //    var sidClaim = principal.FindFirst(ClaimTypes.Sid);
+
+
+
+        //         var sidValue = sidClaim.Value;
+        //         id = int.Parse(sidValue);
+        //         var student = studentRepo.GetStudentByUserId(id);
+
+
+
+
+
+        //    return View(student);
+        //}
+
+        public async Task<IActionResult> Index()
         {
-            var student = studentRepo.GetStudent(id);
-            return View(student);
+            // Get the ClaimsPrincipal from the HttpContext
+            var principal = HttpContext.User;
+
+            // Retrieve the Sid claim
+            var sidClaim = principal.FindFirst(ClaimTypes.Sid);
+
+            if (sidClaim != null)
+            {
+                // Sid value found, you can access it here
+                var sidValue = sidClaim.Value;
+                int id = int.Parse(sidValue);
+                var student = studentRepo.GetStudentByUserId(id);
+
+                // Do something with the student data
+                return View(student);
+            }
+            else
+            {
+                // Sid claim not found, handle the situation accordingly
+                return RedirectToAction("Login", "Account");
+            }
         }
         public IActionResult ShowCourses(int id)
         {
+            ViewBag.stdid = id;
             var std = studentRepo.ShowCourses(id);
            var courses = std.Courses.ToList();
             return View(courses);

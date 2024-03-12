@@ -2,6 +2,7 @@
 using Examination_System.Models;
 using Examination_System.Repository;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Examination_System.Controllers
 {
@@ -16,9 +17,24 @@ namespace Examination_System.Controllers
             instructorRepo = _instructorRepo;
             questionRepo = _questionRepo;
         }
-        public IActionResult Index(int id) { 
-      
-            var instructor = instructorRepo.ShowCourses(id);
+        public  async Task< IActionResult> Index() {
+
+            // Get the ClaimsPrincipal from the HttpContext
+            var principal = HttpContext.User;
+
+            // Retrieve the Sid claim
+            var sidClaim = principal.FindFirst(ClaimTypes.Sid);
+
+            
+                // Sid value found, you can access it here
+                var sidValue = sidClaim.Value;
+                int id = int.Parse(sidValue);
+                Instructor instructor = instructorRepo.GetInstructorByUserId(id);
+
+                // Do something with the student data
+               // return View(student);
+           
+            //var instructor = instructorRepo.ShowCourses(id);
             var courses = instructor.Courses.ToList();
             return View(courses);
         }

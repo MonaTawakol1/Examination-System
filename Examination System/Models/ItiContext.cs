@@ -17,7 +17,9 @@ namespace Examination_System.Models
         public DbSet<Question> Questions { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Topic> Topics { get; set; }
-
+        public DbSet<Admin> Admins { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public ItiContext()
         {
 

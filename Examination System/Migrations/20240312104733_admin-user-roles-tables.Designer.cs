@@ -4,6 +4,7 @@ using Examination_System.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Examination_System.Migrations
 {
     [DbContext(typeof(ItiContext))]
-    partial class ItiContextModelSnapshot : ModelSnapshot
+    [Migration("20240312104733_admin-user-roles-tables")]
+    partial class adminuserrolestables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -268,13 +271,15 @@ namespace Examination_System.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorId"));
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("InstructorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstructorPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("InstructorId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Instructors");
                 });
@@ -338,8 +343,13 @@ namespace Examination_System.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("StudentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("branchId")
                         .HasColumnType("int");
@@ -347,9 +357,6 @@ namespace Examination_System.Migrations
                     b.HasKey("StudentId");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.HasIndex("branchId");
 
@@ -390,6 +397,9 @@ namespace Examination_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("InstructorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -398,7 +408,14 @@ namespace Examination_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("InstructorId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Users");
                 });
@@ -574,17 +591,6 @@ namespace Examination_System.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("Examination_System.Models.Instructor", b =>
-                {
-                    b.HasOne("Examination_System.Models.User", "User")
-                        .WithOne("Instructor")
-                        .HasForeignKey("Examination_System.Models.Instructor", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Examination_System.Models.Question", b =>
                 {
                     b.HasOne("Examination_System.Models.Course", "Course")
@@ -604,12 +610,6 @@ namespace Examination_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Examination_System.Models.User", "User")
-                        .WithOne("Student")
-                        .HasForeignKey("Examination_System.Models.Student", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Examination_System.Models.Branch", "Branch")
                         .WithMany("StudentList")
                         .HasForeignKey("branchId")
@@ -619,8 +619,6 @@ namespace Examination_System.Migrations
                     b.Navigation("Branch");
 
                     b.Navigation("Department");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Examination_System.Models.Topic", b =>
@@ -630,6 +628,21 @@ namespace Examination_System.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Examination_System.Models.User", b =>
+                {
+                    b.HasOne("Examination_System.Models.Instructor", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("InstructorId");
+
+                    b.HasOne("Examination_System.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Instructor");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -695,10 +708,6 @@ namespace Examination_System.Migrations
             modelBuilder.Entity("Examination_System.Models.User", b =>
                 {
                     b.Navigation("Admin");
-
-                    b.Navigation("Instructor");
-
-                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,10 +7,10 @@ namespace Examination_System.Models
     {
         public int StudentId { get; set; }
 
-        [Required]
-        public string StudentName { get; set; }
+        //[Required]
+        //public string StudentName { get; set; }
         
-        public string StudentPassword { get; set;}
+        //public string StudentPassword { get; set;}
 
   
 
@@ -25,6 +25,11 @@ namespace Examination_System.Models
         [ForeignKey("Branch")]
         public int branchId { get; set; }
         public Branch Branch { get; set; }
+
+
+        public int UserId { get; set; }
+
+        public User User { get; set; }
 
     }
 }

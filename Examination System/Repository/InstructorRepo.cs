@@ -11,6 +11,7 @@ namespace Examination_System.Repository
         public List<Question> ShowQuestions(int id);
         public void DeleteQuestion(int id);
         public int GetCourseIdByQuestionId(int questionId);
+        public Instructor GetInstructorByUserId(int userId);
     }
     public class InstructorRepo : IInstructorRepo
     {
@@ -48,6 +49,13 @@ namespace Examination_System.Repository
             var questioncourse = db.Questions.SingleOrDefault(a=>a.QuestionId ==  questionId);
             var courseId = questioncourse.CourseId;
             return courseId;
+        }
+
+
+        public Instructor GetInstructorByUserId(int userId)
+        {
+            Instructor instructor=db.Instructors.Include(a=>a.Courses).Include(a=>a.User).FirstOrDefault(a=>a.UserId == userId);
+            return instructor;
         }
 
     }

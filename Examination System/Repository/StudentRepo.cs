@@ -10,6 +10,8 @@ namespace Examination_System.Repository
         public Student GetStudent(int id);
         public Student ShowCourses(int id);
         public Course showtopics(int id);
+
+        public Student GetStudentByUserId(int id);
     }
     public class StudentRepo:IstudentRepo
     {
@@ -35,6 +37,14 @@ namespace Examination_System.Repository
         public Student ShowCourses(int id)
         {
             Student student = db.Students.Include(a => a.Courses).FirstOrDefault(a => a.StudentId == id);
+            return student;
+        }
+
+
+        public Student GetStudentByUserId(int id)
+        {
+            Student student = db.Students.Include(a => a.Department).Include(a => a.Branch).Include(a=>a.User).FirstOrDefault(a => a.UserId==id);
+
             return student;
         }
 
