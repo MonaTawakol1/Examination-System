@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Student>
+@{
+    ViewData["Title"] = "StudentsInformation";
+    SelectList deptList = new SelectList(ViewBag.depts, "DepartmentId", "DepartmentName");
+}
+
+<h1>Students Information</h1>
+
+<label>Department Name</label>
+<select id="deptSelect" name="DeptNumber" asp-items="deptList"></select>
+
+<div id="div1"></div>
+
+<script>
+    var deptSelect = document.getElementById('deptSelect');
+
+    // Add event listener for change event
+    deptSelect.addEventListener('change', function () {
+        // Get the selected option
+        var selectedOption = deptSelect.options[deptSelect.selectedIndex];
+
+        // Get the selected ID
+        var selectedId = selectedOption.value;
+
+        // Call the function to load the report
+        loadReport(selectedId);
+    });
+
+    function loadReport(departmentId) {
+        // Load the report for the selected department
+        $("#div1").load("/Report/Reports1?DeptNumber=" + departmentId);
+    }
+</script>
