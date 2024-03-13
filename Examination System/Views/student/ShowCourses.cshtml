@@ -47,6 +47,10 @@
 
                     function checkExamTime() {
                         var currentTime = new Date().getTime();
+                        console.log(currentTime);
+                        console.log("start time",startTime);
+                        console.log("end time",endTime)
+
                         if (currentTime >= startTime && currentTime <= endTime) {
                             document.getElementById(startExamButtonId).disabled = false;
                         } else {

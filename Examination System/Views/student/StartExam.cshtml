@@ -25,7 +25,7 @@
         }
         
     }
-    <input class="btn btn-success" type="submit" value="Submit" />
+    <input class="btn btn-success" type="submit" value="Submit" id="submit" />
 </form>
 @* 
 
@@ -54,7 +54,7 @@
  *@
 
 
-                            
+                         
 <script>
     var endTime = new Date("@ViewBag.endDate").getTime();
 
@@ -62,9 +62,9 @@
         var currentTime = new Date().getTime();
         if (currentTime >= endTime) {
             clearInterval(intervalId); // Stop periodic checking
-            document.getElementById("examForm").submit(); // Submit the form
+            document.querySelector('#examForm').submit(); // Programmatically trigger the click event of the submit button
+            
             // Redirect to another page after submitting the form
-            // You can change "destinationPageUrl" to the desired URL
             window.location.href ="/Student/ExamEnded?examId=@ViewBag.examId";
         }
     }
