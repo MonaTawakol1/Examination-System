@@ -67,10 +67,13 @@ namespace Examination_System.Controllers
             var endDate = course.ExamEndDateTime;
             ViewBag.startDate = startDate;
             ViewBag.endDate = endDate;
+            ViewBag.courseId=course.CourseId;
+           
 
             Exam exam=new Exam() { CourseId=id,StudentId=Studentid};
             ExamRepo.AddExam(exam);
             int ExamId=exam.ExamId;
+            ViewBag.examId = ExamId;
             ExamRepo.AddExamQuestions(ExamId, id);
             List<ExamQuestions> examQuestion= ExamRepo.ShowRandomQuestions(ExamId);
             return View(examQuestion);
@@ -87,7 +90,8 @@ namespace Examination_System.Controllers
             return View(examQuestion);
         }
 
-
+      
+       
         [HttpPost]
         public IActionResult StartExam(int ExamId, Dictionary<int, int> ChoiceIds)
         {
@@ -103,7 +107,15 @@ namespace Examination_System.Controllers
         }
 
 
-     
+        public IActionResult ExamEnded(int examId)
+        {
+            ViewBag.examId = examId;
+
+            return View();
+        }
+
+
+
 
     }
 }

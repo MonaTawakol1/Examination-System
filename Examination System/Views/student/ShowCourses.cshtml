@@ -29,7 +29,14 @@
                         <a asp-action="showTopics" asp-controller="student" asp-route-id="@item.CourseId" class="btn btn-info">Show Topics</a>
                         Exam Start Date : @item.ExamStartDateTime
                         Exam End Date :  @item.ExamEndDateTime
-                        <button id="startExamButton-@item.CourseId" class="btn btn-info" disabled>Start Exam</button>
+                        <form  method="get"    asp-action="StartExam" asp-controller="student">
+                                    <input type="hidden" name="id" value="@item.CourseId" />
+                                    <input type="hidden" name="Studentid" value="@ViewBag.stdid" />
+                                    <button type="submit"  id="startExamButton-@item.CourseId" class="btn btn-info" disabled>Start Exam</button>
+
+                            </form>
+@*                         <a asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info">Start Exam</a>
+ *@                        @* <button id="startExamButton-@item.CourseId" class="btn btn-info" disabled  asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info"  >Start Exam</button> *@
                     </td>
                 </tr>
                 <script>
@@ -52,7 +59,7 @@
 
                     // Periodically check every second (you can adjust the interval as needed)
                     setInterval(checkExamTime, 1000);
-                </script>
+               </script>
             }
         </tbody>
     </table>

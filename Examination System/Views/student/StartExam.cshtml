@@ -1,13 +1,16 @@
 ﻿@model IEnumerable<ExamQuestions>
+
 @{
     ViewData["Title"] = "StartExam";
 }
 
 <h1>StartExam</h1>
-<form method="post">
+<form  id="examForm" method="post">
+
 
     @foreach (var item in @Model)
     {
+       
         <h3>@item.Question.QuestionBody</h3>
         <input type="hidden" name="ExamId" value="@item.ExamId" asp-for="@item.ExamId" />
         @for (var i = 0; i < item.Question.ChoicesList.Count; i++)
@@ -20,7 +23,55 @@
 
             <br />
         }
-
+        
     }
     <input class="btn btn-success" type="submit" value="Submit" />
 </form>
+@* 
+
+ <script>
+                    // JavaScript code for enabling/disabling Start Exam button
+                   // var startExamButtonId = "startExamButton-@item.CourseId";
+                    var startTime = new Date("@ViewBag.startDate").getTime();
+                    var endTime = new Date("@ ViewBag.endDate").getTime();
+
+                    function checkExamTime() {
+                        var currentTime = new Date().getTime();
+                        if (currentTime >= startTime && currentTime <= endTime) {
+                            document.getElementById(startExamButtonId).disabled = false;
+                        } else {
+                            document.getElementById(startExamButtonId).disabled = true;
+                        }
+                    }
+
+                    // Initial check when the page loads
+                    checkExamTime();
+
+                    // Periodically check every second (you can adjust the interval as needed)
+                    setInterval(checkExamTime, 1000);
+               </script>
+            }
+ *@
+
+
+                            
+<script>
+    var endTime = new Date("@ViewBag.endDate").getTime();
+
+    function checkExamTime() {
+        var currentTime = new Date().getTime();
+        if (currentTime >= endTime) {
+            clearInterval(intervalId); // Stop periodic checking
+            document.getElementById("examForm").submit(); // Submit the form
+            // Redirect to another page after submitting the form
+            // You can change "destinationPageUrl" to the desired URL
+            window.location.href ="/Student/ExamEnded?examId=@ViewBag.examId";
+        }
+    }
+
+    // Initial check when the page loads
+    checkExamTime();
+
+    // Periodically check every second (you can adjust the interval as needed)
+    var intervalId = setInterval(checkExamTime, 1000);
+</script>
