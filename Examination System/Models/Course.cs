@@ -28,5 +28,9 @@ namespace Examination_System.Models
 
         public DateTime? ExamEndDateTime { get; set;}
 
+        public int? NumberOfTrueAndFalseQuestions {  get; set; }
+
+        public int? NumberOfMcqQuestions { get; set; }
+
     }
 }

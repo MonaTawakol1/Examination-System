@@ -38,23 +38,60 @@ namespace Examination_System.Repository
             db.SaveChanges();   
         }
 
+        //public List<Choice> GetQuestionChoices(Question q)
+        //{
+        //    List<Choice> QuestionchoicesList = new List<Choice>();
+
+
+        //        var choice = db.Choices.Where(a => a.QuestionId == q.QuestionId).ToList();
+        //        foreach(var item in choice)
+        //        {
+        //            if (item.IsAnswer == false)
+        //            {
+        //                QuestionchoicesList.Add(item);
+
+        //            }
+        //        }
+
+        //       return QuestionchoicesList;
+        //}
+
         public List<Choice> GetQuestionChoices(Question q)
         {
             List<Choice> QuestionchoicesList = new List<Choice>();
 
-
-                var choice = db.Choices.Where(a => a.QuestionId == q.QuestionId).ToList();
-                foreach(var item in choice)
+            var choice = db.Choices.Where(a => a.QuestionId == q.QuestionId).ToList();
+            foreach (var item in choice)
+            {
+                if (!item.IsAnswer)
                 {
-                    if (item.IsAnswer == false)
-                    {
-                        QuestionchoicesList.Add(item);
-
-                    }
+                    QuestionchoicesList.Add(item);
                 }
-               
-               return QuestionchoicesList;
+            }
+
+            // Shuffle the list
+            Shuffle(QuestionchoicesList);
+
+            return QuestionchoicesList;
         }
+
+        // Fisher-Yates shuffle algorithm
+        private void Shuffle<T>(List<T> list)
+        {
+            Random rng = new Random();
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
+
+
+
 
         public Choice getQuestionAnswer(Question q)
         {

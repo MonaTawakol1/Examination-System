@@ -29,22 +29,55 @@
                         <a asp-action="showTopics" asp-controller="student" asp-route-id="@item.CourseId" class="btn btn-info">Show Topics</a>
                         Exam Start Date : @item.ExamStartDateTime
                         Exam End Date :  @item.ExamEndDateTime
-                        <form  method="get"    asp-action="StartExam" asp-controller="student">
-                                    <input type="hidden" name="id" value="@item.CourseId" />
-                                    <input type="hidden" name="Studentid" value="@ViewBag.stdid" />
-                                    <button type="submit"  id="startExamButton-@item.CourseId" class="btn btn-info" disabled>Start Exam</button>
+                        <form method="get" asp-action="StartExam" asp-controller="student">
+                            <input type="hidden" name="id" value="@item.CourseId" />
+                            <input type="hidden" name="Studentid" value="@ViewBag.stdid" />
+                            <button type="submit" id="startExamButton-@item.CourseId" class="btn btn-info" disabled>Start Exam</button>
 
-                            </form>
-@*                         <a asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info">Start Exam</a>
- *@                        @* <button id="startExamButton-@item.CourseId" class="btn btn-info" disabled  asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info"  >Start Exam</button> *@
+                        </form>
+                        @*                         <a asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info">Start Exam</a>
+                    @                        @ <button id="startExamButton-@item.CourseId" class="btn btn-info" disabled  asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info"  >Start Exam</button> *@
                     </td>
                 </tr>
                 <script>
-                    // JavaScript code for enabling/disabling Start Exam button
-                    var startExamButtonId = "startExamButton-@item.CourseId";
-                    var startTime = new Date("@item.ExamStartDateTime").getTime();
-                    var endTime = new Date("@item.ExamEndDateTime").getTime();
 
+
+                    var examStartDateTime = "@item.ExamStartDateTime";
+                    var modifiedDateTime = examStartDateTime.replace(' ', 'T');
+
+                    var endExamDateTime = "@item.ExamEndDateTime";
+                    var modifiedDateTime2 = endExamDateTime.replace(' ', 'T');
+
+                    var s = modifiedDateTime.replaceAll("/", "-");
+                    var m = modifiedDateTime2.replaceAll("/", "-");
+
+                    var dateString = s;
+                    var parts = dateString.split("T");
+                    var datePart = parts[0];
+                    var timePart = parts[1];
+
+                    var dateComponents = datePart.split("-");
+                    var rearrangedDateString = dateComponents[2] + "-" + dateComponents[1] + "-" + dateComponents[0] + "T" + timePart;
+
+
+
+                    var dateString2 = m;
+                    var parts2 = dateString2.split("T");
+                    var datePart2 = parts2[0];
+                    var timePart2 = parts2[1];
+
+                    var dateComponents2 = datePart2.split("-");
+                    var rearrangedDateString2 = dateComponents2[2] + "-" + dateComponents2[1] + "-" + dateComponents2[0] + "T" + timePart2;
+
+
+
+
+                    var startExamButtonId = "startExamButton-@item.CourseId";
+                    var startTime = new Date(rearrangedDateString).getTime();
+                    var endTime = new Date(rearrangedDateString2).getTime();
+
+                    console.log(startTime);
+                    console.log(endTime);
                     function checkExamTime() {
                         var currentTime = new Date().getTime();
                         if (currentTime >= startTime && currentTime <= endTime) {
@@ -54,12 +87,12 @@
                         }
                     }
 
-                    // Initial check when the page loads
+
                     checkExamTime();
 
                     // Periodically check every second (you can adjust the interval as needed)
                     setInterval(checkExamTime, 1000);
-               </script>
+                </script>
             }
         </tbody>
     </table>

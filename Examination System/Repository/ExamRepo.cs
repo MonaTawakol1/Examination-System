@@ -13,8 +13,9 @@ namespace Examination_System.Repository
         public void CorrectExam(int examId);
         public void AddExamGrade(int examId);
         public Course getCourseById(int id);
+        public void AddExamDuration(int id, DateTime start, DateTime end, int TorF, int Mcq);
     }
-    public class ExamRepo:IExamRepo
+    public class ExamRepo : IExamRepo
     {
         ItiContext db;
         IQuestionRepo _questionRepo;
@@ -31,67 +32,14 @@ namespace Examination_System.Repository
         {
             db.Add(exam);
             db.SaveChanges();
-            
+
         }
-
-
-        //public void AddExamQuestions(int Examid, int CrsId)
-        //{
-        //    var random = new Random();
-
-        //    List<Question> ids = new List<Question>();
-        //    List<Question> randomQuestions = new List<Question>();
-
-        //    var questionsBank = db.Questions.Where(x => x.CourseId == CrsId && !x.isDeleted).ToList();
-
-        //    questionsBank.ForEach(x =>
-        //    {
-        //        ids.Add(x);
-        //    });
-
-        //    Random rand = new Random();
-        //    int n = 11;
-        //    int numOfMCQ = 5;
-        //    int numOfTORF = 5;
-
-        //    while (n > 1 && (numOfTORF > 0 || numOfMCQ > 0))
-        //    {
-        //        int k = rand.Next(n); // Adjusted range to prevent out-of-bound index
-        //        var value = ids[k];
-
-        //        if (!randomQuestions.Any(q => q.QuestionId == value.QuestionId))
-        //        {
-        //            if (value.QuestionType == QuestionType.TrueOrFalse && numOfTORF > 0)
-        //            {
-        //                randomQuestions.Add(value);
-        //                numOfTORF--;
-        //                n--;
-        //            }
-        //            else if (value.QuestionType == QuestionType.Mcq && numOfMCQ > 0)
-        //            {
-        //                randomQuestions.Add(value);
-        //                numOfMCQ--;
-        //                n--;
-        //            }
-        //        }
-
-        //        // Decrement n after checking condition
-        //    }
-
-        //    foreach (var item in randomQuestions)
-        //    {
-        //        ExamQuestions e = new ExamQuestions() { ExamId = Examid, QuestionId = item.QuestionId, InsertedAt = DateTime.Now };
-        //        db.ExamQuestions.Add(e);
-        //    }
-
-        //    db.SaveChanges();
-        //}
 
 
         public void AddExamQuestions(int Examid, int CrsId)
         {
             var random = new Random();
-            List<int>randomQuestion=new List<int>();
+            List<int> randomQuestion = new List<int>();
             List<int> ids = new List<int>();
             var questionsBank = db.Questions.Where(x => x.CourseId == CrsId).Where(a => a.isDeleted == false).ToList();
             questionsBank.ForEach
@@ -102,15 +50,16 @@ namespace Examination_System.Repository
 
 
             Random rand = new Random();
-
-            int numOfTFQ = 5;
-            int numOfMCQQ = 5;
-            while (randomQuestion.Count()<10)
+            Course crs = db.Courses.FirstOrDefault(a => a.CourseId == CrsId);
+            int numOfTFQ = crs.NumberOfTrueAndFalseQuestions.Value;
+            int numOfMCQQ = db.Courses.FirstOrDefault(a => a.CourseId == CrsId).NumberOfMcqQuestions.Value;
+            int count = numOfTFQ + numOfMCQQ;
+            while (randomQuestion.Count() < count)
             {
-                int k = rand.Next(ids.Count() );
+                int k = rand.Next(ids.Count());
                 var value = ids[k];
-                Question q=_questionRepo.GetQuestion(value);
-                if(q.QuestionType==QuestionType.TrueOrFalse&& numOfTFQ != 0)
+                Question q = _questionRepo.GetQuestion(value);
+                if (q.QuestionType == QuestionType.TrueOrFalse && numOfTFQ != 0)
                 {
                     ids.Remove(ids[k]);
                     randomQuestion.Add(value);
@@ -129,7 +78,7 @@ namespace Examination_System.Repository
 
                 }
 
-              
+
             }
 
             foreach (var item in randomQuestion)
@@ -146,7 +95,7 @@ namespace Examination_System.Repository
 
         public List<ExamQuestions> ShowRandomQuestions(int Examid)
         {
-            var questionsInOrder = db.ExamQuestions.Where(a => a.ExamId == Examid).Include(a=>a.Exam).Include(a=>a.Question).ThenInclude(b=>b.ChoicesList).OrderBy(e => e.InsertedAt).ToList();
+            var questionsInOrder = db.ExamQuestions.Where(a => a.ExamId == Examid).Include(a => a.Exam).Include(a => a.Question).ThenInclude(b => b.ChoicesList).OrderBy(e => e.InsertedAt).ToList();
             return questionsInOrder;
         }
 
@@ -162,35 +111,37 @@ namespace Examination_System.Repository
 
         public void CorrectExam(int examId)
         {
-           var ExamQuestions =  db.ExamQuestions.Include(a=>a.Question).ThenInclude(a=>a.ChoicesList).Where(a => a.ExamId == examId).ToList();
-          foreach(var examQuestion in ExamQuestions)
+            var ExamQuestions = db.ExamQuestions.Include(a => a.Question).ThenInclude(a => a.ChoicesList).Where(a => a.ExamId == examId).ToList();
+            foreach (var examQuestion in ExamQuestions)
             {
-               var choice =  db.Choices.FirstOrDefault(a => a.ChoiceId == examQuestion.ExamAnswers);
-                if(choice.IsAnswer == true)
+                var choice = db.Choices.FirstOrDefault(a => a.ChoiceId == examQuestion.ExamAnswers);
+                if (choice != null)
                 {
-                  examQuestion.IsCorrect = true;
+                    if (choice.IsAnswer == true)
+                    {
+                        examQuestion.IsCorrect = true;
+                    }
+                    else
+                    {
+                        examQuestion.IsCorrect = false;
+                    }
+                    db.ExamQuestions.Update(examQuestion);
                 }
-                else
-                {
-                    examQuestion.IsCorrect = false;
-                }
-                db.ExamQuestions.Update(examQuestion);
-
             }
-          
+
             db.SaveChanges();
         }
 
         public void AddExamGrade(int examId)
         {
-           var  RightQuestions =  db.ExamQuestions.Where(a => a.ExamId == examId && a.IsCorrect == true).ToList();
+            var RightQuestions = db.ExamQuestions.Where(a => a.ExamId == examId && a.IsCorrect == true).ToList();
             int grade = 0;
-            foreach(var rightQuestion in RightQuestions)
+            foreach (var rightQuestion in RightQuestions)
             {
-              var question =   db.Questions.FirstOrDefault(a => a.QuestionId == rightQuestion.QuestionId);
+                var question = db.Questions.FirstOrDefault(a => a.QuestionId == rightQuestion.QuestionId);
                 grade += question.QuestionMark;
             }
-          var exam =  db.Exams.FirstOrDefault(a => a.ExamId == examId);
+            var exam = db.Exams.FirstOrDefault(a => a.ExamId == examId);
             exam.StudentGrade = grade;
             db.Exams.Update(exam);
             db.SaveChanges();
@@ -199,6 +150,16 @@ namespace Examination_System.Repository
         {
             return db.Courses.FirstOrDefault(a => a.CourseId == id);
         }
-      
+
+        public void AddExamDuration(int id, DateTime start, DateTime end, int TorF, int Mcq)
+        {
+            Course crs = getCourseById(id);
+            crs.ExamStartDateTime = start;
+            crs.ExamEndDateTime = end;
+            crs.NumberOfMcqQuestions = Mcq;
+            crs.NumberOfTrueAndFalseQuestions = TorF;
+            db.Courses.Update(crs);
+            db.SaveChanges();
+        }
     }
 }
