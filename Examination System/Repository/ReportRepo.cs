@@ -21,7 +21,7 @@ namespace Examination_System.Repository
         
         public List<Student> StudentsInformation(int DeptNumber)
         {
-            return  db.Students.Include(a=>a.User).Where(a=>a.DepartmentId == DeptNumber).ToList();
+            return  db.Students.Include(a=>a.User).Include(a=>a.Branch).Where(a=>a.DepartmentId == DeptNumber).ToList();
         }
         public List<Department> GetDepartments()
         {
