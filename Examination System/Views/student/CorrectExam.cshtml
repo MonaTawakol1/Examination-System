@@ -8,10 +8,11 @@
 
 <form method="post">
 
-    <h1> Your Grade : @ViewBag.grade</h1>
+    <h1> Your Grade : @ViewBag.grade %</h1>
     @foreach (var item in @Model)
     {
-        <h3>@item.Question.QuestionBody</h3>
+        <h3>@item.Question.QuestionBody</h3><p>(@item.Question.QuestionMark)</p>
+
 
         foreach(var ch in item.Question.ChoicesList)
         {

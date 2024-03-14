@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Exam>
+@{
+    ViewData["Title"] = "Reports2";
+}
+
+<h1>Reports2</h1>
+
+
+<h1>Index</h1>
+<table class="table table-bordered">
+    <tr>
+    
+        <th>Student Course Name</th>
+        <th>Student Grade</th>
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            
+            <td>
+                @item.Course.CourseName
+            </td>
+            <td>
+                @item.StudentGrade %
+            </td>
+        </tr>
+    }
+</table>

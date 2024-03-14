@@ -132,20 +132,67 @@ namespace Examination_System.Repository
             db.SaveChanges();
         }
 
+        //public void AddExamGrade(int examId)
+        //{
+        //    var RightQuestions = db.ExamQuestions.Where(a => a.ExamId == examId && a.IsCorrect == true).ToList();
+        //    var exam1 = db.Exams.FirstOrDefault(e => e.ExamId == examId);
+        //    var courseId = exam1.CourseId;
+        //    var questiona = db.Questions.Where(a => a.CourseId == courseId).ToList();
+        //    int totalMarks = 0;
+        //    foreach(var question in questiona)
+        //    {
+        //        totalMarks += question.QuestionMark;
+        //    }
+
+        //    int grade = 0;
+        //    int percentage=0;
+        //    foreach (var rightQuestion in RightQuestions)
+        //    {
+        //        var question = db.Questions.FirstOrDefault(a => a.QuestionId == rightQuestion.QuestionId);
+        //        grade += question.QuestionMark;
+
+        //    }
+        //    percentage = (grade / totalMarks) * 100;
+
+        //    var exam = db.Exams.FirstOrDefault(a => a.ExamId == examId);
+        //    exam.StudentGrade = percentage;
+        //    db.Exams.Update(exam);
+        //    db.SaveChanges();
+        //}
+
         public void AddExamGrade(int examId)
         {
             var RightQuestions = db.ExamQuestions.Where(a => a.ExamId == examId && a.IsCorrect == true).ToList();
+            var exam1 = db.Exams.FirstOrDefault(e => e.ExamId == examId);
+            var courseId = exam1.CourseId;
+            var examQues = db.ExamQuestions.Include(a => a.Question).Where(a => a.ExamId == examId).ToList();
+            int totalMarks = 0;
+            foreach (var examquestion in examQues)
+            {
+                totalMarks += examquestion.Question.QuestionMark;
+            }
+
             int grade = 0;
+            double percentage = 0; // Changed to double to handle floating-point division
             foreach (var rightQuestion in RightQuestions)
             {
                 var question = db.Questions.FirstOrDefault(a => a.QuestionId == rightQuestion.QuestionId);
                 grade += question.QuestionMark;
+
             }
+
+            if (totalMarks != 0) // Ensure totalMarks is not zero to avoid division by zero
+            {
+                percentage = ((double)grade / totalMarks) * 100; // Cast grade to double for floating-point division
+            }
+
             var exam = db.Exams.FirstOrDefault(a => a.ExamId == examId);
-            exam.StudentGrade = grade;
+            exam.StudentGrade = (int)percentage; // Assigning percentage to StudentGrade after converting to int
             db.Exams.Update(exam);
             db.SaveChanges();
         }
+
+
         public Course getCourseById(int id)
         {
             return db.Courses.FirstOrDefault(a => a.CourseId == id);

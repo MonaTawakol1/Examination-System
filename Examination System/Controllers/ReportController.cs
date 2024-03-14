@@ -6,11 +6,14 @@ namespace Examination_System.Controllers
     public class ReportController : Controller
     {
         IReportRepo reportRepo;
+        IstudentRepo studentRepo;
 
-        public ReportController(IReportRepo _reportRepo)
+        public ReportController(IReportRepo _reportRepo , IstudentRepo _studentRepo)
         {
             reportRepo = _reportRepo;
-            
+
+            studentRepo = _studentRepo;
+
         }
         public IActionResult Index()
         {
@@ -32,5 +35,52 @@ namespace Examination_System.Controllers
           var stdList =   reportRepo.StudentsInformation(DeptNumber);
             return View(stdList);
         }
+        public IActionResult getAllStudent()
+        {
+            var students = reportRepo.GetStudents();
+            ViewBag.students = students;
+            return View();
+        }
+
+        public IActionResult Reports2(int StudentId)
+        {
+           var exams = reportRepo.GetExams(StudentId);
+            return View(exams);
+        }
+
+        public IActionResult getAllInstuctors()
+        {
+
+            var instructor = reportRepo.GetInstructors();
+            ViewBag.instructor = instructor;
+         
+            return View();
+        }
+
+        public IActionResult Reports3(int InstructorId)
+        {
+           
+            var Courses = reportRepo.GetCourse(InstructorId);
+            
+
+            return View(Courses);
+        }
+
+
+        public IActionResult getAllCourses()
+        {
+
+            var courses = reportRepo.GetAllCourses();
+            ViewBag.courses = courses;
+
+            return View();
+        }
+
+        public IActionResult Reports4(int CourseId)
+        {
+            var Courses = reportRepo.showtopics(CourseId);
+            return View(Courses);
+        }
+
     }
 }
