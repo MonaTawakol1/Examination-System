@@ -25,6 +25,7 @@ namespace Examination_System
             builder.Services.AddTransient<IQuestionRepo, QuestionRepo>();
             builder.Services.AddTransient<IExamRepo, ExamRepo>();
             builder.Services.AddTransient<IChoiceRepo, ChoiceRepo>();
+            builder.Services.AddTransient<IReportRepo, ReportRepo>();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();   //-------------added----------
 
 

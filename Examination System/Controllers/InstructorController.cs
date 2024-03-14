@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Examination_System.Models;
+﻿using Examination_System.Models;
 using Examination_System.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -11,11 +10,13 @@ namespace Examination_System.Controllers
 
         IInstructorRepo instructorRepo;
         IQuestionRepo questionRepo;
+        IExamRepo examRepo;
 
-        public InstructorController(IInstructorRepo _instructorRepo , IQuestionRepo _questionRepo)
+        public InstructorController(IInstructorRepo _instructorRepo , IQuestionRepo _questionRepo, IExamRepo _examRepo)
         {
             instructorRepo = _instructorRepo;
             questionRepo = _questionRepo;
+             examRepo = _examRepo;
         }
         public  async Task< IActionResult> Index() {
 
@@ -105,6 +106,19 @@ namespace Examination_System.Controllers
 
             questionRepo.updateQuestion(q);
             return RedirectToAction("ShowQuestions");
+        }
+
+        public IActionResult AddExam(int id)
+        {
+           Course crs =  examRepo.getCourseById(id);
+            return View(crs);
+        }
+
+        [HttpPost]
+        public IActionResult AddExam(int id , DateTime ExamStartDateTime, DateTime ExamEndDateTime, int NumberOfTrueAndFalseQuestions, int NumberOfMcqQuestions)
+        {
+            examRepo.AddExamDuration(id, ExamStartDateTime, ExamEndDateTime, NumberOfTrueAndFalseQuestions, NumberOfMcqQuestions);
+            return View();
         }
     }
 }
