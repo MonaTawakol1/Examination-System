@@ -20,7 +20,7 @@
 
           
             <td>
-                @item.Question.QuestionBody
+               <h1>Question : < @item.Question.QuestionBody/h1>
                 @foreach(var choic in item.Question.ChoicesList)
                 {
                     <p> @choic.ChoiceBody</p>

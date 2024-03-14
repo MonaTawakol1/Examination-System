@@ -1,33 +1,26 @@
 ﻿@model IEnumerable<Exam>
 @{
-    ViewData["Title"] = "Reports5";
+    ViewData["Title"] = "getAllExams";
+    SelectList ExamSelect = new SelectList(ViewBag.Exams, "ExamId", "ExamId");
 }
 
-<h1>Reports5</h1>
 
+<h1>get Exams</h1>
 
-<table class="table table-bordered">
-    <tr>
-
-
-        <th>exam </th>
-        <th>opration </th>
-
-
-    </tr>
-    @foreach (var item in Model)
+<label>Exam ID</label>
+<select id="ExamSelect" onchange="loadReport(this.value)">
+    <option>Select Exam Id</option>
+    @foreach (var item in ExamSelect)
     {
-        <tr>
-
-
-            <td>
-                @item.ExamId
-               
-            </td>
-            <td>
-                <a class="btn btn-primary" asp-action="Reports6" asp-controller="Report" asp-route-ExamId="@item.ExamId">Go To Exam</a>
-
-            </td>
-        </tr>
+        
+        <option value="@item.Value">@item.Value</option>
     }
-</table>
+</select>
+
+<div id="div1"></div>
+
+<script>
+    function loadReport(ExamId) {
+        $("#div1").load("/Report/Reports5?ExamId=" + ExamId);
+    }
+</script>

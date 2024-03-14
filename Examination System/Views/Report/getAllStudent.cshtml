@@ -10,9 +10,10 @@
 
 <label>Student ID</label>
 <select id="studentSelect" onchange="loadReport(this.value)">
+    <option>Select Student</option>
     @foreach (var item in studentSelect)
     {
-        <option>Select Student</option>
+
         <option value="@item.Value">@item.Value</option>
     }
 </select>
