@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Exam>
+@{
+    ViewData["Title"] = "getAllexams";
+    SelectList ExamSelect = new SelectList(ViewBag.Exams, "ExamId", "ExamId");
+}
+
+
+
+<h1>getAllExams</h1>
+
+<label>Exam id</label>
+<select id="ExamSelect" onchange="loadReport(this.value)">
+    <option>Select Exam</option>
+    @foreach (var item in ExamSelect)
+    {
+
+        <option value="@item.Value">@item.Value</option>
+    }
+</select>
+
+<div id="div1"></div>
+
+<script>
+    function loadReport(ExamId) {
+        $("#div1").load("/Report/Reports6?ExamId=" + ExamId);
+    }
+</script>
+

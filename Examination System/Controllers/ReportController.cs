@@ -82,5 +82,37 @@ namespace Examination_System.Controllers
             return View(Courses);
         }
 
+        public IActionResult getAllexams()
+        {
+            var exams = reportRepo.GetAllExam();
+            ViewBag.Exams = exams;
+            return View();
+        }
+        public IActionResult Reports5(int ExamId)
+        {
+            var examQuestions = reportRepo.GetExamQuestions(ExamId);
+            return View(examQuestions);
+        }
+
+        public IActionResult getAllStudentExam()
+        {
+            var Students = reportRepo.GetStudents();
+            ViewBag.Students = Students;
+            return View();
+        }
+        public IActionResult studentExams(int StudentId) 
+        {
+           var exams=reportRepo.GetExams(StudentId);
+           
+            return View(exams);
+        
+        
+        }
+        public IActionResult Reports6(int ExamId)
+        {
+            var examQuestions = reportRepo.GetExamQuestions(ExamId);
+            return View(examQuestions);
+        }
+
     }
 }

@@ -14,6 +14,8 @@ namespace Examination_System.Repository
         public List<Course> GetCourse(int InstructorId);
         public List<Course> GetAllCourses();
         public List<Topic> showtopics(int CourseId);
+        public List<ExamQuestions> GetExamQuestions(int examid);
+        public List<Exam> GetAllExam();
     }
     public class ReportRepo: IReportRepo
     {
@@ -66,8 +68,19 @@ namespace Examination_System.Repository
             return db.Topics.Where(a => a.CourseId == CourseId).ToList();
         }
 
+        public List<ExamQuestions> GetExamQuestions(int examid)
+        {
+            var ExamQ=db.ExamQuestions.Include(a=>a.Question).ThenInclude(a=>a.ChoicesList).Where(a=>a.ExamId==examid).ToList();
+            return ExamQ;
+        }
 
+        public List<Exam> GetAllExam()
+        {
 
+            return db.Exams.ToList();
+        }
+
+       
 
     }
 }
