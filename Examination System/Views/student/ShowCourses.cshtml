@@ -70,8 +70,6 @@
                     var rearrangedDateString2 = dateComponents2[2] + "-" + dateComponents2[1] + "-" + dateComponents2[0] + "T" + timePart2;
 
 
-
-
                     var startExamButtonId = "startExamButton-@item.CourseId";
                     var startTime = new Date(rearrangedDateString).getTime();
                     var endTime = new Date(rearrangedDateString2).getTime();
@@ -90,7 +88,6 @@
                             document.getElementById(startExamButtonId).disabled = true;
                         }
                     }
-
 
                     checkExamTime();
 
