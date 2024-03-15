@@ -1,0 +1,47 @@
+﻿@model Course
+
+@{
+    ViewData["Title"] = "AddExam";
+}
+
+<h1>AddExam</h1>
+
+<h4>Course</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CourseId" />
+          
+            <div class="form-group">
+                <label asp-for="ExamStartDateTime" class="control-label"></label>
+                <input asp-for="ExamStartDateTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="ExamStartDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamEndDateTime" class="control-label"></label>
+                <input asp-for="ExamEndDateTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="ExamEndDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfTrueAndFalseQuestions" class="control-label"></label>
+                <input asp-for="NumberOfTrueAndFalseQuestions" class="form-control" />
+                <span asp-validation-for="NumberOfTrueAndFalseQuestions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfMcqQuestions" class="control-label"></label>
+                <input asp-for="NumberOfMcqQuestions" class="form-control" />
+                <span asp-validation-for="NumberOfMcqQuestions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+

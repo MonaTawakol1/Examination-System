@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ExamQuestions>
+@{
+    ViewData["Title"] = "CorrectExam";
+}
+
+<h1>CorrectExam</h1>
+
+
+<form method="post">
+
+    <h1> Your Grade : @ViewBag.grade %</h1>
+    @foreach (var item in @Model)
+    {
+        <h3>@item.Question.QuestionBody</h3><p>(@item.Question.QuestionMark)</p>
+
+
+        foreach(var ch in item.Question.ChoicesList)
+        {
+
+            if (item.ExamAnswers == ch.ChoiceId)
+            {
+                if (ch.IsAnswer == true)
+                {
+                    <p class="text-success">Correct</p>
+                    <input type="radio" value="@ch.ChoiceId" />
+
+                    <label class="text-success">@ch.ChoiceBody</label>
+                    <br />
+                   
+
+                }
+                else
+                {
+                    <p class="text-danger">Wrong</p>
+                    <input type="radio" value="@ch.ChoiceId" />
+
+                    <label class="text-danger">@ch.ChoiceBody</label>
+                  
+                    <br />
+                }
+            }
+            else
+            {
+                if (ch.IsAnswer == true)
+                {
+                    <input type="radio" value="@ch.ChoiceId" />
+
+                    <label class="text-success">@ch.ChoiceBody</label>
+                    <br />
+
+                }
+                else
+                {
+                    <input type="radio" value="@ch.ChoiceId" />
+
+                    <label>@ch.ChoiceBody</label>
+                    <br />
+                }
+            }
+
+            }
+          
+            
+            <br />
+        
+
+    }
+   
+</form>

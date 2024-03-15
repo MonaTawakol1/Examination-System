@@ -31,7 +31,9 @@ namespace Examination_System.Models
 
            public Course Course { get; set; }
 
-            public List<ExamQuestions> ExamQuestions { get; set; }
+            public List<ExamQuestions> ExamQuestions { get; set; }=new List<ExamQuestions>();
+
+        public bool isDeleted { get; set; } = false;
 
 
     }

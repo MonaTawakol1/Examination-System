@@ -1,0 +1,17 @@
+﻿@model Student
+@{
+    ViewData["Title"] = "Index";
+}
+@* 
+//<h1>@Model.StudentName</h1> *@
+<h1>@Model.Branch.BranchName</h1>
+<h1>@Model.Department.DepartmentName</h1>
+<h1>@Model.StudentId</h1>
+
+<a btn btn-info asp-controller="Student" asp-action="ShowCourses" asp-route-id="@Model.StudentId">Show Courses</a>
+<a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout @User.Identity.Name</a>
+
+
+
+
+

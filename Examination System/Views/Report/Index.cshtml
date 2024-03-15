@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>Reports</th>
+    </tr>
+    <tr>
+        <td>
+
+            <a class="btn btn-info" asp-action="StudentsInformation" asp-controller="Report">Students Information</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a class="btn btn-info" asp-action="getAllStudent" asp-controller="Report">Students Grades</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a class="btn btn-info" asp-action="getAllInstuctors" asp-controller="Report"> Courses</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a class="btn btn-info" asp-action="getAllCourses" asp-controller="Report"> Topics  </a>
+        </td>
+    </tr>
+        <tr>
+        <td>
+            <a class="btn btn-info" asp-action="getAllexams" asp-controller="Report"> Questions </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a class="btn btn-info" asp-action="getAllStudentExam" asp-controller="Report"> Exam </a>
+        </td>
+    </tr>
+</table>
+
+
+
+

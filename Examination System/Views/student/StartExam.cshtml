@@ -1,0 +1,124 @@
+﻿@model IEnumerable<ExamQuestions>
+
+@{
+    ViewData["Title"] = "StartExam";
+}
+
+<h1>StartExam</h1>
+<div id="timer"></div>
+<form id="examForm" method="post">
+
+
+    @foreach (var item in Model)
+    {
+
+        <h3>@item.Question.QuestionBody</h3>
+
+        <p>(@item.Question.QuestionMark)</p>
+
+        <input type="hidden" name="ExamId" value="@item.ExamId" asp-for="@item.ExamId" />
+
+
+        var shuffledChoices = item.Question.ChoicesList.OrderBy(x => Guid.NewGuid()).ToList();
+
+        @for (var i = 0; i < shuffledChoices.Count; i++)
+        {
+            <input type="radio" value="@shuffledChoices[i].ChoiceId" name="ChoiceIds[@item.QuestionId]" />
+
+            <label>@shuffledChoices[i].ChoiceBody</label>
+
+            <input type="hidden" name="QuestionId" value="@item.Question.QuestionId" asp-for="@item.QuestionId" />
+
+            <br />
+        }
+
+
+    }
+    <input class="btn btn-success" type="submit" value="Submit" id="submit"/>
+</form>
+
+
+
+
+@* <script>
+        var endExamDateTime = "@ViewBag.endDate";
+        var modifiedDateTime2 = endExamDateTime.replace(' ', 'T');
+        var m = modifiedDateTime2.replaceAll("/", "-");
+        var dateString2 = m;
+        var parts2 = dateString2.split("T");
+        var datePart2 = parts2[0];
+        var timePart2 = parts2[1];
+
+        var dateComponents2 = datePart2.split("-");
+        var rearrangedDateString2 = dateComponents2[2] + "-" + dateComponents2[1] + "-" + dateComponents2[0] + "T" + timePart2;
+    console.log(rearrangedDateString2);
+
+
+        var endTime = new Date(rearrangedDateString2).getTime();
+        function checkExamTime() {
+            var currentTime = new Date().getTime();
+
+           
+            var timeLeft = endTime - currentTime;
+
+            // Calculate remaining hours, minutes, and seconds
+            var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+
+            // Display the timer in the HTML element with id "timer"
+            document.getElementById("timer").innerHTML = "Time left: " + hours + "h " + minutes + "m " + seconds + "s ";
+
+
+        var endTime = new Date("@ViewBag.endDate").getTime();
+
+            if (currentTime >= endTime) {
+                clearInterval(intervalId); // Stop periodic checking
+            document.getElementById("submit").click(); // Submit the form
+               
+            }
+        }
+
+        checkExamTime();
+
+        var intervalId = setInterval(checkExamTime, 1000);
+</script> *@
+
+<script>
+    var endExamDateTime = "@ViewBag.endDate";
+    var modifiedDateTime2 = endExamDateTime.replace(' ', 'T');
+    var m = modifiedDateTime2.replaceAll("/", "-");
+    var dateString2 = m;
+    var parts2 = dateString2.split("T");
+    var datePart2 = parts2[0];
+    var timePart2 = parts2[1];
+
+    var dateComponents2 = datePart2.split("-");
+    var rearrangedDateString2 = dateComponents2[2] + "-" + dateComponents2[1] + "-" + dateComponents2[0] + "T" + timePart2;
+    console.log(rearrangedDateString2);
+
+    var endTime = new Date(rearrangedDateString2).getTime();
+    function checkExamTime() {
+        var currentTime = new Date().getTime();
+
+        var timeLeft = endTime - currentTime;
+
+        // Calculate remaining hours, minutes, and seconds
+        var hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        // Display the timer in the HTML element with id "timer"
+        document.getElementById("timer").innerHTML = "Time left: " + hours + "h " + minutes + "m " + seconds + "s ";
+
+        if (currentTime >= endTime) {
+            clearInterval(intervalId); // Stop periodic checking
+            document.getElementById("submit").click(); // Submit the form
+        }
+    }
+
+    checkExamTime();
+
+    var intervalId = setInterval(checkExamTime, 1000);
+</script>

@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Course>
+@{
+    ViewData["Title"] = "ShowCourses";
+}
+
+<h1>ShowCourses</h1>
+
+<html>
+<head>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Course Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td scope="row">@item.CourseName</td>
+                    <td>
+                        <a asp-action="showTopics" asp-controller="student" asp-route-id="@item.CourseId" class="btn btn-info">Show Topics</a>
+                        Exam Start Date : @item.ExamStartDateTime
+                        Exam End Date :  @item.ExamEndDateTime
+                        <form method="get" asp-action="StartExam" asp-controller="student">
+                            <input type="hidden" name="id" value="@item.CourseId" />
+                            <input type="hidden" name="Studentid" value="@ViewBag.stdid" />
+                            <button type="submit" id="startExamButton-@item.CourseId" class="btn btn-info" disabled>Start Exam</button>
+
+                        </form>
+                        @*                         <a asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info">Start Exam</a>
+                    @                        @ <button id="startExamButton-@item.CourseId" class="btn btn-info" disabled  asp-action="StartExam" asp-controller="student" asp-route-id="@item.CourseId" asp-route-Studentid="@ViewBag.stdid" class="btn btn-info"  >Start Exam</button> *@
+                    </td>
+                </tr>
+                <script>
+
+
+                    var examStartDateTime = "@item.ExamStartDateTime";
+                    var modifiedDateTime = examStartDateTime.replace(' ', 'T');
+
+                    var endExamDateTime = "@item.ExamEndDateTime";
+                    var modifiedDateTime2 = endExamDateTime.replace(' ', 'T');
+
+                    var s = modifiedDateTime.replaceAll("/", "-");
+                    var m = modifiedDateTime2.replaceAll("/", "-");
+
+                    var dateString = s;
+                    var parts = dateString.split("T");
+                    var datePart = parts[0];
+                    var timePart = parts[1];
+
+                    var dateComponents = datePart.split("-");
+                    var rearrangedDateString = dateComponents[2] + "-" + dateComponents[1] + "-" + dateComponents[0] + "T" + timePart;
+
+
+
+                    var dateString2 = m;
+                    var parts2 = dateString2.split("T");
+                    var datePart2 = parts2[0];
+                    var timePart2 = parts2[1];
+
+                    var dateComponents2 = datePart2.split("-");
+                    var rearrangedDateString2 = dateComponents2[2] + "-" + dateComponents2[1] + "-" + dateComponents2[0] + "T" + timePart2;
+
+
+                    var startExamButtonId = "startExamButton-@item.CourseId";
+                    var startTime = new Date(rearrangedDateString).getTime();
+                    var endTime = new Date(rearrangedDateString2).getTime();
+
+                    console.log(startTime);
+                    console.log(endTime);
+                    function checkExamTime() {
+                        var currentTime = new Date().getTime();
+                        console.log(currentTime);
+                        console.log("start time",startTime);
+                        console.log("end time",endTime)
+
+                        if (currentTime >= startTime && currentTime <= endTime) {
+                            document.getElementById(startExamButtonId).disabled = false;
+                        } else {
+                            document.getElementById(startExamButtonId).disabled = true;
+                        }
+                    }
+
+                    checkExamTime();
+
+                    // Periodically check every second (you can adjust the interval as needed)
+                    setInterval(checkExamTime, 1000);
+                </script>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

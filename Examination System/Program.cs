@@ -1,5 +1,7 @@
 using Examination_System.Models;
 using Examination_System.Repository;
+
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using static Examination_System.Repository.ICourseRepo;
 
@@ -18,10 +20,21 @@ namespace Examination_System
             {
                 a.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=.;Initial Catalog=ExaminationSystem;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
             });
+
+            builder.Services.AddTransient<IstudentRepo, StudentRepo>();
+            builder.Services.AddTransient<IInstructorRepo, InstructorRepo>();
+            builder.Services.AddTransient<IQuestionRepo, QuestionRepo>();
+            builder.Services.AddTransient<IExamRepo, ExamRepo>();
+            builder.Services.AddTransient<IChoiceRepo, ChoiceRepo>();
+            builder.Services.AddTransient<IReportRepo, ReportRepo>();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();   //-------------added----------
+
+
                 builder.Services.AddTransient(typeof(IInstructorRepo), typeof(InstructorRepo));
                 builder.Services.AddTransient(typeof(ICourseRepo), typeof(CourseRepo));
                 builder.Services.AddTransient(typeof(IStudentRepo), typeof(StudentRepo));
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -35,6 +48,9 @@ namespace Examination_System
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();        //--------added for cookie-----------
+
 
             app.UseAuthorization();
 

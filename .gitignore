@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Examination System/Views/student/ShowCourses.cshtml
+/Examination System/Views/student/StartExam.cshtml
+/Examination System/Views/student/StartExam.cshtml
