@@ -1,0 +1,24 @@
+﻿@model Student
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>Edit Student</title>
+</head>
+<body>
+    <h1>Edit Student in Course with ID: @ViewBag.CourseId</h1>
+    <form method="post">
+        <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
+        <input type="hidden" asp-for="StudentId" />
+        <label asp-for="StudentName"></label>
+        <input asp-for="StudentName" class="form-control" />
+        <span asp-validation-for="StudentName"></span>
+        <input type="submit" value="Update Student" class="btn btn-primary" />
+    </form>
+</body>
+</html>

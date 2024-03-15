@@ -42,6 +42,7 @@ namespace Examination_System
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
             app.Run();
         }
     }

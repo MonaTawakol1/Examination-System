@@ -30,10 +30,10 @@
                     <td>@item.CourseId</td>
                     <td>@item.CourseName</td>
                     <td>
-                        <a asp-action="showtopics" asp-controller="instructor" asp-route-id="@item.CourseId" class="btn btn-danger">show topics</a>
+                        <a asp-action="showtopics" asp-controller="instructor" asp-route-CourseId="@item.CourseId" class="btn btn-danger">show topics</a>
                     </td>
                     <td>
-                        <a asp-action="showstudents" asp-controller="instructor" class="btn btn-danger">show students</a>
+                        <a asp-action="showstudents" asp-controller="instructor" asp-route-CourseId="@item.CourseId" class="btn btn-danger">show students</a>
                     </td>
                 </tr>
             }
