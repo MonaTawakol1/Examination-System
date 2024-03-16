@@ -77,7 +77,12 @@ namespace Examination_System.Controllers
             }
             Choice ch = new Choice() { QuestionId = idd, ChoiceBody = choiceAnswer, IsAnswer = true };
             questionRepo.AddChoices(ch);
-            return View();
+        
+
+          
+          
+            return RedirectToAction("ShowQuestions", new { id = id });
+
         }
 
         public IActionResult ShowQuestions(int id)
@@ -104,16 +109,7 @@ namespace Examination_System.Controllers
             ViewBag.CourseId = courseId;
             return View();
             Question question = questionRepo.GetQuestion(id);
-            //Choice Answer = questionRepo.getQuestionAnswer(question);
-            //List<Choice> choices = questionRepo.GetQuestionChoices(question);
-            //int courseId = questionRepo.getQuestionCourse(question).CourseId;
-            //EditQuestionViewModel editQuestionViewModel = new EditQuestionViewModel()
-            //{
-            //    question = questionRepo.GetQuestion(id),
-            //    Answer = Answer,
-            //    Choices = choices,
-            //    CourseId = courseId
-            //};
+         
 
 
             return View(question);
@@ -123,12 +119,14 @@ namespace Examination_System.Controllers
         public IActionResult AddStudent(int courseId, int StudentId)
         public IActionResult EditQuestion(Question q)
         {
+
             _studentRepo.AddStudentToCourse(courseId, StudentId);
             return RedirectToAction("ShowStudents", new { courseId = courseId });
 
 
+
             questionRepo.updateQuestion(q);
-            return RedirectToAction("ShowQuestions");
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult UpdateStudent(int courseId, int studentId)
@@ -148,7 +146,7 @@ namespace Examination_System.Controllers
             _studentRepo.RemoveStudentFromCourse(courseId, studentId);
             return RedirectToAction("ShowStudents", new { courseId = courseId });
             examRepo.AddExamDuration(id, ExamStartDateTime, ExamEndDateTime, NumberOfTrueAndFalseQuestions, NumberOfMcqQuestions);
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

@@ -4,21 +4,32 @@
     SelectList studentSelect = new SelectList(ViewBag.students, "StudentId", "StudentId");
 }
 
-<h1>getAllStudent</h1>
 
 
 
-<label>Student ID</label>
-<select id="studentSelect" onchange="loadReport(this.value)">
-    <option>Select Student</option>
-    @foreach (var item in studentSelect)
-    {
 
-        <option value="@item.Value">@item.Value</option>
-    }
-</select>
+<h2 class="text-center fw-bold mt-5 mb-5">Show Students Grades in Exams</h2>
 
+
+<div class="course text-center">
+
+
+    <select id="studentSelect" onchange="loadReport(this.value)">
+        <option>Select Student</option>
+        @foreach (var item in studentSelect)
+        {
+
+            <option value="@item.Value">@item.Value</option>
+        }
+    </select>
+</div>
 <div id="div1"></div>
+
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
+
+
 
 <script>
     function loadReport(StudentId) {

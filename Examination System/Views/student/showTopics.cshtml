@@ -1,51 +1,26 @@
 ﻿@model IEnumerable<Topic>
 @{
-    ViewData["Title"] = "showTopics";
+    ViewData["Title"] = "Topics";
 }
 
-<h1>showTopics</h1>
 
-
-<html>
-<head>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
-<body>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Topic Name </th>
-                @* <th scope="col">Actions</th>
- *@
-
-
-            </tr>
-        </thead>
-
-
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="container mt-5 topic">
+        <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+        <table class="table">
+            <thead>
                 <tr>
-                   
-                    <td scope="row">@item.TopicName</td>
-                   @*  <td>
-                        <a asp-action="showTopics" asp-controller="student" asp-route-id="@item.CourseId" class="btn btn-info">show Topics</a>
-
-                    </td> *@
-
+                    <th scope="col"> Topic Names</th>
+                  
                 </tr>
-            }
-
-
-        </tbody>
-    </table>
-
-</body>
-
-
-
-
-</html>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.TopicName</td>
+                      
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

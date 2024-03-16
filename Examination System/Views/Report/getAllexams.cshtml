@@ -5,22 +5,34 @@
 }
 
 
-<h1>get Exams</h1>
 
-<label>Exam ID</label>
-<select id="ExamSelect" onchange="loadReport(this.value)">
-    <option>Select Exam Id</option>
-    @foreach (var item in ExamSelect)
-    {
-        
-        <option value="@item.Value">@item.Value</option>
-    }
-</select>
+<h2 class="text-center fw-bold mt-5 mb-5">Show All Questions in Exam</h2>
 
+
+<div class="course text-center">
+
+
+    <select id="ExamSelect" onchange="loadReport(this.value)">
+        <option>Select Exam Id</option>
+        @foreach (var item in ExamSelect)
+        {
+
+            <option value="@item.Value">@item.Value</option>
+        }
+    </select>
+</div>
 <div id="div1"></div>
+
+
+
+
+
 
 <script>
     function loadReport(ExamId) {
         $("#div1").load("/Report/Reports5?ExamId=" + ExamId);
     }
 </script>
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>

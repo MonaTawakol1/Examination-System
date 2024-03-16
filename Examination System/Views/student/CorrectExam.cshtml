@@ -3,67 +3,67 @@
     ViewData["Title"] = "CorrectExam";
 }
 
-<h1>CorrectExam</h1>
 
+<div class="container mt-5">
+    <h1 class="text-center">Exam Results</h1>
 
-<form method="post">
+    <form id="examForm" method="post">
 
-    <h1> Your Grade : @ViewBag.grade %</h1>
-    @foreach (var item in @Model)
-    {
-        <h3>@item.Question.QuestionBody</h3><p>(@item.Question.QuestionMark)</p>
-
-
-        foreach(var ch in item.Question.ChoicesList)
+        <h1> Your Grade : @ViewBag.grade %</h1>
+        @foreach (var item in @Model)
         {
+            <div class="question">
+            <h3>@item.Question.QuestionBody</h3>
 
-            if (item.ExamAnswers == ch.ChoiceId)
-            {
-                if (ch.IsAnswer == true)
+                
+            </div>
+            <div class="choices">
+                @foreach (var ch in item.Question.ChoicesList)
                 {
-                    <p class="text-success">Correct</p>
-                    <input type="radio" value="@ch.ChoiceId" />
+                    <div class="form-check">
+                        @if (item.ExamAnswers == ch.ChoiceId)
+                        {
+                            if (ch.IsAnswer)
+                            {
+                               
+                                <p   name="ChoiceIds[@item.QuestionId]" id="choice-@item.QuestionId-@ch.ChoiceId" value="@ch.ChoiceId"  ></p>
+                                <label class="form-check-label text-success" for="choice-@item.QuestionId-@ch.ChoiceId">@ch.ChoiceBody   <i class="fas fa-check text-success me-2"></i> </label>
+                              
+                            }
+                            else
+                            {
 
-                    <label class="text-success">@ch.ChoiceBody</label>
-                    <br />
-                   
-
+                                <p   name="ChoiceIds[@item.QuestionId]" id="choice-@item.QuestionId-@ch.ChoiceId" value="@ch.ChoiceId"  > </p>
+                                <label class="form-check-label text-danger" for="choice-@item.QuestionId-@ch.ChoiceId">@ch.ChoiceBody   <i class="fas fa-times text-danger me-2"></i> </label>
+                            }
+                        }
+                        
+                        else
+                        {
+                            if (ch.IsAnswer)
+                            {
+                                <p  name="ChoiceIds[@item.QuestionId]" id="choice-@item.QuestionId-@ch.ChoiceId" value="@ch.ChoiceId" ></p>
+                                <label class="form-check-label text-success" for="choice-@item.QuestionId-@ch.ChoiceId">@ch.ChoiceBody </label>
+                            }
+                            else
+                            {
+                                <p   name="ChoiceIds[@item.QuestionId]" id="choice-@item.QuestionId-@ch.ChoiceId" value="@ch.ChoiceId" ></p>
+                                <label class="form-check-label" for="choice-@item.QuestionId-@ch.ChoiceId">@ch.ChoiceBody</label>
+                            }
+                        }
+                    </div>
                 }
-                else
-                {
-                    <p class="text-danger">Wrong</p>
-                    <input type="radio" value="@ch.ChoiceId" />
+            </div>
 
-                    <label class="text-danger">@ch.ChoiceBody</label>
-                  
-                    <br />
-                }
-            }
-            else
-            {
-                if (ch.IsAnswer == true)
-                {
-                    <input type="radio" value="@ch.ChoiceId" />
-
-                    <label class="text-success">@ch.ChoiceBody</label>
-                    <br />
-
-                }
-                else
-                {
-                    <input type="radio" value="@ch.ChoiceId" />
-
-                    <label>@ch.ChoiceBody</label>
-                    <br />
-                }
-            }
-
-            }
-          
-            
             <br />
-        
 
-    }
-   
-</form>
+
+        }
+
+      
+    
+    </form>
+
+     
+
+</div>

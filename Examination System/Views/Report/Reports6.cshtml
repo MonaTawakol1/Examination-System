@@ -1,35 +1,30 @@
 ﻿@model IEnumerable<ExamQuestions>
 @{
     ViewData["Title"] = "Reports6";
+    
 }
 
-<h1>Reports6</h1>
-
-
-<table class="table table-bordered">
+<table class="table table-bordered report mt-5 ">
     <tr>
-
-       
-        <th>exam question</th>
-
-
+        <th>Exam Question</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
-
-          
             <td>
-                @item.Question.QuestionBody
-                @foreach(var choic in item.Question.ChoicesList)
+               Question :  @item.Question.QuestionBody
+                @foreach (var choic in item.Question.ChoicesList)
                 {
                     if (choic.ChoiceId == item.ExamAnswers)
                     {
-                        <p class="text-info"> @choic.ChoiceBody</p>
+                        <p class="AnswerColor"> @choic.ChoiceBody</p>
                     }
+                    else{
                     <p> @choic.ChoiceBody</p>
+                    }
                 }
             </td>
         </tr>
     }
 </table>
+
