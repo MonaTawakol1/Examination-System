@@ -16,5 +16,7 @@ namespace Examination_System.Models
         public List<Student> StudentList { get; set; }
 
         public Instructor branchmanger { get; set; }
+
+        public Boolean isDeleted {  get; set; }=false;
     }
 }

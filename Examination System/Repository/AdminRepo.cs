@@ -30,6 +30,18 @@ namespace Examination_System.Repository
         public User getOldStudentUsers(User u);
         public void EditUserStudent(User u, User old);
         public void DeleteUserStudent(User user);
+        public List<Branch> ShowBranches();
+        public List<User> getusersbranches();
+        public void AddBranch(Branch branch);
+        public Branch getBranchById(int id);
+        public void UpdateBranch(Branch branch);
+        public void DeleteBranch(Branch branch);
+        public List<Department> getDepartmentList();
+        public void AddDepartment(Department department);
+        public Department GetDepartmentById(int id);
+        public void UpdateDepartment(Department department);
+        public void removeDepartment(Department department);
+        public List<Course> GetListOfCourses();
     }
 
     public class AdminRepo :IAdminRepo
@@ -117,7 +129,7 @@ namespace Examination_System.Repository
 
         public List<Branch> getBranches()
         {
-            return db.Branches.ToList();
+            return db.Branches.Where(a=>a.isDeleted==false).ToList();
         }
         public User AddStudent(RegisterStdVM u)
         {
@@ -175,6 +187,67 @@ namespace Examination_System.Repository
             db.Students.Remove(std);
             db.Users.Remove(user);
             db.SaveChanges();
+        }
+
+        public List<Branch> ShowBranches()
+        {
+            var model = db.Branches.Include(a => a.branchmanger).ThenInclude(a => a.User).Where(a=>a.isDeleted==false).ToList();
+            return model;
+        }
+        public List<User> getusersbranches()
+        {
+           return db.Users.Where(a => a.Id == a.Instructor.UserId).Include(a => a.Instructor).ToList();
+        }
+
+        public void AddBranch(Branch branch)
+        {
+            db.Branches.Add(branch);
+            db.SaveChanges();
+        }
+        public Branch getBranchById(int id)
+        {
+            return  db.Branches.FirstOrDefault(a => a.BranchId == id);
+        }
+        public void UpdateBranch(Branch branch)
+        {
+            db.Branches.Update(branch);
+            db.SaveChanges();
+        }
+        public void DeleteBranch(Branch branch)
+        {
+            branch.isDeleted = true;
+            db.Branches.Update(branch);
+            db.SaveChanges();
+        }
+        public List<Department> getDepartmentList()
+        {
+            return db.Departments.Include(a => a.Manager).ThenInclude(a => a.User).Where(a=>a.isDeleted==false).ToList();
+        }
+        public void AddDepartment(Department department)
+        {
+            db.Departments.Add(department);
+            db.SaveChanges();
+        }
+        public Department GetDepartmentById(int id)
+        {
+            return db.Departments.FirstOrDefault(a => a.DepartmentId == id);
+        }
+        public void UpdateDepartment(Department department)
+        {
+            db.Departments.Update(department);
+            db.SaveChanges();
+        }
+
+        public void removeDepartment(Department department)
+        {
+           department.isDeleted = true;
+            db.Departments.Update(department);
+            db.SaveChanges();
+        }
+
+        public List<Course> GetListOfCourses()
+        {
+            return db.Courses.Include(a=>a.Instructors).ToList();
         }
     }
 }

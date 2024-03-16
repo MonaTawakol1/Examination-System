@@ -183,6 +183,132 @@ namespace Examination_System.Controllers
             return RedirectToAction("ShowStudent");
         }
 
+        public IActionResult ShowBranches()
+        {
+            var model=adminRepo.ShowBranches();
+            return View(model);
+        }
+
+        public IActionResult createBranches()
+        {
+            //ViewBag.deptList = db.Users.Where(a => a.Id == a.Instructor.UserId).Include(a => a.Instructor).ToList();
+            ViewBag.deptList = adminRepo.getusersbranches();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult createBranches(Branch model)
+        {
+            if (model.BranchName?.Length > 1)
+            {
+                adminRepo.AddBranch(model);
+                return RedirectToAction("ShowBranches");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        public IActionResult EditBranch(int? id)
+        {
+            ViewBag.deptList = adminRepo.getusersbranches();
+
+            if (id == null)
+                return BadRequest();
+            var model = adminRepo.getBranchById(id.Value);
+            if (model == null)
+                return NotFound();
+            return View(model);
+
+        }
+        [HttpPost]
+        public IActionResult EditBranch(Branch u)
+        {
+            adminRepo.UpdateBranch(u);
+            return RedirectToAction("ShowBranches");
+
+        }
+
+        public IActionResult DeleteBranch(int id)
+        {
+            if (id == null)
+                return BadRequest();
+            var model = adminRepo.getBranchById(id);
+            if (model == null)
+                return NotFound();
+
+          
+            adminRepo.DeleteBranch(model);
+            return RedirectToAction("ShowBranches");
+        }
+
+        public IActionResult ShowDepartment()
+        {
+            var model = adminRepo.getDepartmentList();
+            return View(model);
+        }
+
+        public IActionResult createDepartment()
+        {
+
+            ViewBag.deptList = adminRepo.getusersbranches();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult createDepartment(Department model)
+        {
+            if (model.DepartmentName?.Length > 1)
+            {
+                adminRepo.AddDepartment(model);
+                return RedirectToAction("ShowDepartment");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+
+        public IActionResult EditDepartment(int? id)
+        {
+            ViewBag.deptList = adminRepo.getusersbranches();
+            if (id == null)
+                return BadRequest();
+            var model = adminRepo.GetDepartmentById(id.Value);
+            if (model == null)
+                return NotFound();
+            return View(model);
+
+        }
+        [HttpPost]
+        public IActionResult EditDepartment(Department u)
+        {
+          adminRepo.UpdateDepartment(u);
+            return RedirectToAction("ShowDepartment");
+
+        }
+
+        public IActionResult DeleteDepartment(int id)
+        {
+            if (id == null)
+                return BadRequest();
+            var model = adminRepo.GetDepartmentById(id);
+            if (model == null)
+                return NotFound();
+
+            adminRepo.removeDepartment(model);
+            return RedirectToAction("ShowDepartment");
+        }
+
+        public IActionResult ShowCourses()
+        {
+            var model = adminRepo.GetListOfCourses();
+            return View(model);
+
+        }
+
+
+
     }
 
 
