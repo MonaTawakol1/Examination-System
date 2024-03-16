@@ -2,8 +2,6 @@
 using Examination_System.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace Examination_System.Controllers
 {
@@ -15,10 +13,6 @@ namespace Examination_System.Controllers
         IExamRepo examRepo;
 
         public InstructorController(IInstructorRepo _instructorRepo , IQuestionRepo _questionRepo, IExamRepo _examRepo)
-        public IInstructorRepo insRepo { get; set; }
-        public ICourseRepo _courseRepo { get; set; }
-        public IStudentRepo _studentRepo { get; set; }
-        public InstructorController(IInstructorRepo instructorRepo, ICourseRepo courseRepo, IStudentRepo studentRepo)
         {
             instructorRepo = _instructorRepo;
             questionRepo = _questionRepo;
@@ -50,14 +44,10 @@ namespace Examination_System.Controllers
 
         public IActionResult AddNewQuestion(int id)
         {
-            var model = insRepo.GetAllCourses(instructorId);
-            return View(model);
 
             ViewBag.id = id;
             return View();
         }
-        //static int courseId = 2;
-        public IActionResult ShowTopics(int CourseId)
 
         [HttpPost]
         public IActionResult AddNewQuestion(Question question, List<String> choicesBody, string choiceAnswer ,int id)
@@ -71,8 +61,6 @@ namespace Examination_System.Controllers
                 {
                     Choice ch1 = new Choice() { QuestionId = idd, ChoiceBody = choice, IsAnswer = false };
                     questionRepo.AddChoices(ch1);
-            var model = _courseRepo.GetAllTopics(CourseId);
-            return View(model);
                 }
             }
             Choice ch = new Choice() { QuestionId = idd, ChoiceBody = choiceAnswer, IsAnswer = true };
@@ -92,22 +80,14 @@ namespace Examination_System.Controllers
         }
         public IActionResult DeleteQuestion(int id)
         {
-            var model = _studentRepo.GetAllStudents(courseId);
-            ViewBag.CourseId = courseId;
-            return View(model);
             int courseId = instructorRepo.GetCourseIdByQuestionId(id);
             instructorRepo.DeleteQuestion(id);
             return RedirectToAction("ShowQuestions", new { id = courseId });
         }
-        [HttpGet]
-        public IActionResult AddStudent(int courseId)
 
 
         public IActionResult EditQuestion(int id)
         {
-            ViewBag.StdList = _studentRepo.GetAllStudents();
-            ViewBag.CourseId = courseId;
-            return View();
             Question question = questionRepo.GetQuestion(id);
          
 
@@ -116,26 +96,16 @@ namespace Examination_System.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddStudent(int courseId, int StudentId)
         public IActionResult EditQuestion(Question q)
         {
-
-            _studentRepo.AddStudentToCourse(courseId, StudentId);
-            return RedirectToAction("ShowStudents", new { courseId = courseId });
-
-
+            
 
             questionRepo.updateQuestion(q);
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public IActionResult UpdateStudent(int courseId, int studentId)
 
         public IActionResult AddExam(int id)
         {
-            var student = _studentRepo.GetStudentById(studentId);
-            ViewBag.CourseId = courseId;
-            return View(student);
            Course crs =  examRepo.getCourseById(id);
             return View(crs);
         }
@@ -143,8 +113,6 @@ namespace Examination_System.Controllers
         [HttpPost]
         public IActionResult AddExam(int id , DateTime ExamStartDateTime, DateTime ExamEndDateTime, int NumberOfTrueAndFalseQuestions, int NumberOfMcqQuestions)
         {
-            _studentRepo.RemoveStudentFromCourse(courseId, studentId);
-            return RedirectToAction("ShowStudents", new { courseId = courseId });
             examRepo.AddExamDuration(id, ExamStartDateTime, ExamEndDateTime, NumberOfTrueAndFalseQuestions, NumberOfMcqQuestions);
             return RedirectToAction("Index");
         }

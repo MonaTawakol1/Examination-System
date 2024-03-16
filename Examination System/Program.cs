@@ -3,7 +3,6 @@ using Examination_System.Repository;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using static Examination_System.Repository.ICourseRepo;
 
 namespace Examination_System
 {
@@ -18,7 +17,7 @@ namespace Examination_System
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ItiContext>(a =>
             {
-                a.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=.;Initial Catalog=ExaminationSystem;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
+                a.UseSqlServer(builder.Configuration.GetConnectionString("con"));
             });
 
             builder.Services.AddTransient<IstudentRepo, StudentRepo>();
@@ -30,9 +29,6 @@ namespace Examination_System
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();   //-------------added----------
 
 
-                builder.Services.AddTransient(typeof(IInstructorRepo), typeof(InstructorRepo));
-                builder.Services.AddTransient(typeof(ICourseRepo), typeof(CourseRepo));
-                builder.Services.AddTransient(typeof(IStudentRepo), typeof(StudentRepo));
             var app = builder.Build();
 
 
@@ -57,7 +53,6 @@ namespace Examination_System
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
             app.Run();
         }

@@ -1,6 +1,4 @@
 ﻿using Examination_System.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Diagnostics.Metrics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,11 +14,6 @@ namespace Examination_System.Repository
         public Instructor GetInstructorByUserId(int userId);
     }
     public class InstructorRepo : IInstructorRepo
-    {
-        public List<Course> GetAllCourses(int instructorId);
-    }
-
-    public class InstructorRepo: IInstructorRepo
     {
         ItiContext db;
 
@@ -65,17 +58,5 @@ namespace Examination_System.Repository
             return instructor;
         }
 
-        public List<Course> GetAllCourses(int instructorId)
-        {
-           var instructor = db.Instructors.Include(i=>i.Courses).SingleOrDefault(i=>i.InstructorId== instructorId);
-            if(instructor == null)
-            {
-                return new List<Course>();
-            }
-            else
-            {
-                return instructor.Courses.ToList();
-            }
-        }
     }
 }
