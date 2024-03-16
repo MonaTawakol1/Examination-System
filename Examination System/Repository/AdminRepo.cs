@@ -2,6 +2,7 @@
 using Examination_System.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Net;
 
 namespace Examination_System.Repository
 {
@@ -47,6 +48,8 @@ namespace Examination_System.Repository
         public List<Instructor> ListOfInstructorsNotInCourse(int courseId);
 
         public void AddInstructorToCourse(int InstructorId, int CourseId);
+        public List<Instructor> getInstructorsInCourse(int CourseId);
+        public void RemoveInsFromCourse(int courseId, int InstructorId);
     }
 
     public class AdminRepo :IAdminRepo
@@ -316,22 +319,44 @@ namespace Examination_System.Repository
 
         public List<Instructor> ListOfInstructorsNotInCourse(int courseId)
         {
-            var instructors = db.Instructors.Include(a => a.Departments).ToList();
+            var instructors = db.Instructors.Include(a => a.Departments).Include(a => a.Courses).ToList();
 
-            List<Department> departmentsInCourse = ListOfDepartmentInCourse(courseId);
+            // List to store instructors who are teaching the given course
+            List<Instructor> instructorsInCourse = new List<Instructor>();
 
-            List<Instructor> instructorsNotInCourse = new List<Instructor>();
-
-            foreach (var instructor in instructors)
+            // Find instructors teaching the given course
+            foreach (var ins in instructors)
             {
-                // Check if any department of the instructor is not in the departments of the course
-                if (instructor.Departments.Any(d => !departmentsInCourse.Contains(d)))
+                foreach (var crs in ins.Courses)
                 {
-                    instructorsNotInCourse.Add(instructor);
+                    if (crs.CourseId == courseId)
+                    {
+                        instructorsInCourse.Add(ins);
+                        break; // Once found, no need to continue searching
+                    }
                 }
             }
 
-            return instructorsNotInCourse;
+            // Retrieve departments associated with the given course
+            List<Department> departmentsInCourse = ListOfDepartmentInCourse(courseId);
+
+            // List to store instructors not teaching the given course
+            List<Instructor> notInCourse = new List<Instructor>();
+
+            // Find instructors who are in departments associated with the course but not teaching it
+            foreach (var instructor in instructors)
+            {
+                // Check if the instructor is in any of the departments associated with the course
+                bool isInCourseDepartment = departmentsInCourse.Any(dept => dept.instructors.Contains(instructor));
+
+                // If the instructor is in one of the departments but not teaching the course, add them to the list
+                if (isInCourseDepartment && !instructorsInCourse.Contains(instructor))
+                {
+                    notInCourse.Add(instructor);
+                }
+            }
+
+            return notInCourse;
         }
 
 
@@ -341,6 +366,39 @@ namespace Examination_System.Repository
             var instructor = db.Instructors.FirstOrDefault(a => a.InstructorId == InstructorId);
             var course = db.Courses.Include(a => a.Instructors).FirstOrDefault(a => a.CourseId == CourseId);
             course.Instructors.Add(instructor);
+            db.Courses.Update(course);
+            db.SaveChanges();
+        }
+
+        public List<Instructor> getInstructorsInCourse(int CourseId)
+        {
+
+            var instructors = db.Instructors.Include(a => a.Departments).Include(a => a.Courses).ToList();
+
+            // List to store instructors who are teaching the given course
+            List<Instructor> instructorsInCourse = new List<Instructor>();
+
+            // Find instructors teaching the given course
+            foreach (var ins in instructors)
+            {
+                foreach (var crs in ins.Courses)
+                {
+                    if (crs.CourseId == CourseId)
+                    {
+                        instructorsInCourse.Add(ins);
+                        break; // Once found, no need to continue searching
+                    }
+                }
+            }
+
+            return instructorsInCourse;
+        }
+
+        public void RemoveInsFromCourse(int courseId,int InstructorId)
+        {
+            var instructor=db.Instructors.FirstOrDefault(a=>a.InstructorId== InstructorId);
+            var course = db.Courses.Include(a => a.Instructors).FirstOrDefault(a => a.CourseId == courseId);
+            course.Instructors.Remove(instructor);
             db.Courses.Update(course);
             db.SaveChanges();
         }

@@ -20,6 +20,7 @@
                     <td>@item.CourseName</td>
                     <td>
                         <a asp-action="ShowInstructors" asp-controller="Admin" asp-route-courseId="@item.CourseId" class="btn btn-info">Add Instructors</a>
+                        <a asp-action="ShowInstructorsInCourse" asp-controller="Admin" asp-route-courseId="@item.CourseId" class="btn btn-info">Remove Instructors</a>
                     </td>
                 </tr>
             }

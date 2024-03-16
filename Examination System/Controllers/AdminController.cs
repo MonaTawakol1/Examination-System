@@ -322,6 +322,21 @@ namespace Examination_System.Controllers
             return RedirectToAction("ShowCourses");
         }
 
+        public IActionResult ShowInstructorsInCourse(int courseId)
+        {
+            var model = adminRepo.getInstructorsInCourse(courseId);
+            ViewBag.instructors = model;
+            ViewBag.courseId = courseId;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ShowInstructorsInCourse(int courseId, int InstructorId)
+        {
+
+            adminRepo.RemoveInsFromCourse(InstructorId, courseId);
+            return RedirectToAction("ShowCourses");
+        }
+
 
     }
 

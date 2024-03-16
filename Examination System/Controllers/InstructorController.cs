@@ -1,5 +1,6 @@
 ﻿using Examination_System.Models;
 using Examination_System.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -7,6 +8,7 @@ namespace Examination_System.Controllers
 {
     public class InstructorController : Controller
     {
+        
 
         IInstructorRepo instructorRepo;
         IQuestionRepo questionRepo;
