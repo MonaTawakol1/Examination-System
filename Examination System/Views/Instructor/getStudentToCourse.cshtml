@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "getStudentToCourse";
+    SelectList studentSelect = new SelectList(ViewBag.Students, "StudentId", "StudentId");
+}
+
+
+
+
+<h2 class="text-center fw-bold mt-5 mb-5">Show Students Grades in Exams</h2>
+
+
+<div class="course text-center">
+
+
+    <select id="studentSelect" asp-items="studentSelect">
+        <option>Select Student</option>
+       
+    </select>
+</div>
+
+

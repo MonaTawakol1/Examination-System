@@ -12,6 +12,16 @@ namespace Examination_System.Repository
         public void DeleteQuestion(int id);
         public int GetCourseIdByQuestionId(int questionId);
         public Instructor GetInstructorByUserId(int userId);
+        public Instructor GetInstructor(int instructorId);
+        public List<Course> getCoursesInDepartments(int instructorId, int departmentId);
+        public List<Course> getCoursesInDepartmentss(int instructorId, int departmentId);
+
+        public List<Student> getListOfStudents(int courseId);
+
+        public List<Student> GetStudentNotInCourse(int courseId, int departmentId);
+
+        public void Add(Student std, int CourseId);
+
     }
     public class InstructorRepo : IInstructorRepo
     {
@@ -57,6 +67,100 @@ namespace Examination_System.Repository
             Instructor instructor=db.Instructors.Include(a=>a.Courses).Include(a=>a.User).FirstOrDefault(a=>a.UserId == userId);
             return instructor;
         }
+
+        public Instructor GetInstructor(int instructorId)
+        {
+            var instructor = db.Instructors.Include(a => a.Departments).Include(a => a.User).FirstOrDefault(a => a.UserId == instructorId);
+            return instructor;
+
+        }
+      
+
+        public List<Course> getCoursesInDepartments(int instructorId , int departmentId)
+        {
+            
+
+            var departments = db.Departments.Include(a => a.courses).FirstOrDefault(a => a.DepartmentId == departmentId);
+            var courses = departments.courses.ToList();
+            List<Course> crs = new List<Course>();
+            foreach(var course in courses)
+            {
+               foreach(var item in course.Instructors)
+                {
+                    if(item.InstructorId == instructorId)
+                    {
+                        crs.Add(course);
+                    }
+                }
+            }
+            return crs;
+        }
+
+        public List<Course> getCoursesInDepartmentss(int instructorId, int departmentId)
+        {
+            var ins = db.Instructors.Include(a => a.Courses).ThenInclude(a => a.Departments).FirstOrDefault(a => a.InstructorId == instructorId);
+            var courses = ins.Courses.ToList(); 
+            List<Course> crs = new List<Course>();
+            foreach (var course in courses)
+            {
+                foreach (var item in course.Departments)
+                {
+                    if (item.DepartmentId == departmentId)
+                    {
+                        crs.Add(course);
+                    }
+                }
+            }
+            return crs;
+        }
+
+        public List<Student> getListOfStudents(int courseId)
+        {
+            var students = db.Students.Include(a=>a.User).Include(a => a.Courses).ToList();
+            List<Student> studentsList = new List<Student>(); 
+            foreach(var std in students)
+            {
+                foreach(var crs in std.Courses)
+                {
+                    if(crs.CourseId == courseId)
+                    {
+                        studentsList.Add(std);
+                    }
+                }
+            }
+            return studentsList;
+        }
+
+        public List<Student> GetStudentNotInCourse(int courseId , int departmentId)
+        {
+            
+            var student = db.Students.Where(a=>a.DepartmentId == departmentId).ToList();
+           var Allstudents =  getListOfStudents(courseId);
+            
+            foreach(var std in student)
+            {
+                foreach(var item in Allstudents)
+                {
+                    if(std.StudentId == item.StudentId)
+                    {
+                        student.Remove(std);
+                    }
+                    
+                }
+            }
+
+            return student;
+
+        }
+        public void Add(Student std , int CourseId)
+        {
+           var courses = db.Courses.Include(a=>a.Students).FirstOrDefault(a=>a.CourseId == CourseId);
+            courses.Students.Add(std);
+            db.SaveChanges();
+            
+        }
+
+
 
     }
 }

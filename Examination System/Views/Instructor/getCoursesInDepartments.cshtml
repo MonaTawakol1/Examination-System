@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Course>
+@{
+    ViewData["Title"] = "getCoursesInDepartments";
+}
+
+<h2 class="text-center fw-bold mt-5 mb-5">Show Courses in Department</h2>
+
+<div class="container mt-5 instuctorIndex report2">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Course Id</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Action</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+           
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @item.CourseId
+                    </td>
+                    <td>
+                   
+                        @item.CourseName
+                    </td>
+                    <td>
+
+                        <a class="btn btn-info" asp-action="getListOfStudents"  asp-route-courseId=" @item.CourseId">Show Students</a>
+                        <a class="btn btn-info" asp-action="getStudentToCourse" asp-route-courseId="@item.CourseId" asp-route-departmentId="@ViewBag.deptId">Add Students</a>
+
+
+                    </td>
+                 
+
+                </tr>
+                }
+
+         
+        </tbody>
+    </table>
+</div>
+

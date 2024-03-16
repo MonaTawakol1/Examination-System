@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Student>
+@{
+    ViewData["Title"] = "getListOfStudents";
+}
+
+
+<h2 class="text-center fw-bold mt-5 mb-5">List of students</h2>
+<h4>Number of Students :@Model.Count()</h4>
+<div class="container mt-5 instuctorIndex report2">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Student Id</th>
+                <th scope="col">Student Name</th>
+            
+               
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                
+                @foreach (var item in Model)
+                {
+                    
+
+                    <td>
+                        @item.StudentId
+                    </td>
+                    <td>  
+                        @item.User.Name
+                    </td>
+
+                }
+
+            </tr>
+        </tbody>
+    </table>
+   
+</div>

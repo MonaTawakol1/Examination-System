@@ -116,5 +116,51 @@ namespace Examination_System.Controllers
             examRepo.AddExamDuration(id, ExamStartDateTime, ExamEndDateTime, NumberOfTrueAndFalseQuestions, NumberOfMcqQuestions);
             return RedirectToAction("Index");
         }
+        public IActionResult GetInstructor( int departmentId)
+        {
+            var principal = HttpContext.User;
+
+           
+            var sidClaim = principal.FindFirst(ClaimTypes.Sid);
+
+            if (sidClaim != null)
+            {
+                // Sid value found, you can access it here
+                var sidValue = sidClaim.Value;
+                int id = int.Parse(sidValue);
+                var instructor = instructorRepo.GetInstructor(id);
+                ViewBag.deptId = departmentId;
+                
+                return View(instructor);
+            }
+            else
+            {
+               
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
+        public IActionResult getCoursesInDepartments(int instructorId , int departmentId)
+        {
+            List<Course> courses = instructorRepo.getCoursesInDepartmentss(instructorId, departmentId);
+            return View(courses);
+        }
+        public IActionResult getListOfStudents(int courseId)
+        {
+            var std = instructorRepo.getListOfStudents(courseId);
+            return View(std);
+        }
+
+
+        public IActionResult getStudentToCourse (int courseId, int departmentId)
+        {
+          List<Student> stds = instructorRepo.GetStudentNotInCourse(courseId, departmentId);
+            ViewBag.Students = stds;
+            ViewBag.CourseId = courseId;
+            return View();
+
+        }
     }
+
+    
 }

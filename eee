@@ -1,0 +1,317 @@
+[33mcommit bb6a1010226e6ca0b4e312de62ebfb1e8b563ef9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mlogin[m[33m, [m[1;31morigin/login[m[33m)[m
+Merge: 40d40ff a4552dc
+Author: Salma-Essam-abdullah <100247009+Salma-Essam-abdullah@users.noreply.github.com>
+Date:   Sat Mar 16 03:23:00 2024 +0200
+
+    Merge pull request #8 from NohaAbdelalim/Instructor
+    
+    Instructor
+
+[33mcommit a4552dc80310874ec356bc22340e65620ba6a063[m[33m ([m[1;31morigin/Instructor[m[33m)[m
+Merge: 3a5e58e 40d40ff
+Author: Salma-Essam-abdullah <100247009+Salma-Essam-abdullah@users.noreply.github.com>
+Date:   Sat Mar 16 03:22:30 2024 +0200
+
+    Merge branch 'login' into Instructor
+
+[33mcommit 40d40ffaa424b01148a3253fb575e9f8762c4541[m
+Author: Salma <salma@gmail.com>
+Date:   Sat Mar 16 03:19:59 2024 +0200
+
+    design ui
+
+[33mcommit 3a5e58e3f396a9a0d8d968a3122edead3475124f[m
+Merge: 71cc363 f4a934c
+Author: aminaHussien <aminamuhammed34286@gmail.com>
+Date:   Sat Mar 16 00:58:19 2024 +0200
+
+    merge login into instructor branch
+
+[33mcommit 71cc3633c9bc04fc96aad8fc957fa6b55d382418[m
+Author: aminaHussien <aminamuhammed34286@gmail.com>
+Date:   Fri Mar 15 20:21:30 2024 +0200
+
+    instructor add and delete students in course
+
+[33mcommit f4a934c30b7445162bbbb28cc563da389b56d5f1[m
+Merge: b8e3700 19d3bdd
+Author: Salma-Essam-abdullah <100247009+Salma-Essam-abdullah@users.noreply.github.com>
+Date:   Fri Mar 15 02:01:18 2024 +0200
+
+    Merge pull request #7 from NohaAbdelalim/final
+    
+    start exam
+
+[33mcommit 19d3bdd6caa24b756c348e3f05556a85a02eebc1[m[33m ([m[1;31morigin/final[m[33m, [m[1;32mfinal[m[33m)[m
+Author: Salma <salma@gmail.com>
+Date:   Fri Mar 15 01:59:36 2024 +0200
+
+    start exam
+
+[33mcommit b8e3700b8c2e537b8f64724246d4aa88343268b9[m
+Author: Salma <salma@gmail.com>
+Date:   Fri Mar 15 01:54:28 2024 +0200
+
+    changes
+
+[33mcommit 1c10a6acba37d73dcd39055279acf96fae0e779d[m[33m ([m[1;31morigin/validate[m[33m, [m[1;31morigin/Ui[m[33m, [m[1;31morigin/LoginValidation[m[33m, [m[1;32mUi[m[33m)[m
+Author: Salma <salma@gmail.com>
+Date:   Thu Mar 14 23:25:46 2024 +0200
+
+    reports
+
+[33mcommit 44f12735f21542340ab04933d83d7c43a2158926[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Thu Mar 14 23:14:45 2024 +0200
+
+    reports
+
+[33mcommit c74c9b0893c922b9c6768f96ea6d8477337d6358[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Thu Mar 14 23:14:31 2024 +0200
+
+    reports5,6
+
+[33mcommit 5d39f59b08deab852232f8bdf9bde85564aa59a9[m
+Merge: d734115 cf0342e
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Thu Mar 14 16:29:56 2024 +0200
+
+    ..
+
+[33mcommit cf0342ef16f2911d5fdc3b5e9cd22b24762e8705[m
+Author: Salma <salma@gmail.com>
+Date:   Thu Mar 14 02:24:21 2024 +0200
+
+    reports
+
+[33mcommit 984b53c2a6bcc84f15c3fb965dcbb45fb87ead32[m
+Author: Salma <salma@gmail.com>
+Date:   Wed Mar 13 23:48:23 2024 +0200
+
+    first report
+
+[33mcommit a5ba9b536f53000bbb4b2c38de18c83cf1e1aee3[m
+Author: Salma <salma@gmail.com>
+Date:   Wed Mar 13 21:07:07 2024 +0200
+
+    reports
+
+[33mcommit d734115b8becc3bff9dfbc788af912e553be0f2a[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Wed Mar 13 19:15:32 2024 +0200
+
+    mm
+
+[33mcommit d68a873119d041c2fda27bb73ea73dcf6e2286b3[m
+Author: Salma <salma@gmail.com>
+Date:   Wed Mar 13 18:33:49 2024 +0200
+
+    end exam when time ends and add timer to exam
+
+[33mcommit 2070320d2718024c91567fcbf60f167be113c65d[m
+Author: Salma <salma@gmail.com>
+Date:   Wed Mar 13 15:46:00 2024 +0200
+
+    updates
+
+[33mcommit 3850e556b925476c8c4f99b29b57d7660fbad12d[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Wed Mar 13 11:42:59 2024 +0200
+
+    edite the num of exam question
+
+[33mcommit 5730cb53707db12647c6e8782b9c6cd073935172[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Wed Mar 13 00:26:44 2024 +0200
+
+    button startExam(Enable-Disable0
+
+[33mcommit c527f78951b9df81e89ff8eab583e2fb0104ad45[m
+Author: Salma <salma@gmail.com>
+Date:   Tue Mar 12 21:51:06 2024 +0200
+
+    exam time
+
+[33mcommit f42515148501be90ef21b658a9b95de18678386b[m
+Author: Salma <salma@gmail.com>
+Date:   Tue Mar 12 21:21:02 2024 +0200
+
+    exam time
+
+[33mcommit 61c5272179c4bed64c0aa69f70ea0e3c31c362d9[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Tue Mar 12 17:00:43 2024 +0200
+
+    login
+
+[33mcommit f98b475a69d5285c92f65c8064c17bd2581e4dd3[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Tue Mar 12 12:36:41 2024 +0200
+
+    first commit
+
+[33mcommit 5a16ff1ffe4d15add259a362bd6a5c69963d63c0[m[33m ([m[1;31morigin/dev[m[33m)[m
+Author: salma <salma@gmail.com>
+Date:   Mon Mar 11 21:43:02 2024 +0200
+
+    Exam Question Correct and grade added
+
+[33mcommit bff1c4c5732a94660257f495962571aa5de47b02[m[33m ([m[1;32mInstructor[m[33m)[m
+Author: aminaHussien <aminamuhammed34286@gmail.com>
+Date:   Mon Mar 11 21:40:56 2024 +0200
+
+    adding instructor implementation
+
+[33mcommit 4e708d2e944b896a9d5b73216ff8a685541d5f65[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Mon Mar 11 20:07:24 2024 +0200
+
+    edit-question
+
+[33mcommit d08078cc71c5c2c8149be29059bb5365e5f94d3a[m
+Author: salma <salma@gmail.com>
+Date:   Mon Mar 11 17:38:36 2024 +0200
+
+    accordio update
+
+[33mcommit dad9a13a6319a1b0509cbbcc16680cf61e51317c[m
+Author: salma <salma@gmail.com>
+Date:   Mon Mar 11 17:15:53 2024 +0200
+
+    add exam grade  and correct exam
+
+[33mcommit bfcc91ee4045e5eb544253864b9f1e440256861a[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Mon Mar 11 16:17:16 2024 +0200
+
+    Edite questions and add exam answers
+
+[33mcommit 45111de3b6fa0e367dba3dda1ed0e0c382c94e25[m
+Author: salma <salma@gmail.com>
+Date:   Mon Mar 11 06:02:43 2024 +0200
+
+    delete and show questions
+
+[33mcommit 76f7fa249b822f7e67e78dff3bc4da5100a95d2d[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Sun Mar 10 19:07:07 2024 +0200
+
+    generate exam
+
+[33mcommit b2b2bf63ea8db1dcdf5b347138bd1232f5ef4855[m
+Merge: 151d050 353d7cc
+Author: Salma-Essam-abdullah <100247009+Salma-Essam-abdullah@users.noreply.github.com>
+Date:   Sun Mar 10 14:42:08 2024 +0200
+
+    Merge pull request #6 from NohaAbdelalim/studend-Exam
+    
+    end date
+
+[33mcommit 353d7ccb3c5e984b5b43961a7944f5498f03d300[m[33m ([m[1;31morigin/studend-Exam[m[33m)[m
+Author: salma <salma@gmail.com>
+Date:   Sun Mar 10 14:41:20 2024 +0200
+
+    end date
+
+[33mcommit 151d050a3b3f1d192e1c3cd1a8d1e80fb8d177a5[m
+Merge: 38b405c 57462d7
+Author: Salma-Essam-abdullah <100247009+Salma-Essam-abdullah@users.noreply.github.com>
+Date:   Sun Mar 10 14:33:03 2024 +0200
+
+    Merge pull request #4 from NohaAbdelalim/studend-Exam
+    
+    Studend exam
+
+[33mcommit 57462d79bd0c5d4cea255a634a50ad842ba83f70[m
+Author: salma <salma@gmail.com>
+Date:   Sun Mar 10 14:28:16 2024 +0200
+
+    update db and add question
+
+[33mcommit c1dc9cae9b5421a88218994c0aa755bf0a72f69a[m[33m ([m[1;31morigin/student-Exam[m[33m)[m
+Author: salma <salma@gmail.com>
+Date:   Sat Mar 9 21:54:35 2024 +0200
+
+    instructor questions
+
+[33mcommit 38b405c6b3f3185127ec311647403fbefdcf9f97[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Sat Mar 9 19:23:41 2024 +0200
+
+    student controller (update database)
+
+[33mcommit d153a39e0001351434bf992f60eca847d5cf1893[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: 27ed90c 348f733
+Author: NohaAbdelalim <157377341+NohaAbdelalim@users.noreply.github.com>
+Date:   Sat Mar 9 17:03:28 2024 +0200
+
+    Merge pull request #3 from NohaAbdelalim/dev
+    
+    Dev
+
+[33mcommit 348f73321fc05e83b7348dd5077d5a5f123a0b3b[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Sat Mar 9 17:01:24 2024 +0200
+
+    add relation department course many to many
+
+[33mcommit 5929d40f27aac64893c96198875abc308c7604f7[m
+Merge: a901e0a 0018d32
+Author: Salma-Essam-abdullah <100247009+Salma-Essam-abdullah@users.noreply.github.com>
+Date:   Fri Mar 8 18:03:57 2024 +0200
+
+    Merge pull request #2 from NohaAbdelalim/models1
+    
+    Models1
+
+[33mcommit 27ed90cacd96a2d8edf173c381d1f6d0ad10f39f[m
+Merge: a901e0a 0018d32
+Author: NohaAbdelalim <157377341+NohaAbdelalim@users.noreply.github.com>
+Date:   Fri Mar 8 17:57:29 2024 +0200
+
+    Merge pull request #1 from NohaAbdelalim/models1
+    
+    Models1
+
+[33mcommit 0018d324e219c3295b3b7ad203b59a70efe9fb4d[m[33m ([m[1;31morigin/models1[m[33m)[m
+Author: salma <salma@gmail.com>
+Date:   Fri Mar 8 16:33:41 2024 +0200
+
+    update student model
+
+[33mcommit 98fc3d0710b3e4a1854fa34262c116263fd4c359[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Fri Mar 8 15:06:25 2024 +0200
+
+    add relation instructor manage one branch
+
+[33mcommit e9a066f4ae11320dc1d555f4416243a4f8bc439e[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Wed Mar 6 23:56:20 2024 +0200
+
+    update table question and choices
+
+[33mcommit fdc1931fc6fa19d6a90a943d5df0189c23a4fd3d[m
+Author: salma <salma@gmail.com>
+Date:   Wed Mar 6 21:20:00 2024 +0200
+
+    add models
+
+[33mcommit a901e0a230395b70f5541b80db5b1def4df65d9b[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Tue Mar 5 21:13:24 2024 +0200
+
+    add nugt packages
+
+[33mcommit 3bf793d392b0c466b90b4fe1c9389eeef8f1a855[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Tue Mar 5 20:25:33 2024 +0200
+
+    Add project files.
+
+[33mcommit 0343c10682afcbfc4952e9690da135521ebf16e2[m
+Author: NohaAbdelalim <nohaaymanibrahim@gmail.com>
+Date:   Tue Mar 5 20:25:31 2024 +0200
+
+    Add .gitattributes and .gitignore.
