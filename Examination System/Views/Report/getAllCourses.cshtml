@@ -4,21 +4,22 @@
     SelectList CourseSelect = new SelectList(ViewBag.courses, "CourseId", "CourseName");
 }
 
+     
+    <h2 class="text-center fw-bold mt-5 mb-5">Show All Topics in Course</h2>
 
 
-<h1>getAllCourses</h1>
+<div class="course text-center">
 
-<label>Course Name</label>
-<select id="CourseSelect" onchange="loadReport(this.value)">
-    <option>Select Course</option>
-    @foreach (var item in CourseSelect)
-    {
-
-        <option value="@item.Value">@item.Value</option>
-    }
-</select>
-
-<div id="div1"></div>
+  
+        <select  id="CourseSelect" onchange="loadReport(this.value)" asp-items="CourseSelect">
+            <option>Select Course</option>
+           
+        </select>
+</div>
+    <div id="div1"></div>
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
 
 <script>
     function loadReport(CourseId) {

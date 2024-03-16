@@ -65,7 +65,12 @@ namespace Examination_System.Controllers
             }
             Choice ch = new Choice() { QuestionId = idd, ChoiceBody = choiceAnswer, IsAnswer = true };
             questionRepo.AddChoices(ch);
-            return View();
+        
+
+          
+          
+            return RedirectToAction("ShowQuestions", new { id = id });
+
         }
 
         public IActionResult ShowQuestions(int id)
@@ -84,16 +89,7 @@ namespace Examination_System.Controllers
         public IActionResult EditQuestion(int id)
         {
             Question question = questionRepo.GetQuestion(id);
-            //Choice Answer = questionRepo.getQuestionAnswer(question);
-            //List<Choice> choices = questionRepo.GetQuestionChoices(question);
-            //int courseId = questionRepo.getQuestionCourse(question).CourseId;
-            //EditQuestionViewModel editQuestionViewModel = new EditQuestionViewModel()
-            //{
-            //    question = questionRepo.GetQuestion(id),
-            //    Answer = Answer,
-            //    Choices = choices,
-            //    CourseId = courseId
-            //};
+         
 
 
             return View(question);
@@ -102,10 +98,10 @@ namespace Examination_System.Controllers
         [HttpPost]
         public IActionResult EditQuestion(Question q)
         {
-
+            
 
             questionRepo.updateQuestion(q);
-            return RedirectToAction("ShowQuestions");
+            return RedirectToAction("Index");
         }
 
         public IActionResult AddExam(int id)
@@ -118,7 +114,7 @@ namespace Examination_System.Controllers
         public IActionResult AddExam(int id , DateTime ExamStartDateTime, DateTime ExamEndDateTime, int NumberOfTrueAndFalseQuestions, int NumberOfMcqQuestions)
         {
             examRepo.AddExamDuration(id, ExamStartDateTime, ExamEndDateTime, NumberOfTrueAndFalseQuestions, NumberOfMcqQuestions);
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,31 +1,31 @@
 ﻿@model IEnumerable<ExamQuestions>
 @{
     ViewData["Title"] = "Reports5";
+    Layout = null;
 }
 
-<h1>Reports5</h1>
-
-
-<table class="table table-bordered">
+<table class="table table-bordered report mt-5 ">
     <tr>
-
-       
-        <th>exam question</th>
-
-
+        <th>Exam Question</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
-
-          
             <td>
-               <h1>Question : < @item.Question.QuestionBody/h1>
-                @foreach(var choic in item.Question.ChoicesList)
+                <h3>Question: @item.Question.QuestionBody</h3>
+                @foreach (var choice in item.Question.ChoicesList)
                 {
-                    <p> @choic.ChoiceBody</p>
+                    @if (choice.IsAnswer)
+                    {
+                        <p class="text-success">@choice.ChoiceBody</p>
+                    }
+                    else
+                    {
+                        <p>@choice.ChoiceBody</p>
+                    }
                 }
             </td>
         </tr>
     }
 </table>
+

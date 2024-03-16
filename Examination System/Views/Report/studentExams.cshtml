@@ -1,17 +1,16 @@
 ﻿@model IEnumerable<Exam>
 @{
-    ViewData["Title"] = "Reports5";
+    ViewData["Title"] = "student exams";
+    Layout = null;
 }
 
-<h1>Reports5</h1>
 
-
-<table class="table table-bordered">
+<table class="table table-bordered mt-5 report">
     <tr>
 
 
-        <th>exam </th>
-        <th>opration </th>
+        <th>Exam </th>
+        <th>Show Exam  </th>
 
 
     </tr>
@@ -20,11 +19,11 @@
         <tr>
 
 
-            <td>
+            <td class="text-center">
                 @item.ExamId
 
-            </td>
-            <td>
+            </td >
+            <td class="text-center">
                 <a class="btn btn-primary" asp-action="Reports6" asp-controller="Report" asp-route-ExamId="@item.ExamId">Go To Exam</a>
 
             </td>
