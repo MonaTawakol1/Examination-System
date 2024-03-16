@@ -307,6 +307,20 @@ namespace Examination_System.Controllers
 
         }
 
+        public IActionResult ShowInstructors(int courseId)
+        {
+           var model =  adminRepo.ListOfInstructorsNotInCourse(courseId);
+            ViewBag.instructors = model;
+            ViewBag.courseId = courseId;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ShowInstructors(int courseId, int InstructorId)
+        {
+            adminRepo.AddInstructorToCourse(InstructorId, courseId);
+            return RedirectToAction("ShowCourses");
+        }
 
 
     }

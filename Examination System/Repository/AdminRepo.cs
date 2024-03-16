@@ -42,6 +42,11 @@ namespace Examination_System.Repository
         public void UpdateDepartment(Department department);
         public void removeDepartment(Department department);
         public List<Course> GetListOfCourses();
+        public List<Instructor> GetInstructorByCourseId(int courseId);
+       
+        public List<Instructor> ListOfInstructorsNotInCourse(int courseId);
+
+        public void AddInstructorToCourse(int InstructorId, int CourseId);
     }
 
     public class AdminRepo :IAdminRepo
@@ -249,5 +254,101 @@ namespace Examination_System.Repository
         {
             return db.Courses.Include(a=>a.Instructors).ToList();
         }
+
+        public List<Instructor> GetInstructorByCourseId(int courseId)
+        {
+            var instructors = db.Instructors.Include(a => a.User).Include(a => a.Courses).ToList();
+            List<Instructor> instructorList = new List<Instructor>();
+            foreach (var std in instructors)
+            {
+                foreach (var crs in std.Courses)
+                {
+                    if (crs.CourseId == courseId)
+                    {
+                        instructorList.Add(std);
+                    }
+                }
+            }
+            return instructorList;
+            
+        }
+
+        public List<Department> ListOfDepartmentInCourse(int courseId)
+        {
+            var deptList = db.Departments.Include(a => a.courses).ToList();
+            List<Department> departmentsInCourse = new List<Department>();
+            foreach (var department in deptList)
+            {
+                foreach (var crs in department.courses)
+                {
+                    if (crs.CourseId == courseId)
+                    {
+                        departmentsInCourse.Add(department);
+                    }
+                }
+            }
+            return departmentsInCourse;
+        }
+
+
+
+        //public List<Instructor> ListOfInstructorsNotInCourse(int courseId)
+        //{
+
+        //    var instructors = db.Instructors.Include(a => a.Departments).ToList();
+
+        //    List<Department> departmentsInCourse = ListOfDepartmentInCourse(courseId);
+
+
+        //    List<Instructor> instructorsNotInCourse = new List<Instructor>();
+
+        //    foreach (var instructor in instructors)
+        //    {
+
+        //        if (!instructor.Departments.Any(d => departmentsInCourse.Contains(d)))
+        //        {
+        //            instructorsNotInCourse.Add(instructor);
+        //        }
+        //    }
+
+        //    return instructorsNotInCourse;
+        //}
+
+        public List<Instructor> ListOfInstructorsNotInCourse(int courseId)
+        {
+            var instructors = db.Instructors.Include(a => a.Departments).ToList();
+
+            List<Department> departmentsInCourse = ListOfDepartmentInCourse(courseId);
+
+            List<Instructor> instructorsNotInCourse = new List<Instructor>();
+
+            foreach (var instructor in instructors)
+            {
+                // Check if any department of the instructor is not in the departments of the course
+                if (instructor.Departments.Any(d => !departmentsInCourse.Contains(d)))
+                {
+                    instructorsNotInCourse.Add(instructor);
+                }
+            }
+
+            return instructorsNotInCourse;
+        }
+
+
+
+        public void AddInstructorToCourse(int InstructorId, int CourseId)
+        {
+            var instructor = db.Instructors.FirstOrDefault(a => a.InstructorId == InstructorId);
+            var course = db.Courses.Include(a => a.Instructors).FirstOrDefault(a => a.CourseId == CourseId);
+            course.Instructors.Add(instructor);
+            db.Courses.Update(course);
+            db.SaveChanges();
+        }
+
+
+     
+
+
+
     }
 }
