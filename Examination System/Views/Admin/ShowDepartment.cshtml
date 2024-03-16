@@ -1,28 +1,18 @@
 ﻿@model IEnumerable<Department>
 
 @{
-    Layout = null;
-
+    ViewData["Title"] = "Show Departments";
 }
 
-<!DOCTYPE html>
+<div class="container mt-5 instuctorIndex report2">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
-    <title>ShowDepartment</title>
-</head>
-<body>
-    <a asp-action="createDepartment" asp-controller="Admin" class="btn btn-danger">create</a>
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
 
-                <td>Department Name</td>
-                <td>Manager Name</td>
-                <td>Operation</td>
+                <th>Department Name</th>
+                <th>Manager Name</th>
+                <th>Operation</th>
             </tr>
         </thead>
         <tbody>
@@ -30,16 +20,17 @@
             {
                 <tr>
 
-                    <th>@item.DepartmentName</th>
-                    <th>@item.Manager.User.Name</th>
-                    <th>
+                    <td>@item.DepartmentName</td>
+                    <td>@item.Manager.User.Name</td>
+                    <td>
                         <a asp-action="EditDepartment" asp-controller="Admin" asp-route-id="@item.DepartmentId" class="btn btn-info">Edit</a>
-                        <a asp-action="DeleteDepartment" asp-controller="Admin" onclick="return confirm('are you sure')" asp-route-id="@item.DepartmentId" class="btn btn-danger">Delete</a>
-                    </th>
+                        <a asp-action="DeleteDepartment" asp-controller="Admin" onclick="return confirm('Are you sure you want to delete?')" asp-route-id="@item.DepartmentId" class="btn btn-danger">Delete</a>
+                    </td>
 
                 </tr>
             }
         </tbody>
     </table>
-</body>
-</html>
+    <a asp-action="createDepartment" asp-controller="Admin" class="btn btn-info">Add Department</a>
+</div>
+

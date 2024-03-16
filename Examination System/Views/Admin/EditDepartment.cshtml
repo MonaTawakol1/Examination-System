@@ -5,35 +5,34 @@
     SelectList deptlst = new SelectList(ViewBag.deptList, "Instructor.InstructorId", "Name", "Instructor.InstructorId");
 }
 
-<h1>EditDepartment</h1>
+<h2 class="text-center mt-4 mb-4">Edit Department</h2>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditDepartment">
+<div class="row addQuestion">
+    <div class="col-md-6 offset-md-3">
+
+        <form asp-action="EditDepartment" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <input type="hidden" asp-for="DepartmentId" class="form-control" />
- 
-           
-            <div class="form-group">
+
+            <div class="form-group mb-3">
                 <label asp-for="DepartmentName" class="control-label"></label>
                 <input asp-for="DepartmentName" class="form-control" />
                 <span asp-validation-for="DepartmentName" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="ManagerId" class="control-label">Manager</label>
                 <select asp-for="ManagerId" asp-items="deptlst" class="form-control">
                 </select>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group mb-3">
+                <input type="submit" value="Edit" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="text-center mt-3">
+    <a asp-action="ShowDepartment" class="btn btn-info">Back to List</a>
 </div>
 

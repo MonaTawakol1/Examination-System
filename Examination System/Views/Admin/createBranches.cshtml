@@ -1,33 +1,34 @@
 ﻿@model Branch
 @{
-    Layout = null;
+    ViewData["Title"] = "createBranch";
     SelectList deptlst = new SelectList(ViewBag.deptList, "Instructor.InstructorId", "Name");
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
-    <title>createBranches</title>
-</head>
-<body>
-    <h1>Create Branch</h1>
+<h2 class="text-center mt-4 mb-4">Add New Branch</h2>
+<div class="row addQuestion">
+    <div class="col-md-6 offset-md-3">
     <form method="post">
-        
-        <label asp-for="BranchName"></label>
+
+            <div class="form-group mb-3">
+                <label asp-for="BranchName" class="control-label"></label>
         <input asp-for="BranchName" class="form-control" />
-        <br />
-        
-        <label asp-for="BranchManagerId">Manager</label>
+      </div>
+
+            <div class="form-group mb-3">
+            <label asp-for="BranchManagerId" class="control-label">Manager</label>
         <select asp-for="BranchManagerId" asp-items="deptlst" class="form-control">
             <option>Select Manager</option>
         </select>
-        <br />
-        <input type="Submit" value="create" class="btn btn-primary" />
+      </div>
+            <div class="form-group mb-3">
+        <input type="Submit" value="Create" class="btn btn-primary" />
+        </div>
     </form>
 
-</body>
-</html>
+</div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-action="ShowBranches" class="btn btn-info">Back to List</a>
+</div>

@@ -1,56 +1,53 @@
 ﻿@model Examination_System.Models.User
 
-
-
 @{
     ViewData["Title"] = "EditStudent";
     SelectList deptlst = new SelectList(ViewBag.deptList, "DepartmentId", "DepartmentName");
     SelectList deptlst2 = new SelectList(ViewBag.deptList2, "BranchId", "BranchName");
 }
 
-<h1>EditStudent</h1>
+<h2 class="text-center mt-4 mb-4">Edit Student</h2>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditStudent">
+<div class="row addQuestion">
+    <div class="col-md-6 offset-md-3">
+        <form asp-action="EditStudent" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" class="form-control" />
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="@Model.Student.branchId" class="control-label">Branch</label>
                 <select asp-for="@Model.Student.branchId" asp-items="deptlst2" class="form-control">
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="@Model.Student.DepartmentId" class="control-label">Department</label>
                 <select asp-for="@Model.Student.DepartmentId" asp-items="deptlst" class="form-control">
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <input type="submit" value="Edit" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="text-center mt-3">
+    <a asp-action="ShowStudent" class="btn btn-info">Back to List</a>
 </div>
 
 
