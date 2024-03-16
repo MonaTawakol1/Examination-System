@@ -11,12 +11,14 @@ namespace Examination_System.Controllers
         IInstructorRepo instructorRepo;
         IQuestionRepo questionRepo;
         IExamRepo examRepo;
+        IstudentRepo studentRepo;
 
-        public InstructorController(IInstructorRepo _instructorRepo , IQuestionRepo _questionRepo, IExamRepo _examRepo)
+        public InstructorController(IInstructorRepo _instructorRepo , IQuestionRepo _questionRepo, IExamRepo _examRepo, IstudentRepo _studentRepo)
         {
             instructorRepo = _instructorRepo;
             questionRepo = _questionRepo;
              examRepo = _examRepo;
+            studentRepo = _studentRepo;
         }
         public  async Task< IActionResult> Index() {
 
@@ -143,11 +145,13 @@ namespace Examination_System.Controllers
         public IActionResult getCoursesInDepartments(int instructorId , int departmentId)
         {
             List<Course> courses = instructorRepo.getCoursesInDepartmentss(instructorId, departmentId);
+            ViewBag.deptId = departmentId;
             return View(courses);
         }
         public IActionResult getListOfStudents(int courseId)
         {
             var std = instructorRepo.getListOfStudents(courseId);
+            ViewBag.courseId = courseId;
             return View(std);
         }
 
@@ -158,7 +162,20 @@ namespace Examination_System.Controllers
             ViewBag.Students = stds;
             ViewBag.CourseId = courseId;
             return View();
+        }
 
+        [HttpPost]
+        public IActionResult getStudentToCourse(int CourseId, int studentId ,int departmentId)
+        {
+          var std =   studentRepo.GetStudent(studentId);
+            instructorRepo.Add(std, CourseId);
+            return RedirectToAction("getListOfStudents", new { CourseId = CourseId });
+        }
+
+        public IActionResult RemoveStudent(int studentId , int courseId)
+        {
+            instructorRepo.RemoveStudentFromCourse(studentId, courseId);
+            return RedirectToAction("getListOfStudents", new { CourseId = courseId });
         }
     }
 

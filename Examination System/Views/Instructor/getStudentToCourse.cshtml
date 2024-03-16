@@ -1,4 +1,4 @@
-﻿
+﻿@model Student
 @{
     ViewData["Title"] = "getStudentToCourse";
     SelectList studentSelect = new SelectList(ViewBag.Students, "StudentId", "StudentId");
@@ -7,16 +7,17 @@
 
 
 
-<h2 class="text-center fw-bold mt-5 mb-5">Show Students Grades in Exams</h2>
+<h2 class="text-center fw-bold mt-5 mb-5">Add student to course </h2>
 
 
 <div class="course text-center">
 
-
-    <select id="studentSelect" asp-items="studentSelect">
+    <form  method="post">
+        <select id="studentSelect" asp-items="studentSelect" name="StudentId">
         <option>Select Student</option>
-       
-    </select>
+        </select>
+        <input type="submit" class="btn btn-info" value="Add" />
+    </form>
 </div>
 
 

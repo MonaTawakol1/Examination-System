@@ -21,6 +21,7 @@ namespace Examination_System.Repository
         public List<Student> GetStudentNotInCourse(int courseId, int departmentId);
 
         public void Add(Student std, int CourseId);
+        public void RemoveStudentFromCourse(int studentId, int courseId);
 
     }
     public class InstructorRepo : IInstructorRepo
@@ -133,23 +134,17 @@ namespace Examination_System.Repository
 
         public List<Student> GetStudentNotInCourse(int courseId , int departmentId)
         {
-            
-            var student = db.Students.Where(a=>a.DepartmentId == departmentId).ToList();
-           var Allstudents =  getListOfStudents(courseId);
-            
-            foreach(var std in student)
-            {
-                foreach(var item in Allstudents)
-                {
-                    if(std.StudentId == item.StudentId)
-                    {
-                        student.Remove(std);
-                    }
-                    
-                }
-            }
 
-            return student;
+        
+
+            var studentsInCourse = getListOfStudents(courseId);
+            var studentsInDepartment = db.Students.Where(a => a.DepartmentId == departmentId).ToList();
+
+            var studentsNotInCourse = studentsInDepartment
+                .Where(student => !studentsInCourse.Any(sc => sc.StudentId == student.StudentId))
+                .ToList();
+
+            return studentsNotInCourse;
 
         }
         public void Add(Student std , int CourseId)
@@ -160,7 +155,24 @@ namespace Examination_System.Repository
             
         }
 
+        public void RemoveStudentFromCourse(int studentId, int courseId)
+        {
+
+            var studentToRemove = db.Students
+                        .Include(a => a.Courses)
+                        .FirstOrDefault(s => s.StudentId == studentId);
+
+            if (studentToRemove != null)
+            {
+                var courseToRemove = studentToRemove.Courses.FirstOrDefault(c => c.CourseId == courseId);
+                if (courseToRemove != null)
+                {
+                    studentToRemove.Courses.Remove(courseToRemove);
+                    db.SaveChanges();
+                }
+            }
+        }
 
 
-    }
+        }
 }
