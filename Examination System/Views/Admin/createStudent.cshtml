@@ -1,0 +1,51 @@
+﻿@model Examination_System.ViewModels.RegisterStdVM
+
+@{
+    ViewData["Title"] = "createStudent";
+    SelectList deptlst = new SelectList(ViewBag.deptList, "DepartmentId", "DepartmentName");
+    SelectList deptlst2 = new SelectList(ViewBag.deptList2, "BranchId", "BranchName");
+}
+
+<h1>createStudent</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="createStudent">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="branchId" class="control-label">Branch</label>
+                <select asp-for="branchId" asp-items="deptlst2" class="form-control">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentId" class="control-label">Department</label>
+                <select asp-for="DepartmentId" asp-items="deptlst" class="form-control">
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

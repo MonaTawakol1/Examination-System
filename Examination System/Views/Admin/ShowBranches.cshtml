@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Branch>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <title>ShowBranches</title>
+</head>
+<body>
+    <a asp-action="createBranches" asp-controller="Admin" class="btn btn-danger">create</a>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <td>Branch Name</td>
+                <td>Manager Name</td>
+                <td>Operation</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <th>@item.BranchName</th>
+                    <th>@item.branchmanger.User.Name</th>
+                    <th>
+                        <a asp-action="EditBranch" asp-controller="Admin" asp-route-id="@item.BranchId" class="btn btn-info">Edit</a>
+                        <a asp-action="DeleteBranch" asp-controller="Admin" onclick="return confirm('are you sure')" asp-route-id="@item.BranchId" class="btn btn-danger">Delete</a>
+                    </th>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿@model Branch
+@{
+    Layout = null;
+    SelectList deptlst = new SelectList(ViewBag.deptList, "Instructor.InstructorId", "Name");
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <title>createBranches</title>
+</head>
+<body>
+    <h1>Create Branch</h1>
+    <form method="post">
+        
+        <label asp-for="BranchName"></label>
+        <input asp-for="BranchName" class="form-control" />
+        <br />
+        
+        <label asp-for="BranchManagerId">Manager</label>
+        <select asp-for="BranchManagerId" asp-items="deptlst" class="form-control">
+            <option>Select Manager</option>
+        </select>
+        <br />
+        <input type="Submit" value="create" class="btn btn-primary" />
+    </form>
+
+</body>
+</html>

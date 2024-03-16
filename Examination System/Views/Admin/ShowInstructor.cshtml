@@ -1,0 +1,42 @@
+﻿@model IEnumerable<User>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <title>ShowInstructor</title>
+</head>
+<body>
+    <a asp-action="createInstructor" asp-controller="Admin" class="btn btn-danger">create</a>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                
+                <td>Instructor Name</td>
+                <td>Instructor Email</td>
+                <td>Operations</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    
+                    <th>@item.Name</th>
+                    <th>@item.Email</th>
+                    <th>
+                        <a asp-action="EditInstructor" asp-controller="Admin" asp-route-id="@item.Id" class="btn btn-info">Edit</a>
+                        <a asp-action="DeleteInstructor" asp-controller="Admin" onclick="return confirm('are you sure')" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

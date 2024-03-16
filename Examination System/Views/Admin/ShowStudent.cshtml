@@ -1,0 +1,47 @@
+﻿@model IEnumerable<User>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <title>ShowStudent</title>
+</head>
+<body>
+    <a asp-action="createStudent" asp-controller="Admin" class="btn btn-danger">create</a>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <td>Student Name</td>
+                <td>Student Email</td>
+                <td>Student Branch</td>
+                <td>Student Department</td>
+                <td>Operations</td>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <th>@item.Name</th>
+                    <th>@item.Email</th>
+                    <th>@item.Student.Branch.BranchName</th>
+                    <th>@item.Student.Department.DepartmentName</th>
+                    <th>
+                        <a asp-action="EditStudent" asp-controller="Admin" asp-route-id="@item.Id" class="btn btn-info">Edit</a>
+                        <a asp-action="DeleteStudent" asp-controller="Admin" onclick="return confirm('are you sure')" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Views\Admin\Index.cshtml" />
     <None Include="wwwroot\images\.DS_Store" />
   </ItemGroup>
 
