@@ -376,6 +376,48 @@ namespace Examination_System.Controllers
         }
 
 
+        //new
+
+        public IActionResult ShowInstructorsIn(int deptId)
+        {
+            var model = adminRepo.ListOfInstructorsNotInDepartment(deptId);
+            ViewBag.instructors = model;
+           
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ShowInstructorsIn(int deptId, int InstructorId)
+        {
+            adminRepo.AddInstructorToDepartment(InstructorId, deptId);
+            return RedirectToAction("ShowDepartment");
+        }
+
+        public IActionResult ShowInstructorsInDept(int deptId)
+        {
+            var model = adminRepo.getInstructorsInDepartment(deptId);
+            ViewBag.instructors = model;
+          
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ShowInstructorsInDept(int deptId, int InstructorId)
+        {
+
+            adminRepo.RemoveInsFromDepartment(deptId, InstructorId);
+            return RedirectToAction("ShowDepartment");
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 
 

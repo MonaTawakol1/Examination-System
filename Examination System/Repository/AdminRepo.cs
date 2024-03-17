@@ -1,5 +1,6 @@
 ﻿using Examination_System.Models;
 using Examination_System.ViewModels;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Net;
@@ -54,6 +55,15 @@ namespace Examination_System.Repository
         public bool IsEmailAlreadyRegistered(string email);
         public void deleteIns(Instructor instructor);
         public Instructor getInstructorById(int id);
+
+
+
+        //new 
+        public List<Instructor> ListOfInstructorsNotInDepartment(int deptId);
+        public void AddInstructorToDepartment(int InstructorId, int deptId);
+        public List<Instructor> getInstructorsInDepartment(int deptId);
+
+        public void RemoveInsFromDepartment(int departmentId, int InstructorId);
     }
 
 
@@ -308,8 +318,6 @@ namespace Examination_System.Repository
         }
 
 
-
-
         public List<Instructor> ListOfInstructorsNotInCourse(int courseId)
         {
             var instructors = db.Instructors.Include(a => a.Departments).Include(a => a.Courses).Where(a => a.isDeleted == false).ToList();
@@ -419,5 +427,92 @@ namespace Examination_System.Repository
         {
             return db.Instructors.FirstOrDefault(a => a.UserId == id);
         }
+
+
+
+
+     
+        ////// new
+        ///
+
+        public List<Instructor> ListOfInstructorsNotInDepartment(int deptId)
+        {
+            var instructors = db.Instructors.Include(a => a.Departments).Where(a => a.isDeleted == false).ToList();
+
+            List<Instructor> notInDept = new List<Instructor>();
+            foreach (var instructor in instructors)
+            {
+                bool isInDept = false;
+                foreach (var dept in instructor.Departments)
+                {
+                    if (dept.DepartmentId == deptId)
+                    {
+                        isInDept = true;
+                        break;
+                    }
+                }
+
+                if (!isInDept)
+                {
+                    notInDept.Add(instructor);
+                }
+            }
+
+            return notInDept;
+        }
+
+
+
+        public void AddInstructorToDepartment(int InstructorId, int deptId)
+        {
+            var instructor = db.Instructors.FirstOrDefault(a => a.InstructorId == InstructorId);
+            var dept = db.Departments.Include(a => a.instructors).FirstOrDefault(a => a.DepartmentId == deptId);
+            dept.instructors.Add(instructor);
+            db.Departments.Update(dept);
+            db.SaveChanges();
+        }
+
+        public List<Instructor> getInstructorsInDepartment(int deptId)
+        {
+
+            var instructors = db.Instructors.Include(a => a.Departments).Where(a => a.isDeleted == false).ToList();
+            List<Instructor> instructorsIndept = new List<Instructor>();
+
+
+            foreach (var ins in instructors)
+            {
+                foreach (var dept in ins.Departments)
+                {
+                    if (dept.DepartmentId == deptId)
+                    {
+                        instructorsIndept.Add(ins);
+                        break;
+                    }
+                }
+            }
+
+            return instructorsIndept;
+        }
+
+        public void RemoveInsFromDepartment(int departmentId, int InstructorId)
+        {
+            var instructor = db.Instructors.FirstOrDefault(a => a.InstructorId == InstructorId);
+            var dept = db.Departments.Include(a => a.instructors).FirstOrDefault(a => a.DepartmentId == departmentId);
+            dept.instructors.Remove(instructor);
+            db.Departments.Update(dept);
+            db.SaveChanges();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

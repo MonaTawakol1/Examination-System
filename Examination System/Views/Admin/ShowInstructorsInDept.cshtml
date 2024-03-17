@@ -1,0 +1,19 @@
+﻿
+@model Instructor
+@{
+    ViewData["Title"] = "ShowInstructorsInDept";
+    SelectList instSelect = new SelectList(ViewBag.instructors, "InstructorId", "InstructorId");
+}
+
+<h2 class="text-center fw-bold mt-5 mb-5">Remove Instructor from course </h2>
+
+<div class="course text-center">
+
+    <form method="post">
+        <select id="instSelect" asp-items="instSelect" name="InstructorId">
+            <option>Select Instructor</option>
+        </select>
+        <input type="submit" class="btn btn-info" value="Remove" />
+        <input type="hidden" name="@ViewBag.courseId" />
+    </form>
+</div>
