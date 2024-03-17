@@ -97,6 +97,25 @@ namespace Examination_System.Migrations
                     b.ToTable("DepartmentInstructor");
                 });
 
+            modelBuilder.Entity("Examination_System.Models.Admin", b =>
+                {
+                    b.Property<int>("AdminId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdminId"));
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AdminId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Admins");
+                });
+
             modelBuilder.Entity("Examination_System.Models.Branch", b =>
                 {
                     b.Property<int>("BranchId")
@@ -111,6 +130,9 @@ namespace Examination_System.Migrations
                     b.Property<string>("BranchName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("BranchId");
 
@@ -157,6 +179,20 @@ namespace Examination_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("ExamEndDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ExamStartDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("NumberOfMcqQuestions")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NumberOfTrueAndFalseQuestions")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.HasKey("CourseId");
 
                     b.ToTable("Courses");
@@ -177,6 +213,9 @@ namespace Examination_System.Migrations
                     b.Property<int>("ManagerId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("DepartmentId");
 
                     b.HasIndex("ManagerId")
@@ -196,13 +235,7 @@ namespace Examination_System.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ExamQuestionsExamId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ExamQuestionsQuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentGrade")
+                    b.Property<int?>("StudentGrade")
                         .HasColumnType("int");
 
                     b.Property<int>("StudentId")
@@ -213,8 +246,6 @@ namespace Examination_System.Migrations
                     b.HasIndex("CourseId");
 
                     b.HasIndex("StudentId");
-
-                    b.HasIndex("ExamQuestionsExamId", "ExamQuestionsQuestionId");
 
                     b.ToTable("Exams");
                 });
@@ -229,6 +260,9 @@ namespace Examination_System.Migrations
 
                     b.Property<int?>("ExamAnswers")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("InsertedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool?>("IsCorrect")
                         .HasColumnType("bit");
@@ -248,15 +282,16 @@ namespace Examination_System.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorId"));
 
-                    b.Property<string>("InstructorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("InstructorPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("InstructorId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Instructors");
                 });
@@ -272,12 +307,6 @@ namespace Examination_System.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ExamQuestionsExamId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ExamQuestionsQuestionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("QuestionBody")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -288,13 +317,31 @@ namespace Examination_System.Migrations
                     b.Property<int>("QuestionType")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("QuestionId");
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("ExamQuestionsExamId", "ExamQuestionsQuestionId");
-
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Examination_System.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Examination_System.Models.Student", b =>
@@ -308,17 +355,20 @@ namespace Examination_System.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("StudentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("StudentPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("branchId")
+                        .HasColumnType("int");
 
                     b.HasKey("StudentId");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.HasIndex("branchId");
 
                     b.ToTable("Students");
                 });
@@ -343,6 +393,47 @@ namespace Examination_System.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Topics");
+                });
+
+            modelBuilder.Entity("Examination_System.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<int>("RolesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RoleUser");
                 });
 
             modelBuilder.Entity("BranchDepartment", b =>
@@ -420,6 +511,17 @@ namespace Examination_System.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Examination_System.Models.Admin", b =>
+                {
+                    b.HasOne("Examination_System.Models.User", "User")
+                        .WithOne("Admin")
+                        .HasForeignKey("Examination_System.Models.Admin", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Examination_System.Models.Branch", b =>
                 {
                     b.HasOne("Examination_System.Models.Instructor", "branchmanger")
@@ -466,10 +568,6 @@ namespace Examination_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Examination_System.Models.ExamQuestions", null)
-                        .WithMany("Exams")
-                        .HasForeignKey("ExamQuestionsExamId", "ExamQuestionsQuestionId");
-
                     b.Navigation("Course");
 
                     b.Navigation("Student");
@@ -480,16 +578,29 @@ namespace Examination_System.Migrations
                     b.HasOne("Examination_System.Models.Exam", "Exam")
                         .WithMany("ExamQuestions")
                         .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Examination_System.Models.Question", "Question")
                         .WithMany("ExamQuestions")
                         .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Exam");
 
                     b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("Examination_System.Models.Instructor", b =>
+                {
+                    b.HasOne("Examination_System.Models.User", "User")
+                        .WithOne("Instructor")
+                        .HasForeignKey("Examination_System.Models.Instructor", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Examination_System.Models.Question", b =>
@@ -499,10 +610,6 @@ namespace Examination_System.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Examination_System.Models.ExamQuestions", null)
-                        .WithMany("Questions")
-                        .HasForeignKey("ExamQuestionsExamId", "ExamQuestionsQuestionId");
 
                     b.Navigation("Course");
                 });
@@ -515,7 +622,23 @@ namespace Examination_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Examination_System.Models.User", "User")
+                        .WithOne("Student")
+                        .HasForeignKey("Examination_System.Models.Student", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Examination_System.Models.Branch", "Branch")
+                        .WithMany("StudentList")
+                        .HasForeignKey("branchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
                     b.Navigation("Department");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Examination_System.Models.Topic", b =>
@@ -525,6 +648,26 @@ namespace Examination_System.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.HasOne("Examination_System.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Examination_System.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Examination_System.Models.Branch", b =>
+                {
+                    b.Navigation("StudentList");
                 });
 
             modelBuilder.Entity("Examination_System.Models.Course", b =>
@@ -546,13 +689,6 @@ namespace Examination_System.Migrations
                     b.Navigation("ExamQuestions");
                 });
 
-            modelBuilder.Entity("Examination_System.Models.ExamQuestions", b =>
-                {
-                    b.Navigation("Exams");
-
-                    b.Navigation("Questions");
-                });
-
             modelBuilder.Entity("Examination_System.Models.Instructor", b =>
                 {
                     b.Navigation("Department")
@@ -572,6 +708,15 @@ namespace Examination_System.Migrations
             modelBuilder.Entity("Examination_System.Models.Student", b =>
                 {
                     b.Navigation("Exams");
+                });
+
+            modelBuilder.Entity("Examination_System.Models.User", b =>
+                {
+                    b.Navigation("Admin");
+
+                    b.Navigation("Instructor");
+
+                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }

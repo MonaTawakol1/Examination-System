@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Student>
+@{
+    ViewData["Title"] = "StudentsInformation";
+    SelectList deptList = new SelectList(ViewBag.depts, "DepartmentId", "DepartmentName");
+}
+
+
+
+
+
+
+<h2 class="text-center fw-bold mt-5 mb-5">Show Students in Department</h2>
+
+
+<div class="course text-center">
+
+
+    <select id="deptSelect" onchange="loadReport(this.value)">
+        @foreach (var dept in deptList)
+        {
+            <option>Select Department</option>
+            <option value="@dept.Value">@dept.Text</option>
+        }
+    </select>
+</div>
+<div id="div1"></div>
+
+
+
+
+<script>
+    function loadReport(departmentId) {
+        $("#div1").load("/Report/Reports1?DeptNumber=" + departmentId);
+    }
+</script>
+
+
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>

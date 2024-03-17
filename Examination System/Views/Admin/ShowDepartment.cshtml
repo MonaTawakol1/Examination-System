@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Department>
+
+@{
+    ViewData["Title"] = "Show Departments";
+}
+
+<div class="container mt-5 instuctorIndex report2">
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <th>Department Name</th>
+                <th>Manager Name</th>
+                <th>Operation</th>
+                <th>Instructors Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.DepartmentName</td>
+                    <td>@item.Manager.User.Name</td>
+                    <td>
+                        <a asp-action="EditDepartment" asp-controller="Admin" asp-route-id="@item.DepartmentId" class="btn btn-info">Edit</a>
+                        <a asp-action="DeleteDepartment" asp-controller="Admin" onclick="return confirm('Are you sure you want to delete?')" asp-route-id="@item.DepartmentId" class="btn btn-danger">Delete</a>
+                    </td>
+                    <td>
+                        <a asp-action="ShowInstructorsIn" asp-controller="Admin" asp-route-deptId="@item.DepartmentId" class="btn btn-info">Add Instructor</a>
+                        <a asp-action="ShowInstructorsInDept" asp-controller="Admin" asp-route-deptId="@item.DepartmentId" class="btn btn-danger">Delete Instructors</a>
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="createDepartment" asp-controller="Admin" class="btn btn-info">Add Department</a>
+</div>
+

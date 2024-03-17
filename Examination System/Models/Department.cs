@@ -22,6 +22,7 @@ namespace Examination_System.Models
         public int ManagerId { get; set; }
         public Instructor Manager { get; set; }
 
+        public bool isDeleted { get; set; } = false;
 
     }
 }

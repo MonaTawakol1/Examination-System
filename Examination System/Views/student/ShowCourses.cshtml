@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Course>
+@{
+    ViewData["Title"] = "ShowCourses";
+}
+
+
+    <div class="container mt-5 showCourses">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="text-center mb-4">Course List</h1>
+                @foreach (var item in Model)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.CourseName</h5>
+                            <p class="card-text">
+                                <strong>Exam Start Date:</strong> @item.ExamStartDateTime<br>
+                                <strong>Exam End Date:</strong> @item.ExamEndDateTime
+                            </p>
+                            <form method="get" asp-action="StartExam" asp-controller="student">
+                                <input type="hidden" name="id" value="@item.CourseId" />
+                                <input type="hidden" name="Studentid" value="@ViewBag.stdid" />
+                              
+                                <button type="submit" id="startExamButton-@item.CourseId" class="btn btn-custom btn-block mb-1" disabled>Start Exam</button>
+                            </form>
+                            
+                            <a asp-action="showTopics" asp-controller="student" asp-route-id="@item.CourseId" class="btn btn-custom btn-block" >Show Topics</a>
+
+                        </div>
+                    </div>
+                    <script>
+
+
+                        var examStartDateTime = "@item.ExamStartDateTime";
+                        var modifiedDateTime = examStartDateTime.replace(' ', 'T');
+
+                        var endExamDateTime = "@item.ExamEndDateTime";
+                        var modifiedDateTime2 = endExamDateTime.replace(' ', 'T');
+
+                        var s = modifiedDateTime.replaceAll("/", "-");
+                        var m = modifiedDateTime2.replaceAll("/", "-");
+
+                        var dateString = s;
+                        var parts = dateString.split("T");
+                        var datePart = parts[0];
+                        var timePart = parts[1];
+
+                        var dateComponents = datePart.split("-");
+                        var rearrangedDateString = dateComponents[2] + "-" + dateComponents[1] + "-" + dateComponents[0] + "T" + timePart;
+
+
+
+                        var dateString2 = m;
+                        var parts2 = dateString2.split("T");
+                        var datePart2 = parts2[0];
+                        var timePart2 = parts2[1];
+
+                        var dateComponents2 = datePart2.split("-");
+                        var rearrangedDateString2 = dateComponents2[2] + "-" + dateComponents2[1] + "-" + dateComponents2[0] + "T" + timePart2;
+
+
+                        var startExamButtonId = "startExamButton-@item.CourseId";
+                        var startTime = new Date(rearrangedDateString).getTime();
+                        var endTime = new Date(rearrangedDateString2).getTime();
+
+                        console.log(startTime);
+                        console.log(endTime);
+                        function checkExamTime() {
+                            var currentTime = new Date().getTime();
+                            console.log(currentTime);
+                            console.log("start time", startTime);
+                            console.log("end time", endTime)
+
+                            if (currentTime >= startTime && currentTime <= endTime) {
+                                document.getElementById(startExamButtonId).disabled = false;
+                                document.getElementById(startExamButtonId).style.backgroundColor = "green";
+                            } else {
+                                document.getElementById(startExamButtonId).disabled = true;
+                            }
+                        }
+
+                        checkExamTime();
+
+                        // Periodically check every second (you can adjust the interval as needed)
+                        setInterval(checkExamTime, 1000);
+                    </script>
+                }
+            </div>
+        </div>
+    </div>
+
+

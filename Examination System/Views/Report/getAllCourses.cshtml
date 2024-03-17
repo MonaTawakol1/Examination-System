@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Exam>
+@{
+    ViewData["Title"] = "getAllCourses";
+    SelectList CourseSelect = new SelectList(ViewBag.courses, "CourseId", "CourseName");
+}
+
+     
+    <h2 class="text-center fw-bold mt-5 mb-5">Show All Topics in Course</h2>
+
+
+<div class="course text-center">
+
+  
+        <select  id="CourseSelect" onchange="loadReport(this.value)" asp-items="CourseSelect">
+            <option>Select Course</option>
+           
+        </select>
+</div>
+    <div id="div1"></div>
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
+
+<script>
+    function loadReport(CourseId) {
+        $("#div1").load("/Report/Reports4?CourseId=" + CourseId);
+    }
+</script>

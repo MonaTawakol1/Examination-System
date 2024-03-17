@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ExamQuestions>
+@{
+    ViewData["Title"] = "Reports6";
+    
+}
+
+<table class="table table-bordered report mt-5 ">
+    <tr>
+        <th>Exam Question</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+               Question :  @item.Question.QuestionBody
+                @foreach (var choic in item.Question.ChoicesList)
+                {
+                    if (choic.ChoiceId == item.ExamAnswers)
+                    {
+                        <p class="AnswerColor"> @choic.ChoiceBody</p>
+                    }
+                    else{
+                    <p> @choic.ChoiceBody</p>
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>
+

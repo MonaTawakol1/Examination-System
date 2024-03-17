@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Course>
+@{
+    ViewData["Title"] = "ShowCourses";
+}
+
+
+    <div class="container mt-5 instuctorIndex">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td scope="row">@item.CourseName</td>
+                        <td>
+                            <a class="btn btn-info" asp-controller="Instructor" asp-action="AddNewQuestion" asp-route-id="@item.CourseId">Add Questions</a>
+                            <a class="btn btn-success" asp-controller="Instructor" asp-action="ShowQuestions" asp-route-id="@item.CourseId">Show Questions</a>
+                            <a class="btn btn-danger" asp-controller="Instructor" asp-action="AddExam" asp-route-id="@item.CourseId">Add Exam</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

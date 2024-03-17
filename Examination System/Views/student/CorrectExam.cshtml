@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ExamQuestions>
+@{
+    ViewData["Title"] = "CorrectExam";
+}
+
+
+<div class="container mt-5">
+    <h1 class="text-center">Exam Results</h1>
+
+    <form id="examForm" method="post">
+
+        <h1> Your Grade : @ViewBag.grade %</h1>
+        @foreach (var item in @Model)
+        {
+            <div class="question">
+            <h3>@item.Question.QuestionBody</h3>
+
+                
+            </div>
+            <div class="choices">
+                @foreach (var ch in item.Question.ChoicesList)
+                {
+                    <div class="form-check">
+                        @if (item.ExamAnswers == ch.ChoiceId)
+                        {
+                            if (ch.IsAnswer)
+                            {
+                               
+                                <p   name="ChoiceIds[@item.QuestionId]" id="choice-@item.QuestionId-@ch.ChoiceId" value="@ch.ChoiceId"  ></p>
+                                <label class="form-check-label text-success" for="choice-@item.QuestionId-@ch.ChoiceId">@ch.ChoiceBody   <i class="fas fa-check text-success me-2"></i> </label>
+                              
+                            }
+                            else
+                            {
+
+                                <p   name="ChoiceIds[@item.QuestionId]" id="choice-@item.QuestionId-@ch.ChoiceId" value="@ch.ChoiceId"  > </p>
+                                <label class="form-check-label text-danger" for="choice-@item.QuestionId-@ch.ChoiceId">@ch.ChoiceBody   <i class="fas fa-times text-danger me-2"></i> </label>
+                            }
+                        }
+                        
+                        else
+                        {
+                            if (ch.IsAnswer)
+                            {
+                                <p  name="ChoiceIds[@item.QuestionId]" id="choice-@item.QuestionId-@ch.ChoiceId" value="@ch.ChoiceId" ></p>
+                                <label class="form-check-label text-success" for="choice-@item.QuestionId-@ch.ChoiceId">@ch.ChoiceBody </label>
+                            }
+                            else
+                            {
+                                <p   name="ChoiceIds[@item.QuestionId]" id="choice-@item.QuestionId-@ch.ChoiceId" value="@ch.ChoiceId" ></p>
+                                <label class="form-check-label" for="choice-@item.QuestionId-@ch.ChoiceId">@ch.ChoiceBody</label>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+
+            <br />
+
+
+        }
+
+      
+    
+    </form>
+
+     
+
+</div>

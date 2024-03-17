@@ -1,0 +1,100 @@
+﻿@model IEnumerable<ExamQuestions>
+
+@{
+    ViewData["Title"] = "StartExam";
+}
+
+
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div class="container mt-5">
+    <h1 class="text-center">Start Exam</h1>
+    <div id="timer"></div>
+    <form id="examForm" method="post" onsubmit="return validateForm()">
+        @foreach (var item in Model)
+        {
+            <div class="question">
+                <h3>@item.Question.QuestionBody</h3>
+                <p class="marks">Marks: @item.Question.QuestionMark</p>
+                <input type="hidden" name="ExamId" value="@item.ExamId" asp-for="@item.ExamId" />
+                @Html.HiddenFor(modelItem => item.QuestionId) <!-- Ensure to use correct Razor syntax for hidden fields -->
+                <div class="choices">
+                    @foreach (var choice in item.Question.ChoicesList.OrderBy(x => Guid.NewGuid()))
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="ChoiceIds[@item.QuestionId]" id="choice-@item.QuestionId-@choice.ChoiceId" value="@choice.ChoiceId">
+                            <label class="form-check-label" for="choice-@item.QuestionId-@choice.ChoiceId">@choice.ChoiceBody</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        <button class="btn btn-success submit-btn" type="submit" id="submit">Submit</button>
+    </form>
+</div>
+
+
+<!-- Your JavaScript code -->
+<script>
+    function validateForm() {
+        console.log("Validating form...");
+        var choices = document.querySelectorAll('input[type="radio"]:checked');
+        if (choices.length === 0) {
+            // Show error message using JavaScript alert
+            alert("Please answer  questions before submitting.");
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+</script>
+
+
+
+<script>
+    var endExamDateTime = "@ViewBag.endDate";
+    var modifiedDateTime2 = endExamDateTime.replace(' ', 'T');
+    var m = modifiedDateTime2.replaceAll("/", "-");
+    var dateString2 = m;
+    var parts2 = dateString2.split("T");
+    var datePart2 = parts2[0];
+    var timePart2 = parts2[1];
+
+    var dateComponents2 = datePart2.split("-");
+    var rearrangedDateString2 = dateComponents2[2] + "-" + dateComponents2[1] + "-" + dateComponents2[0] + "T" + timePart2;
+    console.log(rearrangedDateString2);
+
+    var endTime = new Date(rearrangedDateString2).getTime();
+    function checkExamTime() {
+        var currentTime = new Date().getTime();
+
+        var timeLeft = endTime - currentTime;
+
+        // Calculate remaining hours, minutes, and seconds
+        var hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        // Display the timer in the HTML element with id "timer"
+        document.getElementById("timer").innerHTML = "Time left: " + hours + "h " + minutes + "m " + seconds + "s ";
+
+        if (currentTime >= endTime) {
+            clearInterval(intervalId); // Stop periodic checking
+            document.getElementById("submit").click(); // Submit the form
+        }
+    }
+
+    checkExamTime();
+
+    var intervalId = setInterval(checkExamTime, 1000);
+
+   
+</script>
+
+<script type="text/javascript">
+    function preventBack() { window.history.forward(); }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+</script>

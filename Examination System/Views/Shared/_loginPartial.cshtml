@@ -1,0 +1,16 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+//list of headers
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout &nbsp; <i class="fa-solid fa-user color"></i> @User.Identity.Name</a>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+    </li>
+    @* <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+    </li> *@
+}

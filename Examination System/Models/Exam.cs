@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.VisualBasic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Examination_System.Models
 {
@@ -16,8 +17,10 @@ namespace Examination_System.Models
 
         public Course Course { get; set; }
 
-        public int StudentGrade { get; set; }
+        public int? StudentGrade { get; set; }
 
-        public List<ExamQuestions> ExamQuestions { get; set; }
+        public List<ExamQuestions> ExamQuestions { get; set; } = new List<ExamQuestions>();
+
+     
     }
 }

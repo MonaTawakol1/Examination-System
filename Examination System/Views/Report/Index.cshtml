@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+      
+  
+
+    <div class="container mt-5 reportindex">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Reports</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a class="btn btn-custom" asp-action="StudentsInformation" asp-controller="Report">Students Information</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class="btn btn-custom" asp-action="getAllStudent" asp-controller="Report">Students Grades</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class="btn btn-custom" asp-action="getAllInstuctors" asp-controller="Report">Instructors Courses</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class="btn btn-custom" asp-action="getAllCourses" asp-controller="Report">Topics</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class="btn btn-custom" asp-action="getAllexams" asp-controller="Report">Exams Questions</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class="btn btn-custom" asp-action="getAllStudentExam" asp-controller="Report">Exam</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+

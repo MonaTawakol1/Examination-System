@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Exam>
+@{
+    ViewData["Title"] = "student exams";
+    Layout = null;
+}
+
+
+<table class="table table-bordered mt-5 report">
+    <tr>
+
+
+        <th>Exam </th>
+        <th>Show Exam  </th>
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+
+            <td class="text-center">
+                @item.ExamId
+
+            </td >
+            <td class="text-center">
+                <a class="btn btn-primary" asp-action="Reports6" asp-controller="Report" asp-route-ExamId="@item.ExamId">Go To Exam</a>
+
+            </td>
+        </tr>
+    }
+</table>

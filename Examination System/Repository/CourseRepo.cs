@@ -1,14 +1,19 @@
 ﻿using Examination_System.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Examination_System.Repository
 {
-    public class CourseRepo
-    {
-        ItiContext db;
-
-        public CourseRepo(ItiContext _db)
+    
+        public interface ICourseRepo
         {
-            db = _db;
+           
         }
+        public class CourseRepo : ICourseRepo
+        {
+            ItiContext db;
+
+           
+            
+        
     }
 }

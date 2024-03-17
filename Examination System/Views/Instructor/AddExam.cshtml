@@ -1,0 +1,48 @@
+﻿@model Course
+
+@{
+    ViewData["Title"] = "AddExam";
+}
+
+
+<h2 class="text-center">Add Exam</h2>
+
+<h4>Course</h4>
+<hr />
+<div class="row addQuestion">
+    <div class="col-md-6 offset-md-3">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CourseId" />
+          
+            <div class="form-group mb-3">
+                <label asp-for="ExamStartDateTime" class="control-label">Exam Start Date and Time:</label>
+                <input asp-for="ExamStartDateTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="ExamStartDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ExamEndDateTime" class="control-label">Exam End Date and Time:</label>
+                <input asp-for="ExamEndDateTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="ExamEndDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="NumberOfTrueAndFalseQuestions" class="control-label">Number of True/False Questions:</label>
+                <input asp-for="NumberOfTrueAndFalseQuestions" class="form-control" />
+                <span asp-validation-for="NumberOfTrueAndFalseQuestions" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="NumberOfMcqQuestions" class="control-label">Number of Multiple Choice Questions:</label>
+                <input asp-for="NumberOfMcqQuestions" class="form-control" />
+                <span asp-validation-for="NumberOfMcqQuestions" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" value="Save" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
+
+

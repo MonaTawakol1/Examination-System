@@ -1,0 +1,80 @@
+﻿@model Examination_System.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/fonts/icomoon/style.css" asp-append-version="true">
+
+    <link rel="stylesheet" href="~/css0/owl.carousel.min.css" asp-append-version="true">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css0/bootstrap.min.css" asp-append-version="true">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="~/css0/style.css" asp-append-version="true">
+
+    <title>Login </title>
+</head>
+<body>
+
+
+
+    <div class="content mt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="~/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
+                </div>
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8  mt-5">
+                            <div class="mb-4">
+                                <h3>Login</h3>
+
+                            </div>
+                            <form action="#" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <div class="form-group first">
+                                    <label for="username" asp-for="Email">Email</label>
+                                    <input type="email" asp-for="Email" class="form-control" id="Email">
+
+                                </div>
+                                <br />
+                                <div class="form-group last mb-4">
+                                    <label for="password" asp-for="Password">Password</label>
+                                    <input type="password" asp-for="Password" class="form-control" id="password">
+                                </div>
+                                <input type="submit" value="Log In" class="btn btn-block btn-primary">
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/js0/jquery-3.3.1.min.js"></script>
+    <script src="~/js0/popper.min.js"></script>
+    <script src="~/js0/bootstrap.min.js"></script>
+    <script src="~/js0/main.js"></script>
+</body>
+</html>

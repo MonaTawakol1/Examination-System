@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Branch>
+
+@{
+    ViewData["Title"] = "Show Departments";
+}
+
+<div class="container mt-5 instuctorIndex report2">
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <th>Branch Name</th>
+                <th>Manager Name</th>
+                <th>Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.BranchName</td>
+                    <td>@item.branchmanger.User.Name</td>
+                    <td>
+                        <a asp-action="EditBranch" asp-controller="Admin" asp-route-id="@item.BranchId" class="btn btn-info">Edit</a>
+                        <a asp-action="DeleteBranch" asp-controller="Admin" onclick="return confirm('Are you sure you want to delete?')" asp-route-id="@item.BranchId" class="btn btn-danger">Delete</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="createBranches" asp-controller="Admin" class="btn btn-info">Add Branch</a>
+</div>

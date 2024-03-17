@@ -1,0 +1,33 @@
+﻿@model Instructor
+@{
+    ViewData["Title"] = "GetInstructor";
+}
+
+<h2 class="text-center fw-bold mt-5 mb-5">Departments</h2>
+<div class="container mt-5 instuctorIndex report2">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Instructor Id</th>
+                <th scope="col">Departments</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+        <td scope="row">@Model.InstructorId</td>
+            @foreach (var item in Model.Departments)
+            {
+               
+                    
+                    <td>
+                        @item.DepartmentName
+                    </td>
+                    <td>  <a class="btn btn-info" asp-action="getCoursesInDepartments" asp-route-instructorId="@Model.InstructorId" asp-route-departmentId="@item.DepartmentId">Show courses</a>  </td>
+               
+            }
+            
+            </tr>
+        </tbody>
+    </table>
+</div>

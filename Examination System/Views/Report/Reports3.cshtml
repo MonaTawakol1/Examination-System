@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Course>
+@{
+    ViewData["Title"] = "Reports3";
+    Layout = null;
+}
+
+
+
+<table class="table table-bordered mt-5 report2">
+    <tr>
+    
+        <th> Course Name</th>
+        <th>Students Number</th>
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            
+            <td>
+                @item.CourseName
+            </td>
+            <td>
+                @item.Students.Count
+            </td>
+        </tr>
+    }
+</table>
+

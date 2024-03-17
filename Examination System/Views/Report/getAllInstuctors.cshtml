@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Instructor>
+@{
+    ViewData["Title"] = "getAllInstuctors";
+    SelectList InstructorSelect = new SelectList(ViewBag.instructor, "InstructorId", "InstructorId");
+}
+
+
+
+
+
+
+
+
+<h2 class="text-center fw-bold mt-5 mb-5">Show Instructors Courses</h2>
+
+
+<div class="course text-center">
+
+    <select id="InstructorSelect" onchange="loadReport(this.value)">
+        <option>Select Instuctor</option>
+        @foreach (var item in InstructorSelect)
+        {
+
+            <option value="@item.Value">@item.Value</option>
+        }
+    </select>
+</div>
+<div id="div1"></div>
+
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
+
+<script>
+    function loadReport(InstructorId) {
+        $("#div1").load("/Report/Reports3?InstructorId=" + InstructorId);
+    }
+</script>

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Student>
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+
+<table class="table table-bordered  mt-5 report2">
+    <tr>
+    <th>Student Id</th>
+    <th>Student Name</th>
+    <th>Student Department</th>
+    <th>Student Branch</th>
+
+    </tr>
+    @foreach (var student in Model)
+    {
+        <tr>
+            <td>
+                @student.StudentId
+            </td>
+            <td>
+                @student.User.Name
+            </td>
+            <td>
+                @student.Department.DepartmentName
+            </td>
+            <td>
+                @student.Branch.BranchName
+            </td>
+        </tr>
+    }
+</table>
+
+

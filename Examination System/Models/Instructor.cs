@@ -8,14 +8,14 @@ namespace Examination_System.Models
     {
         public int InstructorId { get; set; }
 
-        [Required]
-        public string InstructorName { get; set;}
+        //[Required]
+        //public string InstructorName { get; set;}
 
-        public string InstructorPassword { get; set;}
+        //public string InstructorPassword { get; set;}
 
-        [NotMapped]
+        //[NotMapped]
 
-        public string InstructorConfirmPassword { get; set;}
+        //public string InstructorConfirmPassword { get; set;}
 
         public List<Department> Departments { get; set;}
 
@@ -24,6 +24,14 @@ namespace Examination_System.Models
         public List<Course> Courses { get; set; }
 
         public Branch branch { get; set; }
+
+
+
+        public int UserId { get; set; }
+
+        public User User { get; set; }
+
+        public Boolean isDeleted { get; set; } = false;
 
 
 
