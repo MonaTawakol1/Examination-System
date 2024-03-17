@@ -3,6 +3,7 @@ using Examination_System.Repository;
 using Examination_System.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Examination_System.Controllers
 {
@@ -14,9 +15,27 @@ namespace Examination_System.Controllers
         {
             adminRepo = _adminRepo;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var principal = HttpContext.User;
+
+            // Retrieve the Sid claim
+            var sidClaim = principal.FindFirst(ClaimTypes.Sid);
+
+            if (sidClaim != null)
+            {
+                // Sid value found, you can access it here
+                var sidValue = sidClaim.Value;
+                int id = int.Parse(sidValue);
+                var admin = adminRepo.GetAdmin(id);
+
+                return View(admin);
+            }
+            else
+            {
+                // Sid claim not found, handle the situation accordingly
+                return RedirectToAction("Login", "Account");
+            }
         }
         public IActionResult ShowAdmins()
         {
@@ -124,17 +143,19 @@ namespace Examination_System.Controllers
             return RedirectToAction("ShowInstructor");
 
         }
+
+
         public IActionResult DeleteInstructor(int id)
         {
             if (id == null)
                 return BadRequest();
-            var model = adminRepo.getUser(id);
+            var model = adminRepo.getInstructorById(id);
             if (model == null)
                 return NotFound();
-
-            adminRepo.DeleteUser(model);
+            adminRepo.deleteIns(model);
             return RedirectToAction("ShowInstructor");
         }
+      
 
         public IActionResult ShowStudent()
         {

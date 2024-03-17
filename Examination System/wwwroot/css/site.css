@@ -477,3 +477,34 @@ header {
     background-color: #6c63ff;
     border-color: #6c63ff;
 }
+
+.navbar-brand h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+}
+
+    .navbar-nav .nav-link:hover {
+        color: #007bff;
+    }
+
+.navbar-nav .dropdown-menu {
+    background-color: #f8f9fa;
+}
+
+.navbar-nav .dropdown-item {
+    color: #333;
+}
+
+    .navbar-nav .dropdown-item:hover {
+        background-color: #007bff;
+        color: #fff;
+    }

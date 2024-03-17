@@ -6,6 +6,7 @@ using System.Security.Claims;
 
 namespace Examination_System.Controllers
 {
+    [Authorize(Roles = "Instructors")]
     public class InstructorController : Controller
     {
         
@@ -22,6 +23,33 @@ namespace Examination_System.Controllers
              examRepo = _examRepo;
             studentRepo = _studentRepo;
         }
+
+
+
+        public async Task<IActionResult> Profile()
+        {
+            var principal = HttpContext.User;
+
+            // Retrieve the Sid claim
+            var sidClaim = principal.FindFirst(ClaimTypes.Sid);
+
+            if (sidClaim != null)
+            {
+                // Sid value found, you can access it here
+                var sidValue = sidClaim.Value;
+                int id = int.Parse(sidValue);
+                var admin = instructorRepo.GetProfile(id);
+
+                return View(admin);
+            }
+            else
+            {
+                // Sid claim not found, handle the situation accordingly
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
+
         public  async Task< IActionResult> Index() {
 
             // Get the ClaimsPrincipal from the HttpContext

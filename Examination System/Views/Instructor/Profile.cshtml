@@ -1,4 +1,4 @@
-﻿@model Admin
+﻿@model Instructor
 @{
     ViewData["Title"] = "profile";
 }
@@ -9,10 +9,10 @@
         <h2 class="profile-heading">Your Profile</h2>
         <div class="profile-info">
             <p><strong>ID:</strong> @Model.User.Name</p>
-            <p><strong>Branch:</strong> @Model.AdminId</p>
-          
+            <p><strong>Branch:</strong> @Model.InstructorId</p>
+
         </div>
-       
+
     </div>
 </div>
 

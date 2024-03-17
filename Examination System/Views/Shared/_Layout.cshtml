@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,32 +13,114 @@
 </head>
 <body>
     
-
-   
-
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow">
-            <div class="container">
-                <a class="navbar-brand" href="#"><h3>EXAM</h3></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><h3>EXAM</h3></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    @if (User.IsInRole("Admins") || User.IsInRole("Instructors"))
+                    {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="Index">Reports</a>
                         </li>
-                        <partial name="_loginPartial" />
-                    
-                    </ul>
-                </div>
+
+
+                    }
+                    @if (User.IsInRole("Admins"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Admin" asp-action="ShowAdmins">Admins</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Admin" asp-action="ShowBranches">Branches</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Admin" asp-action="ShowCourses">Courses</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Admin" asp-action="ShowDepartment">Departments</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Admin" asp-action="ShowInstructor">Instructors</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Admin" asp-action="ShowStudent">Students</a>
+                                </li>
+
+
+                               
+                             
+                            </ul>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("Instructors"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Instructor
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Instructor" asp-action="Profile">Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Instructor" asp-action="GetInstructor">Departments</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Instructor" asp-action="Index">Courses</a>
+                                </li>
+                              
+
+                            </ul>
+                        </li>
+                    }
+
+
+                    @if (User.IsInRole("Students"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Student
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item text-dark" asp-area="" asp-controller="Student" asp-action="Index">Profile</a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                    }
+
+
+
+                    <partial name="_loginPartial" />
+
+                </ul>
+
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+
+
+
 
 
 

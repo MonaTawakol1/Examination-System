@@ -2,8 +2,10 @@
 using Examination_System.Models;
 using Examination_System.Repository;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 namespace Examination_System.Controllers
 {
+    [Authorize(Roles = "Students")]
     public class studentController : Controller
     {
         IstudentRepo studentRepo;

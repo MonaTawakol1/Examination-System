@@ -15,6 +15,7 @@ namespace Examination_System.Repository
         public Instructor GetInstructor(int instructorId);
         public List<Course> getCoursesInDepartments(int instructorId, int departmentId);
         public List<Course> getCoursesInDepartmentss(int instructorId, int departmentId);
+        public Instructor GetProfile(int instructorId);
 
         public List<Student> getListOfStudents(int courseId);
 
@@ -171,6 +172,11 @@ namespace Examination_System.Repository
                     db.SaveChanges();
                 }
             }
+        }
+
+        public Instructor GetProfile(int instructorId)
+        {
+            return db.Instructors.Include(a => a.User).FirstOrDefault(u => u.UserId == instructorId);
         }
 
 

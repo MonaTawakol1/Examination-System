@@ -1,8 +1,11 @@
 ﻿using Examination_System.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Examination_System.Controllers
 {
+    [Authorize(Roles = "Admins")]
+    [Authorize(Roles = "Instructors")]
     public class ReportController : Controller
     {
         IReportRepo reportRepo;

@@ -68,7 +68,7 @@ namespace Examination_System.Controllers
                     }
                     else if (item.Name == "Instructors")
                     {
-                        return RedirectToAction("GetInstructor", "Instructor");
+                        return RedirectToAction("Profile", "Instructor");
 
                     }
                 }

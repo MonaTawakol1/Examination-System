@@ -31,6 +31,8 @@ namespace Examination_System.Models
 
         public User User { get; set; }
 
+        public Boolean isDeleted { get; set; } = false;
+
 
 
 

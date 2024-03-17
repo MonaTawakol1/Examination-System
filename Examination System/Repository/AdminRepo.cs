@@ -10,6 +10,7 @@ namespace Examination_System.Repository
     {
         public List<User> showAdmins();
         public void AddUser(User user);
+        public Admin GetAdmin(int userId);
         public void AddRole(User user);
         public void AddAdmin(Admin admin);
         public User getUser(int userId);
@@ -51,7 +52,10 @@ namespace Examination_System.Repository
         public List<Instructor> getInstructorsInCourse(int CourseId);
         public void RemoveInsFromCourse(int courseId, int InstructorId);
         public bool IsEmailAlreadyRegistered(string email);
+        public void deleteIns(Instructor instructor);
+        public Instructor getInstructorById(int id);
     }
+
 
     public class AdminRepo :IAdminRepo
     {
@@ -94,14 +98,14 @@ namespace Examination_System.Repository
         }
         public void DeleteUser(User user)
         {
-
+            
             db.Users.Remove(user);
             db.SaveChanges();
         }
 
         public List<User> GetUsers()
         {
-           return db.Users.Where(a => a.Id == a.Instructor.UserId).Include(a => a.Instructor).ToList();
+           return db.Users.Where(a => a.Id == a.Instructor.UserId && a.Instructor.isDeleted==false).Include(a => a.Instructor).ToList();
         }
 
         public void AddRoleInstructor(User user)
@@ -390,7 +394,21 @@ namespace Examination_System.Repository
         }
 
 
+        public Admin GetAdmin(int userId)
+        {
+            return db.Admins.Include(a=>a.User).FirstOrDefault(u => u.UserId == userId);
+        }
 
 
+        public void deleteIns(Instructor instructor)
+        {
+            instructor.isDeleted = true;
+            db.Instructors.Update(instructor);
+            db.SaveChanges();
+        }
+        public Instructor getInstructorById(int id)
+        {
+            return db.Instructors.FirstOrDefault(a => a.UserId == id);
+        }
     }
 }
