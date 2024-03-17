@@ -1,0 +1,18 @@
+﻿
+@model Course
+@{
+    ViewData["Title"] = "ShowCourseIn";
+    SelectList courseSelect = new SelectList(ViewBag.courses, "CourseId", "CourseName");
+}
+
+<h2 class="text-center fw-bold mt-5 mb-5">Add Course to Department </h2>
+
+<div class="course text-center">
+    <form method="post">
+        <select id="courseSelect" asp-items="courseSelect" name="CourseId">
+            <option>Select Course</option>
+        </select>
+        <input type="submit" class="btn btn-info" value="Add" />
+
+    </form>
+</div>

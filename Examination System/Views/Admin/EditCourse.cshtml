@@ -1,0 +1,34 @@
+﻿@model Examination_System.Models.Course
+
+@{
+    ViewData["Title"] = "EditCourse";
+
+}
+
+<h2 class="text-center mt-4 mb-4">Edit Course</h2>
+
+<div class="row addQuestion">
+    <div class="col-md-6 offset-md-3">
+
+        <form asp-action="EditCourse" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="CourseId" class="form-control" />
+
+            <div class="form-group mb-3">
+                <label asp-for="CourseName" class="control-label"></label>
+                <input asp-for="CourseName" class="form-control" />
+                <span asp-validation-for="CourseName" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-action="ShowDepartment" class="btn btn-info">Back to List</a>
+</div>
+

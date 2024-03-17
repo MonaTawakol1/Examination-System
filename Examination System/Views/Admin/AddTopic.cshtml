@@ -1,0 +1,35 @@
+﻿
+
+@model Examination_System.Models.Topic
+
+@{
+    ViewData["Title"] = "AddTopic";
+
+
+}
+
+<h2 class="text-center mt-4 mb-4">Add Topic</h2>
+
+<div class="row addQuestion">
+    <div class="col-md-6 offset-md-3">
+
+        <form  method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="TopicName" class="control-label"></label>
+                <input asp-for="TopicName" class="form-control" />
+                <span asp-validation-for="TopicName" class="text-danger"></span>
+            </div>
+            <input name="@ViewBag.CourseId" value="@ViewBag.CourseId" class="form-control" />
+
+            <div class="form-group mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-action="ShowCourses" class="btn btn-info">Back to List</a>
+</div>

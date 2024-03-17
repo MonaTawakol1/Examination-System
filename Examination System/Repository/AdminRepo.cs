@@ -46,7 +46,7 @@ namespace Examination_System.Repository
         public void removeDepartment(Department department);
         public List<Course> GetListOfCourses();
         public List<Instructor> GetInstructorByCourseId(int courseId);
-       
+        public void RemoveTopic(int topicId);
         public List<Instructor> ListOfInstructorsNotInCourse(int courseId);
 
         public void AddInstructorToCourse(int InstructorId, int CourseId);
@@ -56,6 +56,11 @@ namespace Examination_System.Repository
         public void deleteIns(Instructor instructor);
         public Instructor getInstructorById(int id);
 
+        public List<Course> ListOfCoursesNotInDepartment(int deptId);
+        public void AddCourseToDepartment(int coursId, int deptId);
+        public List<Course> getCoursesInDepartment(int deptId);
+        public void RemoveCourseFromDepartment(int departmentId, int courseId);
+
 
 
         //new 
@@ -64,6 +69,18 @@ namespace Examination_System.Repository
         public List<Instructor> getInstructorsInDepartment(int deptId);
 
         public void RemoveInsFromDepartment(int departmentId, int InstructorId);
+
+
+        //course
+        public void AddCourse(Course course);
+        public Course GetCourseById(int id);
+
+        public void UpdateCourse(Course course);
+        public void removeCourse(Course course);
+
+        //topics
+        public List<Topic> ShowTopics(int courseId);
+        public void AddTopic(Topic topic);
     }
 
 
@@ -279,7 +296,7 @@ namespace Examination_System.Repository
 
         public List<Course> GetListOfCourses()
         {
-            return db.Courses.Include(a=>a.Instructors).ToList();
+            return db.Courses.Include(a=>a.Instructors).Where(a=>a.isDeleted==false).ToList();
         }
 
         public List<Instructor> GetInstructorByCourseId(int courseId)
@@ -504,15 +521,130 @@ namespace Examination_System.Repository
         }
 
 
+       
+
+        //courses
+
+        public void AddCourse(Course course)
+        {
+            db.Courses.Add(course);
+            db.SaveChanges();
+        }
+        public Course GetCourseById(int id)
+        {
+            return db.Courses.FirstOrDefault(a => a.CourseId == id);
+        }
+        public void UpdateCourse(Course course)
+        {
+            db.Courses.Update(course);
+            db.SaveChanges();
+        }
+
+        public void removeCourse(Course course)
+        {
+            course.isDeleted = true;
+            db.Courses.Update(course);
+            db.SaveChanges();
+        }
 
 
 
 
+        ///course new
+        ///
+      
+        ///
+        public List<Course> ListOfCoursesNotInDepartment(int deptId)
+        {
+            var courses = db.Courses.Include(a => a.Departments).Where(a => a.isDeleted == false).ToList();
+
+            List<Course> notInDept = new List<Course>();
+            foreach (var course in courses)
+            {
+                bool isInDept = false;
+                foreach (var dept in course.Departments)
+                {
+                    if (dept.DepartmentId == deptId)
+                    {
+                        isInDept = true;
+                        break;
+                    }
+                }
+
+                if (!isInDept)
+                {
+                    notInDept.Add(course);
+                }
+            }
+
+            return notInDept;
+        }
 
 
 
+        public void AddCourseToDepartment(int coursId, int deptId)
+        {
+            var course = db.Courses.FirstOrDefault(a => a.CourseId == coursId);
+            var dept = db.Departments.Include(a => a.courses).FirstOrDefault(a => a.DepartmentId == deptId);
+            dept.courses.Add(course);
+            db.Departments.Update(dept);
+            db.SaveChanges();
+        }
+
+        public List<Course> getCoursesInDepartment(int deptId)
+        {
+
+            var courses = db.Courses.Include(a => a.Departments).Where(a => a.isDeleted == false).ToList();
+            List<Course> CoursesIndept = new List<Course>();
 
 
+            foreach (var course in courses)
+            {
+                foreach (var dept in course.Departments)
+                {
+                    if (dept.DepartmentId == deptId)
+                    {
+                        CoursesIndept.Add(course);
+                        break;
+                    }
+                }
+            }
+
+            return CoursesIndept;
+        }
+
+        public void RemoveCourseFromDepartment(int departmentId, int courseId)
+        {
+            var course = db.Courses.FirstOrDefault(a => a.CourseId == courseId);
+            var dept = db.Departments.Include(a => a.courses).FirstOrDefault(a => a.DepartmentId == departmentId);
+            dept.courses.Remove(course);
+            db.Departments.Update(dept);
+            db.SaveChanges();
+        }
+
+
+
+        //topics
+        public List<Topic> ShowTopics(int courseId)
+        {
+           return db.Topics.Where(a => a.CourseId == courseId).ToList();
+        }
+
+
+        public void AddTopic(Topic topic )
+        {
+         
+            db.Topics.Add(topic);
+            db.SaveChanges();
+            
+        }
+
+        public void RemoveTopic(int topicId)
+        {
+            var topic = db.Topics.FirstOrDefault(a => a.TopicId == topicId);
+            db.Topics.Remove(topic); 
+            db.SaveChanges();
+        }
 
     }
 }

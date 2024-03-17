@@ -21,6 +21,8 @@ namespace Examination_System.Models
         public List<Instructor> Instructors { get; set; }
         public List<Department> Departments { get; set; }
 
+        public Boolean isDeleted { get; set; } = false;
+
 
         [CustomValidation(typeof(Course), "ValidateStartDateTime")]
         public DateTime? ExamStartDateTime { get; set; }
