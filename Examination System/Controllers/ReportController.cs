@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Examination_System.Controllers
 {
-    [Authorize(Roles = "Admins")]
-    [Authorize(Roles = "Instructors")]
+    [Authorize(Roles = "Admins,Instructors")]
     public class ReportController : Controller
     {
         IReportRepo reportRepo;
