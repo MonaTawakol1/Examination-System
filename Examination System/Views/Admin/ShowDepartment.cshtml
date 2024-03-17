@@ -14,6 +14,7 @@
                 <th>Manager Name</th>
                 <th>Operation</th>
                 <th>Instructors Operation</th>
+                <th>Courses Operation</th>
             </tr>
         </thead>
         <tbody>
@@ -30,7 +31,10 @@
                     <td>
                         <a asp-action="ShowInstructorsIn" asp-controller="Admin" asp-route-deptId="@item.DepartmentId" class="btn btn-info">Add Instructor</a>
                         <a asp-action="ShowInstructorsInDept" asp-controller="Admin" asp-route-deptId="@item.DepartmentId" class="btn btn-danger">Delete Instructors</a>
-
+                    </td>
+                    <td>
+                        <a asp-action="ShowCourseIn" asp-controller="Admin" asp-route-deptId="@item.DepartmentId" class="btn btn-info">Add Courses</a>
+                        <a asp-action="ShowCoursesInDept" asp-controller="Admin" asp-route-deptId="@item.DepartmentId" class="btn btn-danger">Delete Courses</a>
                     </td>
 
                 </tr>

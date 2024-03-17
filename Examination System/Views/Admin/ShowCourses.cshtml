@@ -10,6 +10,8 @@
                 <th> Course ID</th>
                 <th> Course Name</th>
                 <th>Opeations</th>
+                <th>Operations Instructor</th>
+                <th>Topics</th>
             </tr>
         </thead>
         <tbody>
@@ -18,13 +20,22 @@
                 <tr>
                     <td>@item.CourseId</td>
                     <td>@item.CourseName</td>
+
+                    <td>
+                        <a asp-action="EditCourse" asp-controller="Admin" asp-route-id="@item.CourseId" class="btn btn-info">Edit</a>
+                        <a asp-action="DeleteCourse" asp-controller="Admin" onclick="return confirm('Are you sure you want to delete?')" asp-route-id="@item.CourseId" class="btn btn-danger">Delete</a>
+
+                    </td>
                     <td>
                         <a asp-action="ShowInstructors" asp-controller="Admin" asp-route-courseId="@item.CourseId" class="btn btn-info">Add Instructors</a>
                         <a asp-action="ShowInstructorsInCourse" asp-controller="Admin" asp-route-courseId="@item.CourseId" class="btn btn-info">Remove Instructors</a>
+                    </td>
+                    <td>
+                        <a asp-action="ShowTopic" asp-controller="Admin" asp-route-courseId="@item.CourseId" class="btn btn-info">Topics</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-   
+    <a asp-action="createCourse" asp-controller="Admin" class="btn btn-info">Add Course</a>
    </div>

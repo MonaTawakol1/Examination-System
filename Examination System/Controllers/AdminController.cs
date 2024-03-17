@@ -283,6 +283,7 @@ namespace Examination_System.Controllers
         public IActionResult ShowDepartment()
         {
             var model = adminRepo.getDepartmentList();
+            
             return View(model);
         }
 
@@ -356,7 +357,7 @@ namespace Examination_System.Controllers
         [HttpPost]
         public IActionResult ShowInstructors(int courseId, int InstructorId)
         {
-            adminRepo.AddInstructorToCourse(InstructorId, courseId);
+            adminRepo.AddInstructorToCourse(InstructorId,courseId);
             return RedirectToAction("ShowCourses");
         }
 
@@ -413,8 +414,117 @@ namespace Examination_System.Controllers
 
 
 
+        //course
+        public IActionResult createCourse()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult createCourse(Course model)
+        {
+            if (model.CourseName?.Length > 1)
+            {
+                adminRepo.AddCourse(model);
+                return RedirectToAction("ShowCourses");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
 
 
+        public IActionResult EditCourse(int? id)
+        {
+          
+            if (id == null)
+                return BadRequest();
+            var model = adminRepo.GetCourseById(id.Value);
+            if (model == null)
+                return NotFound();
+            return View(model);
+
+        }
+        [HttpPost]
+        public IActionResult EditCourse(Course u)
+        {
+            adminRepo.UpdateCourse(u);
+            return RedirectToAction("ShowCourses");
+
+        }
+
+        public IActionResult DeleteCourse(int id)
+        {
+            if (id == null)
+                return BadRequest();
+            var model = adminRepo.GetCourseById(id);
+            if (model == null)
+                return NotFound();
+
+            adminRepo.removeCourse(model);
+            return RedirectToAction("ShowCourses");
+        }
+
+
+
+        //new course
+        public IActionResult ShowCourseIn(int deptId)
+        {
+            var model = adminRepo.ListOfCoursesNotInDepartment(deptId);
+            ViewBag.courses = model;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ShowCourseIn(int deptId, int CourseId)
+        {
+            adminRepo.AddCourseToDepartment(CourseId, deptId);
+            return RedirectToAction("ShowDepartment");
+        }
+
+        public IActionResult ShowCoursesInDept(int deptId)
+        {
+            var model = adminRepo.getCoursesInDepartment(deptId);
+            ViewBag.courses = model;
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ShowCoursesInDept(int deptId, int courseId)
+        {
+
+            adminRepo.RemoveCourseFromDepartment(deptId, courseId);
+            return RedirectToAction("ShowDepartment");
+        }
+
+
+        public IActionResult ShowTopic(int courseId)
+        {
+          var model =  adminRepo.ShowTopics(courseId);
+            ViewBag.courseId = courseId;
+            return View(model);
+        }
+
+
+        public IActionResult AddTopic(int courseId)
+
+        {
+            ViewBag.CourseId = courseId;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddTopic(Topic model )
+        {
+                adminRepo.AddTopic(model);
+                return RedirectToAction("ShowCourses");    
+        }
+
+        public IActionResult DeleteTopic(int TopicId)
+        {
+            adminRepo.RemoveTopic(TopicId);
+                return RedirectToAction("ShowCourses");
+        }
 
 
 

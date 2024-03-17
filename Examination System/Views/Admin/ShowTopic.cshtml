@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Topic>
+@{
+    ViewData["Title"] = "ShowTopic";
+}
+
+
+<div class="container mt-5 topic">
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"> Topic Names</th>
+                <th scope="col">Operations</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TopicName</td>
+                    <td>
+                        <a asp-action="DeleteTopic" asp-route-TopicId="@item.TopicId" asp-controller="Admin" class="btn btn-danger">Delete Topic</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+            </table>
+    <a asp-action="AddTopic" asp-route-courseId="@ViewBag.courseId" asp-controller="Admin" class="btn btn-info">Add Topic</a>
+
+</div>
