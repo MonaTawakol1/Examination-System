@@ -4,6 +4,7 @@ using Examination_System.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Examination_System.Migrations
 {
     [DbContext(typeof(ItiContext))]
-    partial class ItiContextModelSnapshot : ModelSnapshot
+    [Migration("20240317010654_mmmmmm")]
+    partial class mmmmmm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,12 +188,10 @@ namespace Examination_System.Migrations
                     b.Property<DateTime?>("ExamStartDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("NumberOfMcqQuestions")
-                        .IsRequired()
+                    b.Property<int>("NumberOfMcqQuestions")
                         .HasColumnType("int");
 
-                    b.Property<int?>("NumberOfTrueAndFalseQuestions")
-                        .IsRequired()
+                    b.Property<int>("NumberOfTrueAndFalseQuestions")
                         .HasColumnType("int");
 
                     b.HasKey("CourseId");

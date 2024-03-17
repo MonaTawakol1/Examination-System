@@ -50,6 +50,7 @@ namespace Examination_System.Repository
         public void AddInstructorToCourse(int InstructorId, int CourseId);
         public List<Instructor> getInstructorsInCourse(int CourseId);
         public void RemoveInsFromCourse(int courseId, int InstructorId);
+        public bool IsEmailAlreadyRegistered(string email);
     }
 
     public class AdminRepo :IAdminRepo
@@ -295,27 +296,6 @@ namespace Examination_System.Repository
 
 
 
-        //public List<Instructor> ListOfInstructorsNotInCourse(int courseId)
-        //{
-
-        //    var instructors = db.Instructors.Include(a => a.Departments).ToList();
-
-        //    List<Department> departmentsInCourse = ListOfDepartmentInCourse(courseId);
-
-
-        //    List<Instructor> instructorsNotInCourse = new List<Instructor>();
-
-        //    foreach (var instructor in instructors)
-        //    {
-
-        //        if (!instructor.Departments.Any(d => departmentsInCourse.Contains(d)))
-        //        {
-        //            instructorsNotInCourse.Add(instructor);
-        //        }
-        //    }
-
-        //    return instructorsNotInCourse;
-        //}
 
         public List<Instructor> ListOfInstructorsNotInCourse(int courseId)
         {
@@ -403,8 +383,12 @@ namespace Examination_System.Repository
             db.SaveChanges();
         }
 
+        public bool IsEmailAlreadyRegistered(string email)
+        {
+            // Assuming your DbContext is named ApplicationDbContext
+            return db.Users.Any(u => u.Email == email);
+        }
 
-     
 
 
 

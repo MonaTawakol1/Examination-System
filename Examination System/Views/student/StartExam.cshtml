@@ -5,10 +5,15 @@
 }
 
 
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <div class="container mt-5">
     <h1 class="text-center">Start Exam</h1>
     <div id="timer"></div>
-    <form id="examForm" method="post">
+    <form id="examForm" method="post" onsubmit="return validateForm()">
         @foreach (var item in Model)
         {
             <div class="question">
@@ -32,9 +37,19 @@
 </div>
 
 
-
-
-
+<!-- Your JavaScript code -->
+<script>
+    function validateForm() {
+        console.log("Validating form...");
+        var choices = document.querySelectorAll('input[type="radio"]:checked');
+        if (choices.length === 0) {
+            // Show error message using JavaScript alert
+            alert("Please answer  questions before submitting.");
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+</script>
 
 
 
@@ -74,4 +89,8 @@
     checkExamTime();
 
     var intervalId = setInterval(checkExamTime, 1000);
+
+   
 </script>
+
+

@@ -32,6 +32,12 @@ namespace Examination_System.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (adminRepo.IsEmailAlreadyRegistered(user.Email))
+                {
+                    ModelState.AddModelError("Email", "This email is already registered with another user");
+                    return View(user);
+                }
+
                 adminRepo.AddUser(user);
 
                 adminRepo.AddRole(user);
@@ -85,6 +91,11 @@ namespace Examination_System.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (adminRepo.IsEmailAlreadyRegistered(user.Email))
+                {
+                    ModelState.AddModelError("Email", "This email is already registered with another user");
+                    return View(user);
+                }
 
                 adminRepo.AddUser(user);
 
@@ -144,8 +155,14 @@ namespace Examination_System.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+                if (adminRepo.IsEmailAlreadyRegistered(u.Email))
+                {
+                    ModelState.AddModelError("Email", "This email is already registered with another user");
+                    return View(u);
+                }
 
-               User user =  adminRepo.AddStudent(u);
+                User user =  adminRepo.AddStudent(u);
                 adminRepo.AddRoleStudent(user);
 
                 adminRepo.AddStudent(user, u);

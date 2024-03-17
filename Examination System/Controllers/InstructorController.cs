@@ -117,8 +117,16 @@ namespace Examination_System.Controllers
         [HttpPost]
         public IActionResult AddExam(int id , DateTime ExamStartDateTime, DateTime ExamEndDateTime, int NumberOfTrueAndFalseQuestions, int NumberOfMcqQuestions)
         {
-            examRepo.AddExamDuration(id, ExamStartDateTime, ExamEndDateTime, NumberOfTrueAndFalseQuestions, NumberOfMcqQuestions);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                examRepo.AddExamDuration(id, ExamStartDateTime, ExamEndDateTime, NumberOfTrueAndFalseQuestions, NumberOfMcqQuestions);
+                return RedirectToAction("Index");
+            }
+            else 
+            {
+                Course crs = examRepo.getCourseById(id);
+                return View(crs);
+            }
         }
         public IActionResult GetInstructor( int departmentId)
         {
