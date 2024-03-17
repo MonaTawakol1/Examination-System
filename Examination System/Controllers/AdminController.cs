@@ -371,7 +371,7 @@ namespace Examination_System.Controllers
         public IActionResult ShowInstructorsInCourse(int courseId, int InstructorId)
         {
 
-            adminRepo.RemoveInsFromCourse(InstructorId, courseId);
+            adminRepo.RemoveInsFromCourse(courseId, InstructorId);
             return RedirectToAction("ShowCourses");
         }
 

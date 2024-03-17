@@ -209,8 +209,17 @@ namespace Examination_System.Repository
         }
         public List<User> getusersbranches()
         {
-           return db.Users.Where(a => a.Id == a.Instructor.UserId).Include(a => a.Instructor).ToList();
+            var branches = db.Branches.ToList();
+            var managersIds = branches.Select(branch => branch.BranchManagerId).ToList();
+
+            var instructors = db.Users
+                                .Include(u => u.Instructor)
+                                .Where(u => u.Instructor != null && !u.Instructor.isDeleted && u.Id == u.Instructor.UserId && !managersIds.Contains(u.Id))
+                                .ToList();
+
+            return instructors;
         }
+
 
         public void AddBranch(Branch branch)
         {
@@ -265,7 +274,7 @@ namespace Examination_System.Repository
 
         public List<Instructor> GetInstructorByCourseId(int courseId)
         {
-            var instructors = db.Instructors.Include(a => a.User).Include(a => a.Courses).ToList();
+            var instructors = db.Instructors.Include(a => a.User).Include(a => a.Courses).Where(a=>a.isDeleted==false).ToList();
             List<Instructor> instructorList = new List<Instructor>();
             foreach (var std in instructors)
             {
@@ -303,7 +312,7 @@ namespace Examination_System.Repository
 
         public List<Instructor> ListOfInstructorsNotInCourse(int courseId)
         {
-            var instructors = db.Instructors.Include(a => a.Departments).Include(a => a.Courses).ToList();
+            var instructors = db.Instructors.Include(a => a.Departments).Include(a => a.Courses).Where(a => a.isDeleted == false).ToList();
 
             // List to store instructors who are teaching the given course
             List<Instructor> instructorsInCourse = new List<Instructor>();
@@ -331,7 +340,7 @@ namespace Examination_System.Repository
             foreach (var instructor in instructors)
             {
                 // Check if the instructor is in any of the departments associated with the course
-                bool isInCourseDepartment = departmentsInCourse.Any(dept => dept.instructors.Contains(instructor));
+                bool isInCourseDepartment = departmentsInCourse != null && departmentsInCourse.Any(dept => dept.instructors != null && dept.instructors.Contains(instructor));
 
                 // If the instructor is in one of the departments but not teaching the course, add them to the list
                 if (isInCourseDepartment && !instructorsInCourse.Contains(instructor))
@@ -357,7 +366,7 @@ namespace Examination_System.Repository
         public List<Instructor> getInstructorsInCourse(int CourseId)
         {
 
-            var instructors = db.Instructors.Include(a => a.Departments).Include(a => a.Courses).ToList();
+            var instructors = db.Instructors.Include(a => a.Departments).Include(a => a.Courses).Where(a => a.isDeleted == false).ToList();
 
             // List to store instructors who are teaching the given course
             List<Instructor> instructorsInCourse = new List<Instructor>();
