@@ -117,7 +117,26 @@ namespace Examination_System.Controllers
         }
 
 
+        public async Task<IActionResult> ShowGrades(int courseId)
+        {
 
+            // Get the ClaimsPrincipal from the HttpContext
+            var principal = HttpContext.User;
+
+            // Retrieve the Sid claim
+            var sidClaim = principal.FindFirst(ClaimTypes.Sid);
+
+          
+                // Sid value found, you can access it here
+                var sidValue = sidClaim.Value;
+                int id = int.Parse(sidValue);
+            var student = studentRepo.GetStudentByUserId(id);
+
+
+
+            var exams = studentRepo.GetExams(student.StudentId, courseId);
+            return View(exams);
+        }
 
     }
 }

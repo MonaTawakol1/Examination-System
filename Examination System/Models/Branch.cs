@@ -10,12 +10,10 @@ namespace Examination_System.Models
         [Required]
         public string BranchName { get; set; }
 
-        [ForeignKey("branchmanger")]
-        public int BranchManagerId { get; set; }
         public List<Department> DepartmentList { get; set; }
         public List<Student> StudentList { get; set; }
 
-        public Instructor branchmanger { get; set; }
+        
 
         public Boolean isDeleted {  get; set; }=false;
     }

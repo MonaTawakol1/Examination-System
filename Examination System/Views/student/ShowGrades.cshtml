@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Exam>
+@{
+    ViewData["Title"] = "ShowGrades";
+}
+<h2 class="text-center fw-bold mt-5 mb-5">Your Grades </h2>
+<div class="container mt-5 instuctorIndex report2">
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <th>Exam Id</th>
+
+                <th>Student Grade</th>
+                <th>Course Name</th>
+            </tr>
+        </thead>
+        <tbody>
+           <tr>
+                @foreach (var exam in @Model)
+                {
+                    <td>@exam.ExamId</td>
+                    <td>@exam.StudentGrade %</td>
+                   <td>@exam.Course.CourseName</td>
+                }
+
+           </tr>
+        </tbody>
+    </table>
+    
+</div>
+
+

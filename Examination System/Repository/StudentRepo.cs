@@ -13,6 +13,8 @@ namespace Examination_System.Repository
 
         public Student GetStudentByUserId(int id);
 
+        public List<Exam> GetExams(int studentid , int courseId) ;
+
 
 
         public List<Student> GetAllStudents(int courseId);
@@ -66,8 +68,13 @@ namespace Examination_System.Repository
                 return course.Students.ToList();
             }
         }
-    
-      
+
+
+        public List<Exam> GetExams(int studentid, int courseId)
+        {
+            return db.Exams.Include(a => a.Course).Include(a => a.Student).ThenInclude(a => a.User).Where(a => a.StudentId == studentid && a.CourseId == courseId).ToList();
+
+        }
 
 
     }

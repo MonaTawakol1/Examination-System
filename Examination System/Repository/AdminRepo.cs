@@ -231,17 +231,17 @@ namespace Examination_System.Repository
 
         public List<Branch> ShowBranches()
         {
-            var model = db.Branches.Include(a => a.branchmanger).ThenInclude(a => a.User).Where(a=>a.isDeleted==false).ToList();
+            var model = db.Branches.Where(a=>a.isDeleted==false).ToList();
             return model;
         }
         public List<User> getusersbranches()
         {
             var branches = db.Branches.ToList();
-            var managersIds = branches.Select(branch => branch.BranchManagerId).ToList();
+           
 
             var instructors = db.Users
                                 .Include(u => u.Instructor)
-                                .Where(u => u.Instructor != null && !u.Instructor.isDeleted && u.Id == u.Instructor.UserId && !managersIds.Contains(u.Id))
+                                .Where(u => u.Instructor != null && !u.Instructor.isDeleted && u.Id == u.Instructor.UserId )
                                 .ToList();
 
             return instructors;
