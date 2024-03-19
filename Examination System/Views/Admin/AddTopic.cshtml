@@ -21,7 +21,7 @@
                 <input asp-for="TopicName" class="form-control" />
                 <span asp-validation-for="TopicName" class="text-danger"></span>
             </div>
-            <input name="@ViewBag.CourseId" value="@ViewBag.CourseId" class="form-control" />
+            <input name="@ViewBag.CourseId" value="@ViewBag.CourseId" class="form-control" hidden />
 
             <div class="form-group mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -23,7 +23,7 @@ namespace Examination_System.Models
 
         public List<Course> Courses { get; set; }
 
-        public Branch branch { get; set; }
+       
 
 
 

@@ -4,6 +4,7 @@ using Examination_System.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Examination_System.Migrations
 {
     [DbContext(typeof(ItiContext))]
-    partial class ItiContextModelSnapshot : ModelSnapshot
+    [Migration("20240319210533_deptmanager")]
+    partial class deptmanager
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,6 +127,9 @@ namespace Examination_System.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BranchId"));
 
+                    b.Property<int>("BranchManagerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("BranchName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -132,6 +138,9 @@ namespace Examination_System.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("BranchId");
+
+                    b.HasIndex("BranchManagerId")
+                        .IsUnique();
 
                     b.ToTable("Branches");
                 });
@@ -207,16 +216,10 @@ namespace Examination_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ManagerId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
 
                     b.HasKey("DepartmentId");
-
-                    b.HasIndex("ManagerId")
-                        .IsUnique();
 
                     b.ToTable("Departments");
                 });
@@ -519,6 +522,17 @@ namespace Examination_System.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Examination_System.Models.Branch", b =>
+                {
+                    b.HasOne("Examination_System.Models.Instructor", "branchmanger")
+                        .WithOne("branch")
+                        .HasForeignKey("Examination_System.Models.Branch", "BranchManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("branchmanger");
+                });
+
             modelBuilder.Entity("Examination_System.Models.Choice", b =>
                 {
                     b.HasOne("Examination_System.Models.Question", "Question")
@@ -528,16 +542,6 @@ namespace Examination_System.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("Examination_System.Models.Department", b =>
-                {
-                    b.HasOne("Examination_System.Models.Instructor", "Manager")
-                        .WithOne("Department")
-                        .HasForeignKey("Examination_System.Models.Department", "ManagerId")
-                        .IsRequired();
-
-                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("Examination_System.Models.Exam", b =>
@@ -677,7 +681,7 @@ namespace Examination_System.Migrations
 
             modelBuilder.Entity("Examination_System.Models.Instructor", b =>
                 {
-                    b.Navigation("Department")
+                    b.Navigation("branch")
                         .IsRequired();
                 });
 

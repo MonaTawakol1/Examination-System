@@ -25,6 +25,8 @@
                             </form>
                             
                             <a asp-action="showTopics" asp-controller="student" asp-route-id="@item.CourseId" class="btn btn-custom btn-block" >Show Topics</a>
+                            <br/>
+                        <a asp-action="ShowGrades" asp-controller="student" asp-route-courseId="@item.CourseId"  class="btn btn-custom btn-block">Show Grades</a>
 
                         </div>
                     </div>
